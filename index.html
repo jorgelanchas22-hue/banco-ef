@@ -97,6 +97,13 @@
   .clear-btn:hover{ border-color:var(--track); color:var(--track); }
 
   /* GRID */
+  .curso-group{ margin-bottom:24px; }
+  .curso-group-title{
+    font-family:'Oswald',sans-serif; text-transform:uppercase; font-size:1rem; font-weight:600;
+    color:var(--white); background:var(--navy); display:inline-flex; align-items:center; gap:8px;
+    padding:6px 14px; border-radius:6px; margin:0 0 12px 0;
+  }
+  .curso-group-count{ background:var(--track); font-size:0.75rem; padding:2px 8px; border-radius:12px; }
   .grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(240px,1fr)); gap:16px; }
   .card{
     background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow);
@@ -248,9 +255,12 @@
       <button class="clear-btn" id="btn-exportar-backup" title="Descarga todos tus datos (ejercicios y grupos) en un archivo">⬇️ Copia de seguridad</button>
       <button class="clear-btn" id="btn-importar-backup" title="Recupera datos de un archivo de copia de seguridad">⬆️ Restaurar copia</button>
       <input type="file" id="input-importar-backup" accept="application/json" style="display:none;">
+      <label style="display:flex; align-items:center; gap:6px; font-size:0.82rem; color:var(--ink-soft); font-weight:600; text-transform:none; margin-left:auto;">
+        <input type="checkbox" id="toggle-agrupar-curso"> Agrupar por curso
+      </label>
     </div>
 
-    <div class="grid" id="grid-ejercicios"></div>
+    <div id="banco-contenedor"></div>
     <div class="empty" id="empty-banco" style="display:none;">
       <div class="display">Aún no hay ejercicios aquí</div>
       <p>Añade el primero desde la pestaña "Añadir ejercicio", o cuéntame qué PDF vas a pasarme y lo clasifico yo.</p>
@@ -795,12 +805,34 @@ function cardHTML(ej, opts={}){
 }
 
 function renderBanco(){
-  const grid = document.getElementById('grid-ejercicios');
+  const cont = document.getElementById('banco-contenedor');
   const filtered = ejercicios.filter(matchesFiltros);
-  grid.innerHTML = filtered.map(ej=>cardHTML(ej,{manage:true})).join("");
   document.getElementById('empty-banco').style.display = ejercicios.length===0 ? 'block' : 'none';
 
-  grid.querySelectorAll('.btn-borrar').forEach(b=>b.addEventListener('click', e=>{
+  const agrupar = document.getElementById('toggle-agrupar-curso').checked;
+  if(agrupar){
+    let html = "";
+    CURSOS.forEach(curso=>{
+      const delCurso = filtered.filter(ej=>ej.cursos.includes(curso));
+      if(delCurso.length===0) return;
+      html += `<div class="curso-group">
+        <h3 class="curso-group-title">${curso} <span class="curso-group-count">${delCurso.length}</span></h3>
+        <div class="grid">${delCurso.map(ej=>cardHTML(ej,{manage:true})).join("")}</div>
+      </div>`;
+    });
+    const sinCurso = filtered.filter(ej=>!ej.cursos || ej.cursos.length===0);
+    if(sinCurso.length>0){
+      html += `<div class="curso-group">
+        <h3 class="curso-group-title">Sin curso asignado <span class="curso-group-count">${sinCurso.length}</span></h3>
+        <div class="grid">${sinCurso.map(ej=>cardHTML(ej,{manage:true})).join("")}</div>
+      </div>`;
+    }
+    cont.innerHTML = html || "";
+  } else {
+    cont.innerHTML = `<div class="grid">${filtered.map(ej=>cardHTML(ej,{manage:true})).join("")}</div>`;
+  }
+
+  cont.querySelectorAll('.btn-borrar').forEach(b=>b.addEventListener('click', e=>{
     const id = e.target.dataset.id;
     if(confirm('¿Borrar este ejercicio del banco?')){
       ejercicios = ejercicios.filter(x=>x.id!==id);
@@ -808,14 +840,15 @@ function renderBanco(){
       renderBanco();
     }
   }));
-  grid.querySelectorAll('.btn-editar').forEach(b=>b.addEventListener('click', e=>{
+  cont.querySelectorAll('.btn-editar').forEach(b=>b.addEventListener('click', e=>{
     editarEjercicio(e.target.dataset.id);
   }));
-  grid.querySelectorAll('.btn-add-imagen').forEach(b=>b.addEventListener('click', e=>{
+  cont.querySelectorAll('.btn-add-imagen').forEach(b=>b.addEventListener('click', e=>{
     quickImagenTargetId = e.target.dataset.id;
     document.getElementById('quick-img-input').click();
   }));
 }
+document.getElementById('toggle-agrupar-curso').addEventListener('change', renderBanco);
 
 let quickImagenTargetId = null;
 document.getElementById('quick-img-input').addEventListener('change', e=>{
