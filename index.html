@@ -1,0 +1,1339 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Banco EF · Triana</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#1B2A4A;
+    --navy-light:#2C4270;
+    --chalk:#F7F6F2;
+    --chalk-line:#E4E1D8;
+    --track:#E8542A;
+    --track-dark:#C9421C;
+    --lime:#C4D82E;
+    --ink:#22262B;
+    --ink-soft:#5B6270;
+    --white:#FFFFFF;
+    --radius:10px;
+    --shadow: 0 2px 10px rgba(27,42,74,0.08);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--chalk);
+    color:var(--ink);
+    font-family:'Work Sans', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{
+    font-family:'Oswald', sans-serif;
+    text-transform:uppercase;
+    letter-spacing:0.02em;
+  }
+  /* HEADER */
+  header{
+    background:var(--navy);
+    color:var(--white);
+    padding:22px 28px 0 28px;
+    position:sticky; top:0; z-index:50;
+  }
+  .header-top{
+    display:flex; align-items:baseline; justify-content:space-between; flex-wrap:wrap; gap:10px;
+  }
+  header h1{
+    margin:0; font-size:1.5rem; font-weight:700; letter-spacing:0.03em;
+  }
+  header h1 span{ color:var(--track); }
+  .subtitle{ color:#B7C1D6; font-size:0.85rem; margin:2px 0 16px 0; }
+  nav.tabs{
+    display:flex; gap:4px; border-bottom:3px solid var(--track);
+  }
+  nav.tabs button{
+    background:transparent; border:none; color:#B7C1D6;
+    font-family:'Oswald',sans-serif; text-transform:uppercase; letter-spacing:0.04em;
+    font-size:0.85rem; font-weight:600;
+    padding:10px 18px; cursor:pointer; border-radius:6px 6px 0 0;
+    position:relative; top:1px;
+  }
+  nav.tabs button.active{
+    color:var(--white); background:var(--track);
+  }
+  nav.tabs button:not(.active):hover{ color:var(--white); background:var(--navy-light); }
+
+  main{ max-width:1180px; margin:0 auto; padding:24px 20px 60px 20px; }
+  .view{ display:none; }
+  .view.active{ display:block; animation:fade .25s ease; }
+  @keyframes fade{ from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:none;} }
+
+  /* FILTER BAR */
+  .filterbar{
+    background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow);
+    padding:16px 18px; margin-bottom:20px; display:flex; flex-wrap:wrap; gap:14px; align-items:flex-end;
+  }
+  .filterbar .field{ display:flex; flex-direction:column; gap:6px; }
+  .filterbar label{ font-size:0.72rem; text-transform:uppercase; letter-spacing:0.05em; color:var(--ink-soft); font-weight:600; }
+  select, input[type=text], input[type=number], textarea{
+    font-family:'Work Sans',sans-serif; font-size:0.9rem; padding:8px 10px;
+    border:1.5px solid var(--chalk-line); border-radius:6px; background:var(--white); color:var(--ink);
+  }
+  select:focus, input:focus, textarea:focus{ outline:2px solid var(--track); outline-offset:1px; }
+  .filterbar input[type=text]{ min-width:180px; }
+  .chip-group{ display:flex; flex-wrap:wrap; gap:6px; max-width:340px; }
+  .chip{
+    border:1.5px solid var(--chalk-line); background:var(--white); color:var(--ink-soft);
+    font-size:0.78rem; padding:5px 11px; border-radius:20px; cursor:pointer; user-select:none;
+    transition:all .15s ease;
+  }
+  .chip:hover{ border-color:var(--track); }
+  .chip.active{ background:var(--navy); border-color:var(--navy); color:var(--white); }
+  .clear-btn{
+    background:none; border:1.5px solid var(--chalk-line); color:var(--ink-soft);
+    padding:8px 14px; border-radius:6px; font-size:0.82rem; cursor:pointer; font-weight:600;
+  }
+  .clear-btn:hover{ border-color:var(--track); color:var(--track); }
+
+  /* GRID */
+  .grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(240px,1fr)); gap:16px; }
+  .card{
+    background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow);
+    overflow:hidden; display:flex; flex-direction:column;
+  }
+  .card-img{
+    width:100%; height:140px; background:var(--chalk-line);
+    display:flex; align-items:center; justify-content:center; color:#9AA1AD; font-size:0.78rem;
+    background-size:cover; background-position:center;
+  }
+  .card-body{ padding:14px 14px 16px 14px; display:flex; flex-direction:column; gap:8px; flex:1; }
+  .card-body h3{ font-size:1rem; margin:0; font-weight:600; letter-spacing:0.01em; }
+  .card-desc{ font-size:0.83rem; color:var(--ink-soft); line-height:1.4; margin:0; flex:1; }
+  .tag-row{ display:flex; flex-wrap:wrap; gap:5px; }
+  .tag{ font-size:0.68rem; font-weight:600; text-transform:uppercase; letter-spacing:0.03em; padding:3px 8px; border-radius:4px; }
+  .tag.curso{ background:#E7ECF6; color:var(--navy); }
+  .tag.bloque{ background:#FBE6DE; color:var(--track-dark); }
+  .tag.contenido{ background:#EFF3D3; color:#5A6614; }
+  .card-meta{ font-size:0.76rem; color:var(--ink-soft); display:flex; justify-content:space-between; margin-top:2px; }
+  .card-actions{ display:flex; gap:8px; margin-top:6px; }
+  .btn{
+    border:none; border-radius:6px; padding:8px 12px; font-size:0.8rem; font-weight:600;
+    cursor:pointer; font-family:'Work Sans',sans-serif; transition:transform .1s ease;
+  }
+  .btn:active{ transform:scale(0.97); }
+  .btn-primary{ background:var(--track); color:var(--white); flex:1; }
+  .btn-primary:hover{ background:var(--track-dark); }
+  .btn-ghost{ background:var(--chalk); color:var(--ink-soft); border:1.5px solid var(--chalk-line); }
+  .btn-ghost:hover{ border-color:var(--track); color:var(--track); }
+  .btn-danger{ background:none; color:#B23A2A; border:1.5px solid #F0C7BC; }
+
+  .empty{ text-align:center; padding:60px 20px; color:var(--ink-soft); }
+  .empty .display{ font-size:1.3rem; color:var(--navy); margin-bottom:6px; }
+
+  /* FORM (Añadir ejercicio) */
+  .form-card{ background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow); padding:24px; max-width:640px; }
+  .form-grid{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .form-grid .full{ grid-column:1/-1; }
+  .form-grid label{ display:block; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.04em; color:var(--ink-soft); font-weight:600; margin-bottom:6px; }
+  .form-grid select, .form-grid input, .form-grid textarea{ width:100%; }
+  .checkbox-group{ display:flex; flex-wrap:wrap; gap:10px; }
+  .checkbox-group label{ display:flex; align-items:center; gap:6px; text-transform:none; font-size:0.85rem; color:var(--ink); font-weight:400; }
+  .img-drop{
+    border:2px dashed var(--chalk-line); border-radius:8px; padding:16px; text-align:center; cursor:pointer;
+    color:var(--ink-soft); font-size:0.85rem;
+  }
+  .img-drop:hover{ border-color:var(--track); color:var(--track); }
+  .img-preview{ max-width:100%; max-height:160px; border-radius:6px; margin-top:10px; display:none; }
+  .form-actions{ margin-top:20px; display:flex; gap:10px; }
+
+  /* SESSION DESIGNER */
+  .session-layout{ display:grid; grid-template-columns:1fr 380px; gap:20px; align-items:start; }
+  @media (max-width:900px){ .session-layout{ grid-template-columns:1fr; } }
+  .session-panel{ background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow); padding:18px; position:sticky; top:150px; }
+  .session-meta-row{ display:flex; gap:10px; margin-bottom:14px; }
+  .lane{ margin-bottom:14px; }
+  .lane-title{
+    font-family:'Oswald',sans-serif; text-transform:uppercase; font-size:0.78rem; font-weight:600;
+    letter-spacing:0.05em; color:var(--white); background:var(--navy);
+    padding:6px 10px; border-radius:6px; display:flex; justify-content:space-between;
+  }
+  .lane-items{ border-left:3px solid var(--chalk-line); margin-left:6px; padding-left:10px; min-height:36px; }
+  .lane-empty{ color:#B4BAC4; font-size:0.78rem; padding:10px 0; font-style:italic; }
+  .sess-item{
+    background:var(--chalk); border-radius:6px; padding:8px 10px; margin:6px 0;
+    display:flex; align-items:center; gap:8px; font-size:0.85rem;
+  }
+  .sess-item .name{ flex:1; }
+  .sess-item .dur{ color:var(--ink-soft); font-size:0.78rem; }
+  .mini-btn{ background:none; border:none; cursor:pointer; color:var(--ink-soft); font-size:0.9rem; padding:2px 4px; }
+  .mini-btn:hover{ color:var(--track); }
+  .total-row{ display:flex; justify-content:space-between; font-family:'Oswald',sans-serif; font-size:1rem; margin:14px 0; padding-top:10px; border-top:2px solid var(--chalk-line); }
+  .total-row span:last-child{ color:var(--track); }
+
+  /* RUBRICA */
+  .rubric-box{ margin-top:18px; border-top:2px solid var(--chalk-line); padding-top:14px; }
+  .rubric-box h4{ margin:0 0 10px 0; font-size:0.85rem; }
+  .rubric-crit-row{ display:flex; gap:6px; margin-bottom:6px; align-items:center; }
+  .rubric-crit-row input[type=text]{ flex:1; font-size:0.82rem; padding:6px 8px; }
+  .rubric-add{ background:none; border:1.5px dashed var(--chalk-line); color:var(--ink-soft); border-radius:6px; padding:6px 10px; font-size:0.78rem; cursor:pointer; width:100%; margin-top:2px; }
+  .rubric-add:hover{ border-color:var(--track); color:var(--track); }
+  .scale-row{ display:flex; gap:6px; margin-bottom:6px; }
+  .scale-row input[type=text]{ flex:2; font-size:0.8rem; padding:5px 7px; }
+  .scale-row input[type=number]{ flex:1; font-size:0.8rem; padding:5px 7px; }
+  .rubric-sub{ font-size:0.72rem; text-transform:uppercase; letter-spacing:0.04em; color:var(--ink-soft); font-weight:600; margin:10px 0 6px; }
+  .print-rubric table{ width:100%; border-collapse:collapse; margin-top:10px; font-size:0.82rem; }
+  .print-rubric th, .print-rubric td{ border:1px solid #ccc; padding:5px 6px; text-align:left; }
+  .print-rubric th{ background:#EFEFEF; }
+  .print-rubric .legend{ font-size:0.78rem; color:#555; margin-top:6px; }
+
+  footer.note{ text-align:center; color:var(--ink-soft); font-size:0.78rem; padding:20px 0 40px; }
+
+  /* PRINT VIEW */
+  #printArea{ display:none; }
+  @media print{
+    header, nav.tabs, .filterbar, .card-actions, .no-print{ display:none !important; }
+    body *{ visibility:hidden; }
+    #printArea, #printArea *{ visibility:visible; }
+    #printArea{ display:block; position:absolute; top:0; left:0; width:100%; padding:20px; }
+    .print-lane h4{ background:var(--navy) !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  }
+  .print-header{ border-bottom:3px solid var(--track); padding-bottom:10px; margin-bottom:16px; }
+  .print-lane h4{ background:var(--navy); color:white; padding:5px 10px; border-radius:4px; font-family:'Oswald',sans-serif; text-transform:uppercase; font-size:0.9rem; }
+  .print-ex{ padding:6px 0 6px 12px; border-bottom:1px dashed var(--chalk-line); font-size:0.92rem; }
+</style>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <h1>BANCO <span>EF</span> · TRIANA</h1>
+    <div class="subtitle">Banco de ejercicios, tareas y retos — diseño de sesiones</div>
+    <span id="sync-status" style="font-size:0.75rem; color:#B7C1D6;">💾 Solo local (sin sincronizar)</span>
+  </div>
+  <nav class="tabs">
+    <button class="tab-btn active" data-view="banco">Banco de ejercicios</button>
+    <button class="tab-btn" data-view="sesion">Diseñar sesión</button>
+    <button class="tab-btn" data-view="anadir">Añadir ejercicio</button>
+    <button class="tab-btn" data-view="alumnos">Alumnos</button>
+  </nav>
+</header>
+
+<main>
+
+  <!-- ===================== VISTA: BANCO ===================== -->
+  <section id="view-banco" class="view active">
+    <div class="filterbar">
+      <div class="field">
+        <label>Buscar</label>
+        <input type="text" id="f-search" placeholder="Nombre o descripción...">
+      </div>
+      <div class="field">
+        <label>Curso</label>
+        <div class="chip-group" id="f-curso"></div>
+      </div>
+      <div class="field">
+        <label>Bloque</label>
+        <div class="chip-group" id="f-bloque"></div>
+      </div>
+      <div class="field">
+        <label>Contenido</label>
+        <div class="chip-group" id="f-contenido"></div>
+      </div>
+      <button class="clear-btn" id="btn-clear-filters">Limpiar filtros</button>
+      <button class="clear-btn" id="btn-quitar-duplicados" title="Elimina ejercicios repetidos (mismo nombre y descripción)">🧹 Quitar duplicados</button>
+      <button class="clear-btn" id="btn-exportar-backup" title="Descarga todos tus datos (ejercicios y grupos) en un archivo">⬇️ Copia de seguridad</button>
+      <button class="clear-btn" id="btn-importar-backup" title="Recupera datos de un archivo de copia de seguridad">⬆️ Restaurar copia</button>
+      <input type="file" id="input-importar-backup" accept="application/json" style="display:none;">
+    </div>
+
+    <div class="grid" id="grid-ejercicios"></div>
+    <div class="empty" id="empty-banco" style="display:none;">
+      <div class="display">Aún no hay ejercicios aquí</div>
+      <p>Añade el primero desde la pestaña "Añadir ejercicio", o cuéntame qué PDF vas a pasarme y lo clasifico yo.</p>
+    </div>
+  </section>
+
+  <!-- ===================== VISTA: SESION ===================== -->
+  <section id="view-sesion" class="view">
+    <div class="session-layout">
+      <div>
+        <div class="filterbar">
+          <div class="field">
+            <label>Curso de la sesión</label>
+            <select id="sess-curso">
+              <option value="">Todos</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Buscar en el banco</label>
+            <input type="text" id="sess-search" placeholder="Nombre o descripción...">
+          </div>
+        </div>
+        <div class="grid" id="grid-sesion-banco"></div>
+      </div>
+
+      <div class="session-panel no-print">
+        <h3 style="margin-top:0;">Tu sesión</h3>
+        <div class="session-meta-row">
+          <input type="text" id="sess-nombre" placeholder="Nombre de la sesión" style="flex:1;">
+          <button class="btn btn-ghost" id="btn-toggle-circuito" title="Montar un circuito por estaciones y vueltas">🔁 Crear circuito</button>
+        </div>
+
+        <div id="circuito-panel" style="display:none; background:var(--chalk); border:1.5px dashed var(--track); border-radius:8px; padding:12px; margin-bottom:14px;">
+          <div style="font-size:0.78rem; color:var(--ink-soft); margin-bottom:8px;">
+            Marca "+ Estación" en los ejercicios del banco (a la izquierda) para añadirlos aquí como estaciones del circuito, en el orden en que los vayas marcando.
+          </div>
+          <div id="circuito-estaciones"></div>
+          <div style="display:flex; align-items:center; gap:10px; margin-top:10px;">
+            <label style="font-size:0.78rem; color:var(--ink-soft); text-transform:uppercase; font-weight:600;">Nº de vueltas</label>
+            <input type="number" id="circuito-vueltas" min="1" value="2" style="width:70px;">
+          </div>
+          <div class="form-actions">
+            <button class="btn btn-primary" id="btn-generar-circuito">Generar circuito en Parte principal</button>
+            <button class="btn btn-ghost" id="btn-cancelar-circuito">Cancelar</button>
+          </div>
+        </div>
+
+        <div class="lane" data-bloque="calentamiento">
+          <div class="lane-title"><span>Calentamiento</span><span class="lane-min">0 min</span></div>
+          <div class="lane-items" id="lane-calentamiento"><div class="lane-empty">Arrastra ejercicios aquí desde el banco →</div></div>
+        </div>
+        <div class="lane" data-bloque="principal">
+          <div class="lane-title"><span>Parte principal</span><span class="lane-min">0 min</span></div>
+          <div class="lane-items" id="lane-principal"><div class="lane-empty">Sin ejercicios todavía</div></div>
+        </div>
+        <div class="lane" data-bloque="vuelta">
+          <div class="lane-title"><span>Vuelta a la calma</span><span class="lane-min">0 min</span></div>
+          <div class="lane-items" id="lane-vuelta"><div class="lane-empty">Sin ejercicios todavía</div></div>
+        </div>
+
+        <div class="total-row"><span>Duración total</span><span id="sess-total">0 min</span></div>
+
+        <div class="rubric-box">
+          <h4>Evaluación de la sesión</h4>
+          <label style="display:flex; align-items:center; gap:8px; text-transform:none; font-weight:400; font-size:0.88rem; color:var(--ink); margin-bottom:6px;">
+            <input type="checkbox" id="rubric-evaluar-toggle"> ¿Evaluar esta sesión?
+          </label>
+
+          <div id="rubric-detalle" style="display:none;">
+            <div class="rubric-sub">Criterios (mismo peso, máx. 3)</div>
+            <div id="rubric-criterios"></div>
+            <button class="rubric-add" id="btn-add-criterio">+ Añadir criterio</button>
+
+            <div class="rubric-sub">Escala (valores fijos, no rangos)</div>
+            <div id="rubric-escala"></div>
+            <button class="rubric-add" id="btn-add-nivel">+ Añadir nivel</button>
+
+            <div class="rubric-sub">Grupo de clase</div>
+            <select id="rubric-grupo-select" style="width:100%;">
+              <option value="">Selecciona un grupo...</option>
+            </select>
+
+            <div class="rubric-sub">Nº de alumnos (solo si no eliges grupo)</div>
+            <input type="number" id="rubric-n-alumnos" min="1" value="25" style="width:90px;">
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button class="btn btn-ghost" id="btn-vaciar-sesion">Vaciar</button>
+          <button class="btn btn-primary" id="btn-imprimir-sesion">Imprimir sesión</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== VISTA: AÑADIR ===================== -->
+  <section id="view-anadir" class="view">
+    <div class="form-card" style="margin-bottom:20px;">
+      <h2 style="margin-top:0;">Importar varios ejercicios de golpe</h2>
+      <p style="font-size:0.85rem; color:var(--ink-soft); margin-top:-6px;">Pega aquí el bloque de fichas que te prepare (formato JSON) y pulsa Importar. Útil cuando te genere una tanda de varios ejercicios a la vez.</p>
+      <textarea id="import-textarea" rows="6" placeholder='[{"nombre":"...", "descripcion":"...", "cursos":["3º ESO"], "bloque":"principal", "contenidos":["Condición física"], "subcontenidos":["Resistencia"], "material":"...", "duracion":10}]' style="width:100%; font-family:monospace; font-size:0.8rem;"></textarea>
+      <div class="form-actions">
+        <button class="btn btn-primary" id="btn-importar">Importar</button>
+      </div>
+      <div id="import-msg" style="font-size:0.82rem; margin-top:8px;"></div>
+    </div>
+
+    <div class="form-card">
+      <h2 style="margin-top:0;">Nuevo ejercicio</h2>
+      <div class="form-grid">
+        <div class="full">
+          <label>Nombre</label>
+          <input type="text" id="new-nombre" placeholder="Ej: Relevos en zigzag">
+        </div>
+        <div class="full">
+          <label>Descripción</label>
+          <textarea id="new-desc" rows="3" placeholder="Explicación breve del ejercicio..."></textarea>
+        </div>
+        <div class="full">
+          <label>Imagen / dibujo (opcional)</label>
+          <div class="img-drop" id="img-drop-zone">Haz clic para subir una imagen del ejercicio</div>
+          <input type="file" id="new-img-input" accept="image/*" style="display:none;">
+          <img id="new-img-preview" class="img-preview">
+        </div>
+        <div class="full">
+          <label>Curso(s)</label>
+          <div class="checkbox-group" id="new-cursos"></div>
+        </div>
+        <div>
+          <label>Bloque</label>
+          <select id="new-bloque">
+            <option value="calentamiento">Calentamiento</option>
+            <option value="principal">Parte principal</option>
+            <option value="vuelta">Vuelta a la calma</option>
+          </select>
+        </div>
+        <div>
+          <label>Duración aprox. (min)</label>
+          <input type="number" id="new-duracion" min="1" value="5">
+        </div>
+        <div class="full">
+          <label>Contenido</label>
+          <div class="checkbox-group" id="new-contenidos"></div>
+        </div>
+        <div class="full" id="subcontenidos-wrapper"></div>
+        <div class="full">
+          <label>Material necesario</label>
+          <input type="text" id="new-material" placeholder="Ej: conos, petos, balones...">
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-primary" id="btn-guardar-ejercicio">Guardar ejercicio</button>
+        <button class="btn btn-ghost" id="btn-limpiar-form">Limpiar</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<section id="view-alumnos" class="view" style="max-width:900px; margin:0 auto; padding:24px 20px 60px 20px;">
+  <div class="form-card" style="max-width:100%;">
+    <h2 style="margin-top:0;">Grupos y alumnado</h2>
+    <p style="font-size:0.85rem; color:var(--ink-soft); margin-top:-6px;">Crea un grupo (ej. "3º ESO A") con la lista de alumnos, uno por línea. Cuando diseñes una sesión para ese grupo, la rúbrica de evaluación se imprimirá ya con los nombres en vez de líneas en blanco.</p>
+    <div class="form-grid">
+      <div class="full">
+        <label>Nombre del grupo</label>
+        <input type="text" id="grupo-nombre" placeholder="Ej: 3º ESO A">
+      </div>
+      <div class="full">
+        <label>Alumnos (uno por línea)</label>
+        <textarea id="grupo-alumnos" rows="8" placeholder="Nombre Apellido&#10;Nombre Apellido&#10;..."></textarea>
+      </div>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-primary" id="btn-guardar-grupo">Guardar grupo</button>
+      <button class="btn btn-ghost" id="btn-limpiar-grupo">Limpiar</button>
+    </div>
+  </div>
+
+  <div id="lista-grupos" style="margin-top:20px; display:flex; flex-direction:column; gap:12px;"></div>
+</section>
+
+<footer class="note">Banco EF · Triana — uso personal · datos guardados en este navegador</footer>
+
+<!-- PRINT AREA -->
+<div id="printArea"></div>
+<input type="file" id="quick-img-input" accept="image/*" style="display:none;">
+
+<script>
+window.addEventListener('error', function(e){
+  console.error('Error en Banco EF:', e.message, e.filename, e.lineno);
+  const banner = document.createElement('div');
+  banner.style.cssText = 'position:fixed; bottom:0; left:0; right:0; background:#B23A2A; color:white; padding:10px 16px; font-family:sans-serif; font-size:0.85rem; z-index:9999;';
+  banner.textContent = 'Ha ocurrido un error y algo puede no funcionar: ' + e.message + ' (línea ' + e.lineno + ')';
+  document.body.appendChild(banner);
+});
+
+/* ===================== FIREBASE (opcional, recomendado) ===================== */
+// Para que nada se pierda al borrar datos del navegador, y para usar la app
+// desde varios dispositivos, sigue estos pasos UNA sola vez:
+// 1. Ve a https://console.firebase.google.com — usa el mismo proyecto de tu
+//    ecosistema (EduFísica Pro, etc.) o crea uno nuevo.
+// 2. Activa "Realtime Database" (región europe-west1), modo prueba está bien
+//    para empezar (reglas abiertas de lectura/escritura).
+// 3. En "Configuración del proyecto" > "Tus apps" > añade una app web, copia
+//    el objeto de configuración y pégalo aquí abajo, sustituyendo los "".
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyANIdbpGRokwK02rE5EK2hGsUqXHU6O-QI",
+  authDomain: "banco-ef-salesianostrian-dd2a0.firebaseapp.com",
+  databaseURL: "https://banco-ef-salesianostrian-dd2a0-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "banco-ef-salesianostrian-dd2a0"
+};
+
+let firebaseDB = null;
+let firebaseListo = false;
+
+function firebaseConfigurado(){
+  return !!(FIREBASE_CONFIG.apiKey && FIREBASE_CONFIG.databaseURL);
+}
+
+function actualizarEstadoSync(texto){
+  const el = document.getElementById('sync-status');
+  if(el) el.textContent = texto;
+}
+
+if(firebaseConfigurado()){
+  try{
+    firebase.initializeApp(FIREBASE_CONFIG);
+    firebaseDB = firebase.database();
+    actualizarEstadoSync('☁️ Conectando...');
+    firebase.auth().signInAnonymously().then(()=>{
+      firebaseListo = true;
+      actualizarEstadoSync('☁️ Sincronizado');
+      cargarDesdeFirebase();
+    }).catch(err=>{
+      console.error('Error de autenticación Firebase:', err);
+      actualizarEstadoSync('⚠️ Error: ' + (err.code || err.message || 'desconocido'));
+    });
+  }catch(e){
+    console.error('Error iniciando Firebase:', e);
+    actualizarEstadoSync('⚠️ Error: ' + (e.message || 'desconocido'));
+  }
+}
+
+function cargarDesdeFirebase(){
+  firebaseDB.ref('bancoEF/ejercicios').once('value').then(snap=>{
+    const remote = snap.val();
+    if(remote && Array.isArray(remote) && remote.length>0){
+      const remoteIds = new Set(remote.map(x=>x.id));
+      const soloLocal = ejercicios.filter(x=>!remoteIds.has(x.id));
+      ejercicios = remote.concat(soloLocal);
+    }
+    saveEjercicios(ejercicios);
+    renderBanco();
+    if(document.getElementById('view-sesion').classList.contains('active')){ renderSesionBanco(); }
+  }).catch(err=>console.error('Error cargando ejercicios de Firebase:', err));
+  firebaseDB.ref('bancoEF/grupos').once('value').then(snap=>{
+    const remote = snap.val();
+    if(remote){ grupos = Object.assign({}, grupos, remote); saveGrupos(grupos); }
+  }).catch(err=>console.error('Error cargando grupos de Firebase:', err));
+}
+
+function syncFirebase(path, data){
+  if(firebaseListo && firebaseDB){
+    firebaseDB.ref(path).set(data).catch(err=>{
+      console.error('Error guardando en Firebase:', err);
+      actualizarEstadoSync('⚠️ Error de sincronización');
+    });
+  }
+}
+
+
+/* ===================== DATOS BASE ===================== */
+const CURSOS = ["1º ESO","2º ESO","3º ESO","4º ESO","1º Bach","2º Bach"];
+const BLOQUES = { calentamiento:"Calentamiento", principal:"Parte principal", vuelta:"Vuelta a la calma" };
+const CONTENIDOS = ["Condición física","Juegos y deportes","Expresión corporal","Orientación","Otros"];
+const SUBCONTENIDOS = {
+  "Condición física": ["Resistencia","Fuerza","Flexibilidad","Velocidad","Coordinación"],
+  "Juegos y deportes": ["Juegos populares","Deportes individuales","Deportes colectivos","Deportes de adversario"],
+  "Expresión corporal": ["Ritmo","Danza","Dramatización","Acrosport"],
+  "Orientación": ["Orientación en el aula","Orientación en el centro","Orientación en el medio natural"],
+  "Otros": []
+};
+
+const STORAGE_KEY = "bancoEF_ejercicios_v1";
+const SESSION_KEY = "bancoEF_sesionActual_v1";
+const BATCHES_KEY = "bancoEF_batchesAplicados_v1";
+
+/* Cada vez que Claude prepare una tanda nueva de ejercicios, se añade aquí
+   como una clave nueva (sesion7, sesion8...). Al abrir la app, las tandas
+   que aún no se hayan aplicado en este navegador se incorporan solas al
+   banco, sin tocar los ejercicios que tú hayas añadido o editado a mano. */
+const BATCHES = {"sesion1": [{"nombre": "El espejo elástico", "descripcion": "Por parejas, uno hace movimientos lentos de estiramiento (brazos, tronco, piernas) y el otro los imita a la vez, como un espejo. Cada 1 minuto se cambian los roles.", "cursos": ["3º ESO"], "bloque": "calentamiento", "contenidos": ["Condición física"], "subcontenidos": ["Flexibilidad"], "material": "Ninguno", "duracion": 8}, {"nombre": "Pica-relevos", "descripcion": "Equipos en fila, el primero pasa la pica por encima de la cabeza hacia atrás sin girarse, el último la recibe y corre a colocarse el primero. Gana el equipo que completa antes una vuelta completa.", "cursos": ["3º ESO"], "bloque": "principal", "contenidos": ["Condición física"], "subcontenidos": ["Flexibilidad"], "material": "Picas", "duracion": 10}, {"nombre": "El puente que se abre", "descripcion": "En grupos de 4, forman un puente con el cuerpo (manos y pies en el suelo, tronco elevado); un balón de voleibol pasa rodando por debajo mientras cada uno se estira para no tocarlo. Variante: bajar la altura del puente progresivamente.", "cursos": ["3º ESO"], "bloque": "principal", "contenidos": ["Condición física"], "subcontenidos": ["Flexibilidad"], "material": "Balones de voleibol", "duracion": 12}, {"nombre": "Torre de ladrillos flexible", "descripcion": "En equipos, apilan ladrillos de psicomotricidad formando una torre; cada alumno debe agacharse en cuclillas (sin doblar la espalda) para coger un ladrillo y llevarlo a otro punto, relevando al compañero.", "cursos": ["3º ESO"], "bloque": "principal", "contenidos": ["Condición física"], "subcontenidos": ["Flexibilidad"], "material": "Ladrillos de psicomotricidad", "duracion": 10}, {"nombre": "Respiración en círculo", "descripcion": "En círculo cogidos de la mano, inspiran levantando los brazos y espiran flexionando el tronco hacia el centro, en silencio, marcando el ritmo el profesor.", "cursos": ["3º ESO"], "bloque": "vuelta", "contenidos": ["Condición física"], "subcontenidos": ["Flexibilidad"], "material": "Ninguno", "duracion": 5}], "sesion2": [{"nombre": "Aro-vaivén", "descripcion": "Por parejas, con un aro cada uno, hacen círculos con los brazos estirados por encima de la cabeza siguiendo el ritmo de una música lenta, alternando sentido de giro.", "cursos": ["3º ESO"], "bloque": "calentamiento", "contenidos": ["Condición física"], "material": "Aros", "duracion": 7}, {"nombre": "El pañuelo estirado", "descripcion": "Por parejas, sujetan un pañuelo entre las dos manos y van estirando brazos y tronco en distintas direcciones (arriba, lateral, diagonal) sin soltarlo, manteniendo cada postura 15 segundos.", "cursos": ["3º ESO"], "bloque": "principal", "contenidos": ["Condición física"], "material": "Pañuelos", "duracion": 10}, {"nombre": "Aros en cadena", "descripcion": "En grupos de 3, encadenan varios aros en el suelo y van pasando el cuerpo por dentro de cada aro estirando primero brazos, luego piernas, sin tocar los bordes.", "cursos": ["3º ESO"], "bloque": "principal", "contenidos": ["Condición física"], "material": "Aros", "duracion": 12}, {"nombre": "Pañuelo al viento", "descripcion": "Individual, lanzan el pañuelo hacia arriba y antes de que caiga deben estirar completamente el cuerpo (de puntillas, brazos arriba) para cogerlo.", "cursos": ["3º ESO"], "bloque": "principal", "contenidos": ["Condición física"], "material": "Pañuelos", "duracion": 8}, {"nombre": "Respiración con aro", "descripcion": "Sentados con el aro apoyado en el regazo, inspiran llevando el aro hacia arriba y espiran bajándolo lentamente al suelo.", "cursos": ["3º ESO"], "bloque": "vuelta", "contenidos": ["Condición física"], "material": "Aros", "duracion": 5}], "sesion3": [{"nombre": "Trote con movilidad articular", "descripcion": "Trote suave por el espacio durante 3 minutos, intercalando movilizaciones de tobillos, rodillas, caderas y hombros marcadas por el profesor al ritmo del cronómetro.", "cursos": ["3º ESO"], "bloque": "calentamiento", "contenidos": ["Condición física"], "subcontenidos": ["Flexibilidad"], "material": "Cronómetro", "duracion": 8, "imagen": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj4KICA8cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0Y3RjZGMiIvPgogIDxnIHN0cm9rZT0iIzFCMkE0QSIgc3Ryb2tlLXdpZHRoPSI0IiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiPgogICAgPGNpcmNsZSBjeD0iMTUwIiBjeT0iNTUiIHI9IjEyIiBmaWxsPSIjMUIyQTRBIi8+CiAgICA8bGluZSB4MT0iMTUwIiB5MT0iNjciIHgyPSIxNDAiIHkyPSIxMTAiLz4KICAgIDxsaW5lIHgxPSIxNDAiIHkxPSIxMTAiIHgyPSIxMTAiIHkyPSIxMzAiLz4KICAgIDxsaW5lIHgxPSIxNDAiIHkxPSIxMTAiIHgyPSIxNjUiIHkyPSIxNTAiLz4KICAgIDxsaW5lIHgxPSIxNDUiIHkxPSI4NSIgeDI9IjExNSIgeTI9IjcwIi8+CiAgICA8bGluZSB4MT0iMTQ1IiB5MT0iODUiIHgyPSIxNzUiIHkyPSIxMDUiLz4KICA8L2c+CiAgPHBhdGggZD0iTTYwIDE3NSBRMTUwIDE1NSAyNDAgMTc1IiBzdHJva2U9IiNFODU0MkEiIHN0cm9rZS13aWR0aD0iMyIgZmlsbD0ibm9uZSIgc3Ryb2tlLWRhc2hhcnJheT0iNiw2Ii8+CiAgPHRleHQgeD0iMTUwIiB5PSIxOTIiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMyIgZmlsbD0iIzVCNjI3MCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+VHJvdGUgKyBtb3ZpbGlkYWQ8L3RleHQ+Cjwvc3ZnPgo="}, {"nombre": "Estiramiento en espaldera - tren inferior", "descripcion": "Sujeto a la espaldera, apoya un pie en un travesaño y estira la pierna contraria manteniendo la espalda recta; cambia de pierna cada 45 segundos al aviso del cronómetro.", "cursos": ["3º ESO"], "bloque": "principal", "contenidos": ["Condición física"], "subcontenidos": ["Flexibilidad"], "material": "Espalderas, cronómetro", "duracion": 9, "imagen": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj4KICA8cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0Y3RjZGMiIvPgogIDwhLS0gZXNwYWxkZXJhIC0tPgogIDxnIHN0cm9rZT0iI0I3QzFENiIgc3Ryb2tlLXdpZHRoPSI0Ij4KICAgIDxsaW5lIHgxPSIyMjAiIHkxPSIyMCIgeDI9IjIyMCIgeTI9IjE4MCIvPgogICAgPGxpbmUgeDE9IjI2MCIgeTE9IjIwIiB4Mj0iMjYwIiB5Mj0iMTgwIi8+CiAgICA8bGluZSB4MT0iMjIwIiB5MT0iNDAiIHgyPSIyNjAiIHkyPSI0MCIvPgogICAgPGxpbmUgeDE9IjIyMCIgeTE9IjcwIiB4Mj0iMjYwIiB5Mj0iNzAiLz4KICAgIDxsaW5lIHgxPSIyMjAiIHkxPSIxMDAiIHgyPSIyNjAiIHkyPSIxMDAiLz4KICAgIDxsaW5lIHgxPSIyMjAiIHkxPSIxMzAiIHgyPSIyNjAiIHkyPSIxMzAiLz4KICAgIDxsaW5lIHgxPSIyMjAiIHkxPSIxNjAiIHgyPSIyNjAiIHkyPSIxNjAiLz4KICA8L2c+CiAgPGcgc3Ryb2tlPSIjMUIyQTRBIiBzdHJva2Utd2lkdGg9IjQiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCI+CiAgICA8Y2lyY2xlIGN4PSIxMzAiIGN5PSI2MCIgcj0iMTIiIGZpbGw9IiMxQjJBNEEiLz4KICAgIDxsaW5lIHgxPSIxMzAiIHkxPSI3MiIgeDI9IjE1MCIgeTI9IjExMCIvPgogICAgPGxpbmUgeDE9IjE1MCIgeTE9IjExMCIgeDI9IjEzMCIgeTI9IjE1MCIvPgogICAgPGxpbmUgeDE9IjE1MCIgeTE9IjExMCIgeDI9IjIxMCIgeTI9IjEzMCIvPgogICAgPGxpbmUgeDE9IjE0MCIgeTE9Ijg1IiB4Mj0iMjE1IiB5Mj0iNzAiLz4KICA8L2c+CiAgPHRleHQgeD0iMTUwIiB5PSIxOTIiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMyIgZmlsbD0iIzVCNjI3MCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+RXN0aXJhbWllbnRvIGVuIGVzcGFsZGVyYTwvdGV4dD4KPC9zdmc+Cg=="}, {"nombre": "Estiramiento en espaldera - tronco", "descripcion": "De espaldas a la espaldera, sujeto con ambas manos a la altura de la cadera, flexiona el tronco hacia adelante dejando caer el peso lentamente; mantiene 30 segundos y recupera.", "cursos": ["3º ESO"], "bloque": "principal", "contenidos": ["Condición física"], "subcontenidos": ["Flexibilidad"], "material": "Espalderas, cronómetro", "duracion": 8, "imagen": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj4KICA8cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0Y3RjZGMiIvPgogIDwhLS0gZXNwYWxkZXJhIC0tPgogIDxnIHN0cm9rZT0iI0I3QzFENiIgc3Ryb2tlLXdpZHRoPSI0Ij4KICAgIDxsaW5lIHgxPSIyMjAiIHkxPSIyMCIgeDI9IjIyMCIgeTI9IjE4MCIvPgogICAgPGxpbmUgeDE9IjI2MCIgeTE9IjIwIiB4Mj0iMjYwIiB5Mj0iMTgwIi8+CiAgICA8bGluZSB4MT0iMjIwIiB5MT0iNDAiIHgyPSIyNjAiIHkyPSI0MCIvPgogICAgPGxpbmUgeDE9IjIyMCIgeTE9IjcwIiB4Mj0iMjYwIiB5Mj0iNzAiLz4KICAgIDxsaW5lIHgxPSIyMjAiIHkxPSIxMDAiIHgyPSIyNjAiIHkyPSIxMDAiLz4KICAgIDxsaW5lIHgxPSIyMjAiIHkxPSIxMzAiIHgyPSIyNjAiIHkyPSIxMzAiLz4KICAgIDxsaW5lIHgxPSIyMjAiIHkxPSIxNjAiIHgyPSIyNjAiIHkyPSIxNjAiLz4KICA8L2c+CiAgPGcgc3Ryb2tlPSIjMUIyQTRBIiBzdHJva2Utd2lkdGg9IjQiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCI+CiAgICA8Y2lyY2xlIGN4PSIxMzAiIGN5PSI2MCIgcj0iMTIiIGZpbGw9IiMxQjJBNEEiLz4KICAgIDxsaW5lIHgxPSIxMzAiIHkxPSI3MiIgeDI9IjE1MCIgeTI9IjExMCIvPgogICAgPGxpbmUgeDE9IjE1MCIgeTE9IjExMCIgeDI9IjEzMCIgeTI9IjE1MCIvPgogICAgPGxpbmUgeDE9IjE1MCIgeTE9IjExMCIgeDI9IjIxMCIgeTI9IjEzMCIvPgogICAgPGxpbmUgeDE9IjE0MCIgeTE9Ijg1IiB4Mj0iMjE1IiB5Mj0iNzAiLz4KICA8L2c+CiAgPHRleHQgeD0iMTUwIiB5PSIxOTIiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMyIgZmlsbD0iIzVCNjI3MCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+RXN0aXJhbWllbnRvIGVuIGVzcGFsZGVyYTwvdGV4dD4KPC9zdmc+Cg=="}, {"nombre": "Mariposa en colchoneta", "descripcion": "Sentado en la colchoneta, junta las plantas de los pies y presiona suavemente las rodillas hacia el suelo con los codos, manteniendo la espalda erguida durante 40 segundos.", "cursos": ["3º ESO"], "bloque": "principal", "contenidos": ["Condición física"], "subcontenidos": ["Flexibilidad"], "material": "Colchonetas, cronómetro", "duracion": 8, "imagen": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj4KICA8cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0Y3RjZGMiIvPgogIDxyZWN0IHg9IjYwIiB5PSIxMzAiIHdpZHRoPSIxODAiIGhlaWdodD0iMzUiIHJ4PSI2IiBmaWxsPSIjRTdFQ0Y2IiBzdHJva2U9IiNCN0MxRDYiIHN0cm9rZS13aWR0aD0iMiIvPgogIDxnIHN0cm9rZT0iIzFCMkE0QSIgc3Ryb2tlLXdpZHRoPSI0IiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiPgogICAgPGNpcmNsZSBjeD0iOTAiIGN5PSIxMjAiIHI9IjEyIiBmaWxsPSIjMUIyQTRBIi8+CiAgICA8bGluZSB4MT0iMTAyIiB5MT0iMTIyIiB4Mj0iMTcwIiB5Mj0iMTIyIi8+CiAgICA8bGluZSB4MT0iMTcwIiB5MT0iMTIyIiB4Mj0iMjAwIiB5Mj0iMTAwIi8+CiAgICA8bGluZSB4MT0iMTcwIiB5MT0iMTIyIiB4Mj0iMjAwIiB5Mj0iMTQwIi8+CiAgPC9nPgogIDx0ZXh0IHg9IjE1MCIgeT0iMTg4IiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTMiIGZpbGw9IiM1QjYyNzAiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkVzdGlyYW1pZW50byBlbiBjb2xjaG9uZXRhPC90ZXh0Pgo8L3N2Zz4K"}, {"nombre": "Abrazo de rodillas en colchoneta", "descripcion": "Tumbado boca arriba sobre la colchoneta, lleva ambas rodillas al pecho y las abraza, manteniendo la zona lumbar en contacto con el suelo durante 30 segundos; repite 3 veces.", "cursos": ["3º ESO"], "bloque": "principal", "contenidos": ["Condición física"], "subcontenidos": ["Flexibilidad"], "material": "Colchonetas, cronómetro", "duracion": 8, "imagen": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj4KICA8cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0Y3RjZGMiIvPgogIDxyZWN0IHg9IjYwIiB5PSIxMzAiIHdpZHRoPSIxODAiIGhlaWdodD0iMzUiIHJ4PSI2IiBmaWxsPSIjRTdFQ0Y2IiBzdHJva2U9IiNCN0MxRDYiIHN0cm9rZS13aWR0aD0iMiIvPgogIDxnIHN0cm9rZT0iIzFCMkE0QSIgc3Ryb2tlLXdpZHRoPSI0IiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiPgogICAgPGNpcmNsZSBjeD0iOTAiIGN5PSIxMjAiIHI9IjEyIiBmaWxsPSIjMUIyQTRBIi8+CiAgICA8bGluZSB4MT0iMTAyIiB5MT0iMTIyIiB4Mj0iMTcwIiB5Mj0iMTIyIi8+CiAgICA8bGluZSB4MT0iMTcwIiB5MT0iMTIyIiB4Mj0iMjAwIiB5Mj0iMTAwIi8+CiAgICA8bGluZSB4MT0iMTcwIiB5MT0iMTIyIiB4Mj0iMjAwIiB5Mj0iMTQwIi8+CiAgPC9nPgogIDx0ZXh0IHg9IjE1MCIgeT0iMTg4IiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTMiIGZpbGw9IiM1QjYyNzAiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkVzdGlyYW1pZW50byBlbiBjb2xjaG9uZXRhPC90ZXh0Pgo8L3N2Zz4K"}, {"nombre": "Respiración final en colchoneta", "descripcion": "Tumbado boca arriba, manos sobre el abdomen, inspira profundamente en 4 segundos y espira lentamente en 6 segundos, repitiendo el ciclo de forma tranquila.", "cursos": ["3º ESO"], "bloque": "vuelta", "contenidos": ["Condición física"], "subcontenidos": ["Flexibilidad"], "material": "Colchonetas", "duracion": 5, "imagen": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj4KICA8cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0Y3RjZGMiIvPgogIDxnIHN0cm9rZT0iIzFCMkE0QSIgc3Ryb2tlLXdpZHRoPSI0IiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiPgogICAgPGNpcmNsZSBjeD0iMTUwIiBjeT0iNzAiIHI9IjEyIiBmaWxsPSIjMUIyQTRBIi8+CiAgICA8bGluZSB4MT0iMTUwIiB5MT0iODIiIHgyPSIxNTAiIHkyPSIxMjAiLz4KICAgIDxsaW5lIHgxPSIxNTAiIHkxPSIxMjAiIHgyPSIxMjAiIHkyPSIxNTAiLz4KICAgIDxsaW5lIHgxPSIxNTAiIHkxPSIxMjAiIHgyPSIxODAiIHkyPSIxNTAiLz4KICAgIDxsaW5lIHgxPSIxNTAiIHkxPSI5NSIgeDI9IjEyMCIgeTI9IjkwIi8+CiAgICA8bGluZSB4MT0iMTUwIiB5MT0iOTUiIHgyPSIxODAiIHkyPSI5MCIvPgogIDwvZz4KICA8Y2lyY2xlIGN4PSIxNTAiIGN5PSI3MCIgcj0iMjQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0M0RDgyRSIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtZGFzaGFycmF5PSIzLDMiLz4KICA8dGV4dCB4PSIxNTAiIHk9IjE4NSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjEzIiBmaWxsPSIjNUI2MjcwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5SZXNwaXJhY2nDs248L3RleHQ+Cjwvc3ZnPgo="}], "sesion4": [{"nombre": "Trote continuo con conos guía", "descripcion": "Trote suave y continuo bordeando una línea de conos colocados en el perímetro del espacio durante 3-4 minutos, a ritmo constante sin parar.", "cursos": ["3º ESO"], "bloque": "calentamiento", "contenidos": ["Condición física"], "subcontenidos": ["Resistencia"], "material": "Conos", "duracion": 8, "imagen": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj4KICA8cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0Y3RjZGMiIvPgogIDxnIGZpbGw9IiNFODU0MkEiPgogICAgPHBvbHlnb24gcG9pbnRzPSI3MCwxNjUgODUsMTIwIDEwMCwxNjUiLz4KICAgIDxwb2x5Z29uIHBvaW50cz0iMTQwLDE2NSAxNTUsMTIwIDE3MCwxNjUiLz4KICAgIDxwb2x5Z29uIHBvaW50cz0iMjEwLDE2NSAyMjUsMTIwIDI0MCwxNjUiLz4KICA8L2c+CiAgPGcgc3Ryb2tlPSIjMUIyQTRBIiBzdHJva2Utd2lkdGg9IjQiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCI+CiAgICA8Y2lyY2xlIGN4PSIxMTAiIGN5PSI2NSIgcj0iMTEiIGZpbGw9IiMxQjJBNEEiLz4KICAgIDxsaW5lIHgxPSIxMTAiIHkxPSI3NiIgeDI9IjEwMCIgeTI9IjEwNSIvPgogICAgPGxpbmUgeDE9IjEwMCIgeTE9IjEwNSIgeDI9IjgwIiB5Mj0iOTUiLz4KICAgIDxsaW5lIHgxPSIxMDAiIHkxPSIxMDUiIHgyPSIxMTUiIHkyPSIxMzAiLz4KICAgIDxsaW5lIHgxPSIxMDUiIHkxPSI5MCIgeDI9IjEzMCIgeTI9IjgwIi8+CiAgPC9nPgogIDxwYXRoIGQ9Ik00MCAxNzUgUTE1MCAyMDAgMjYwIDE3NSIgc3Ryb2tlPSIjQjdDMUQ2IiBzdHJva2Utd2lkdGg9IjIiIGZpbGw9Im5vbmUiIHN0cm9rZS1kYXNoYXJyYXk9IjUsNSIvPgogIDx0ZXh0IHg9IjE1MCIgeT0iMTkyIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTMiIGZpbGw9IiM1QjYyNzAiIHRleHQtYW5jaG9yPSJtaWRkbGUiPlppZ3phZyBlbnRyZSBjb25vczwvdGV4dD4KPC9zdmc+Cg=="}, {"nombre": "Circuito continuo de bancos suecos", "descripcion": "Recorrido en el que hay que subir y bajar de varios bancos suecos colocados en fila, sin detenerse, repitiendo el circuito completo durante el tiempo indicado por el profesor.", "cursos": ["3º ESO"], "bloque": "principal", "contenidos": ["Condición física"], "subcontenidos": ["Resistencia"], "material": "Bancos suecos", "duracion": 12, "imagen": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj4KICA8cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0Y3RjZGMiIvPgogIDxyZWN0IHg9IjcwIiB5PSIxNDAiIHdpZHRoPSIxNjAiIGhlaWdodD0iMTQiIHJ4PSIzIiBmaWxsPSIjQjdDMUQ2Ii8+CiAgPHJlY3QgeD0iODAiIHk9IjE1NCIgd2lkdGg9IjEwIiBoZWlnaHQ9IjI1IiBmaWxsPSIjQjdDMUQ2Ii8+CiAgPHJlY3QgeD0iMjEwIiB5PSIxNTQiIHdpZHRoPSIxMCIgaGVpZ2h0PSIyNSIgZmlsbD0iI0I3QzFENiIvPgogIDxnIHN0cm9rZT0iIzFCMkE0QSIgc3Ryb2tlLXdpZHRoPSI0IiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiPgogICAgPGNpcmNsZSBjeD0iMTUwIiBjeT0iNzAiIHI9IjEyIiBmaWxsPSIjMUIyQTRBIi8+CiAgICA8bGluZSB4MT0iMTUwIiB5MT0iODIiIHgyPSIxNTAiIHkyPSIxMTUiLz4KICAgIDxsaW5lIHgxPSIxNTAiIHkxPSIxMTUiIHgyPSIxMzAiIHkyPSIxNDAiLz4KICAgIDxsaW5lIHgxPSIxNTAiIHkxPSIxMTUiIHgyPSIxNzUiIHkyPSIxNTAiLz4KICAgIDxsaW5lIHgxPSIxNDUiIHkxPSI5NSIgeDI9IjEyMCIgeTI9IjEwNSIvPgogICAgPGxpbmUgeDE9IjE0NSIgeTE9Ijk1IiB4Mj0iMTc1IiB5Mj0iODAiLz4KICA8L2c+CiAgPHRleHQgeD0iMTUwIiB5PSIxOTIiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMyIgZmlsbD0iIzVCNjI3MCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+Q2lyY3VpdG8gYmFuY28gc3VlY288L3RleHQ+Cjwvc3ZnPgo="}, {"nombre": "Zigzag continuo entre conos", "descripcion": "Recorrido en zigzag entre una hilera de conos, alternando trote y carrera suave, volviendo al punto de inicio y repitiendo sin pausas largas.", "cursos": ["3º ESO"], "bloque": "principal", "contenidos": ["Condición física"], "subcontenidos": ["Resistencia"], "material": "Conos", "duracion": 10, "imagen": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj4KICA8cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0Y3RjZGMiIvPgogIDxnIGZpbGw9IiNFODU0MkEiPgogICAgPHBvbHlnb24gcG9pbnRzPSI3MCwxNjUgODUsMTIwIDEwMCwxNjUiLz4KICAgIDxwb2x5Z29uIHBvaW50cz0iMTQwLDE2NSAxNTUsMTIwIDE3MCwxNjUiLz4KICAgIDxwb2x5Z29uIHBvaW50cz0iMjEwLDE2NSAyMjUsMTIwIDI0MCwxNjUiLz4KICA8L2c+CiAgPGcgc3Ryb2tlPSIjMUIyQTRBIiBzdHJva2Utd2lkdGg9IjQiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCI+CiAgICA8Y2lyY2xlIGN4PSIxMTAiIGN5PSI2NSIgcj0iMTEiIGZpbGw9IiMxQjJBNEEiLz4KICAgIDxsaW5lIHgxPSIxMTAiIHkxPSI3NiIgeDI9IjEwMCIgeTI9IjEwNSIvPgogICAgPGxpbmUgeDE9IjEwMCIgeTE9IjEwNSIgeDI9IjgwIiB5Mj0iOTUiLz4KICAgIDxsaW5lIHgxPSIxMDAiIHkxPSIxMDUiIHgyPSIxMTUiIHkyPSIxMzAiLz4KICAgIDxsaW5lIHgxPSIxMDUiIHkxPSI5MCIgeDI9IjEzMCIgeTI9IjgwIi8+CiAgPC9nPgogIDxwYXRoIGQ9Ik00MCAxNzUgUTE1MCAyMDAgMjYwIDE3NSIgc3Ryb2tlPSIjQjdDMUQ2IiBzdHJva2Utd2lkdGg9IjIiIGZpbGw9Im5vbmUiIHN0cm9rZS1kYXNoYXJyYXk9IjUsNSIvPgogIDx0ZXh0IHg9IjE1MCIgeT0iMTkyIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTMiIGZpbGw9IiM1QjYyNzAiIHRleHQtYW5jaG9yPSJtaWRkbGUiPlppZ3phZyBlbnRyZSBjb25vczwvdGV4dD4KPC9zdmc+Cg=="}, {"nombre": "Persecución por parejas", "descripcion": "Por parejas, uno persigue al otro dentro de un espacio delimitado con conos; cada 1 minuto se cambian los roles, manteniendo un ritmo de carrera continuo y sostenido.", "cursos": ["3º ESO"], "bloque": "principal", "contenidos": ["Condición física"], "subcontenidos": ["Resistencia"], "material": "Conos", "duracion": 10, "imagen": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj4KICA8cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0Y3RjZGMiIvPgogIDxnIHN0cm9rZT0iIzFCMkE0QSIgc3Ryb2tlLXdpZHRoPSI0IiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiPgogICAgPGNpcmNsZSBjeD0iMTAwIiBjeT0iNjAiIHI9IjExIiBmaWxsPSIjMUIyQTRBIi8+CiAgICA8bGluZSB4MT0iMTAwIiB5MT0iNzEiIHgyPSI5NSIgeTI9IjEwNSIvPgogICAgPGxpbmUgeDE9Ijk1IiB5MT0iMTA1IiB4Mj0iNzAiIHkyPSIxMjUiLz4KICAgIDxsaW5lIHgxPSI5NSIgeTE9IjEwNSIgeDI9IjExNSIgeTI9IjE0MCIvPgogICAgPGxpbmUgeDE9Ijk1IiB5MT0iODUiIHgyPSI3MCIgeTI9Ijc1Ii8+CiAgICA8bGluZSB4MT0iOTUiIHkxPSI4NSIgeDI9IjEyMCIgeTI9IjEwMCIvPgogIDwvZz4KICA8ZyBzdHJva2U9IiNFODU0MkEiIHN0cm9rZS13aWR0aD0iNCIgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIj4KICAgIDxjaXJjbGUgY3g9IjE5MCIgY3k9IjYwIiByPSIxMSIgZmlsbD0iI0U4NTQyQSIvPgogICAgPGxpbmUgeDE9IjE5MCIgeTE9IjcxIiB4Mj0iMTg1IiB5Mj0iMTA1Ii8+CiAgICA8bGluZSB4MT0iMTg1IiB5MT0iMTA1IiB4Mj0iMTYwIiB5Mj0iMTI1Ii8+CiAgICA8bGluZSB4MT0iMTg1IiB5MT0iMTA1IiB4Mj0iMjA1IiB5Mj0iMTQwIi8+CiAgICA8bGluZSB4MT0iMTg1IiB5MT0iODUiIHgyPSIxNjAiIHkyPSI3NSIvPgogICAgPGxpbmUgeDE9IjE4NSIgeTE9Ijg1IiB4Mj0iMjEwIiB5Mj0iMTAwIi8+CiAgPC9nPgogIDx0ZXh0IHg9IjE1MCIgeT0iMTkyIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTMiIGZpbGw9IiM1QjYyNzAiIHRleHQtYW5jaG9yPSJtaWRkbGUiPlBlcnNlY3VjacOzbjwvdGV4dD4KPC9zdmc+Cg=="}, {"nombre": "Paseo con respiración controlada", "descripcion": "Caminata suave por el espacio, coordinando la respiración con los pasos (inspirar 3 pasos, espirar 3 pasos), para ir recuperando el ritmo cardiaco progresivamente.", "cursos": ["3º ESO"], "bloque": "vuelta", "contenidos": ["Condición física"], "subcontenidos": ["Resistencia"], "material": "Ninguno", "duracion": 5, "imagen": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj4KICA8cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0Y3RjZGMiIvPgogIDxnIHN0cm9rZT0iIzFCMkE0QSIgc3Ryb2tlLXdpZHRoPSI0IiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiPgogICAgPGNpcmNsZSBjeD0iMTUwIiBjeT0iNjAiIHI9IjEyIiBmaWxsPSIjMUIyQTRBIi8+CiAgICA8bGluZSB4MT0iMTUwIiB5MT0iNzIiIHgyPSIxNDUiIHkyPSIxMjAiLz4KICAgIDxsaW5lIHgxPSIxNDUiIHkxPSIxMjAiIHgyPSIxMjUiIHkyPSIxNTAiLz4KICAgIDxsaW5lIHgxPSIxNDUiIHkxPSIxMjAiIHgyPSIxNjAiIHkyPSIxNTAiLz4KICAgIDxsaW5lIHgxPSIxNDgiIHkxPSI5MCIgeDI9IjEyNSIgeTI9Ijg1Ii8+CiAgICA8bGluZSB4MT0iMTQ4IiB5MT0iOTAiIHgyPSIxNzAiIHkyPSIxMDAiLz4KICA8L2c+CiAgPGNpcmNsZSBjeD0iMTUwIiBjeT0iNjAiIHI9IjI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNDNEQ4MkUiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWRhc2hhcnJheT0iMywzIi8+CiAgPHRleHQgeD0iMTUwIiB5PSIxODUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMyIgZmlsbD0iIzVCNjI3MCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+UGFzZW8gKyByZXNwaXJhY2nDs248L3RleHQ+Cjwvc3ZnPgo="}], "sesion5": [{"nombre": "Activación progresiva", "descripcion": "Caminata rápida que va aumentando progresivamente hasta trote suave durante 4 minutos, preparando el sistema cardio-pulmonar para el esfuerzo continuo.", "cursos": ["3º ESO"], "bloque": "calentamiento", "contenidos": ["Condición física"], "subcontenidos": ["Resistencia"], "material": "Cronómetro", "duracion": 8, "imagen": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj4KICA8cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0Y3RjZGMiIvPgogIDxnIHN0cm9rZT0iIzFCMkE0QSIgc3Ryb2tlLXdpZHRoPSI0IiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiPgogICAgPGNpcmNsZSBjeD0iMTUwIiBjeT0iNTUiIHI9IjEyIiBmaWxsPSIjMUIyQTRBIi8+CiAgICA8bGluZSB4MT0iMTUwIiB5MT0iNjciIHgyPSIxNDAiIHkyPSIxMTAiLz4KICAgIDxsaW5lIHgxPSIxNDAiIHkxPSIxMTAiIHgyPSIxMTAiIHkyPSIxMzAiLz4KICAgIDxsaW5lIHgxPSIxNDAiIHkxPSIxMTAiIHgyPSIxNjUiIHkyPSIxNTAiLz4KICAgIDxsaW5lIHgxPSIxNDUiIHkxPSI4NSIgeDI9IjExNSIgeTI9IjcwIi8+CiAgICA8bGluZSB4MT0iMTQ1IiB5MT0iODUiIHgyPSIxNzUiIHkyPSIxMDUiLz4KICA8L2c+CiAgPHBhdGggZD0iTTYwIDE3NSBRMTUwIDE1NSAyNDAgMTc1IiBzdHJva2U9IiNFODU0MkEiIHN0cm9rZS13aWR0aD0iMyIgZmlsbD0ibm9uZSIgc3Ryb2tlLWRhc2hhcnJheT0iNiw2Ii8+CiAgPHRleHQgeD0iMTUwIiB5PSIxOTIiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMyIgZmlsbD0iIzVCNjI3MCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+VHJvdGUgKyBtb3ZpbGlkYWQ8L3RleHQ+Cjwvc3ZnPgo="}, {"nombre": "Carrera continua a ritmo propio", "descripcion": "Carrera continua durante un tiempo fijado por el profesor, manteniendo un ritmo constante que permita hablar sin ahogarse (prueba del habla), sin paradas.", "cursos": ["3º ESO"], "bloque": "principal", "contenidos": ["Condición física"], "subcontenidos": ["Resistencia"], "material": "Cronómetro", "duracion": 15, "imagen": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj4KICA8cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0Y3RjZGMiIvPgogIDxnIHN0cm9rZT0iIzFCMkE0QSIgc3Ryb2tlLXdpZHRoPSI0IiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiPgogICAgPGNpcmNsZSBjeD0iMTUwIiBjeT0iNTUiIHI9IjEyIiBmaWxsPSIjMUIyQTRBIi8+CiAgICA8bGluZSB4MT0iMTUwIiB5MT0iNjciIHgyPSIxNDAiIHkyPSIxMTAiLz4KICAgIDxsaW5lIHgxPSIxNDAiIHkxPSIxMTAiIHgyPSIxMTAiIHkyPSIxMzAiLz4KICAgIDxsaW5lIHgxPSIxNDAiIHkxPSIxMTAiIHgyPSIxNjUiIHkyPSIxNTAiLz4KICAgIDxsaW5lIHgxPSIxNDUiIHkxPSI4NSIgeDI9IjExNSIgeTI9IjcwIi8+CiAgICA8bGluZSB4MT0iMTQ1IiB5MT0iODUiIHgyPSIxNzUiIHkyPSIxMDUiLz4KICA8L2c+CiAgPHBhdGggZD0iTTYwIDE3NSBRMTUwIDE1NSAyNDAgMTc1IiBzdHJva2U9IiNFODU0MkEiIHN0cm9rZS13aWR0aD0iMyIgZmlsbD0ibm9uZSIgc3Ryb2tlLWRhc2hhcnJheT0iNiw2Ii8+CiAgPHRleHQgeD0iMTUwIiB5PSIxOTIiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMyIgZmlsbD0iIzVCNjI3MCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+VHJvdGUgKyBtb3ZpbGlkYWQ8L3RleHQ+Cjwvc3ZnPgo="}, {"nombre": "Toma de pulso y ajuste de intensidad", "descripcion": "Cada 5 minutos de carrera, parada de 15 segundos para tomarse el pulso en la muñeca o el cuello, contar las pulsaciones y ajustar el ritmo según si está por encima o por debajo de la intensidad indicada.", "cursos": ["3º ESO"], "bloque": "principal", "contenidos": ["Condición física"], "subcontenidos": ["Resistencia"], "material": "Cronómetro", "duracion": 10, "imagen": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj4KICA8cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0Y3RjZGMiIvPgogIDxnIHN0cm9rZT0iIzFCMkE0QSIgc3Ryb2tlLXdpZHRoPSI0IiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiPgogICAgPGNpcmNsZSBjeD0iMTMwIiBjeT0iNjUiIHI9IjEyIiBmaWxsPSIjMUIyQTRBIi8+CiAgICA8bGluZSB4MT0iMTMwIiB5MT0iNzciIHgyPSIxMzAiIHkyPSIxMjAiLz4KICAgIDxsaW5lIHgxPSIxMzAiIHkxPSIxMjAiIHgyPSIxMTAiIHkyPSIxNTUiLz4KICAgIDxsaW5lIHgxPSIxMzAiIHkxPSIxMjAiIHgyPSIxNTAiIHkyPSIxNTUiLz4KICAgIDxsaW5lIHgxPSIxMzAiIHkxPSI5NSIgeDI9IjEwNSIgeTI9IjkwIi8+CiAgICA8bGluZSB4MT0iMTMwIiB5MT0iOTUiIHgyPSIxNzUiIHkyPSIxMDUiLz4KICAgIDxsaW5lIHgxPSIxNzUiIHkxPSIxMDUiIHgyPSIxOTAiIHkyPSI5MCIvPgogIDwvZz4KICA8cGF0aCBkPSJNMTk1IDk1IGw4IC0xMCBsNiAxNCBsNiAtMjAgbDYgMTYgbDEwIC04IiBzdHJva2U9IiNFODU0MkEiIHN0cm9rZS13aWR0aD0iMyIgZmlsbD0ibm9uZSIvPgogIDx0ZXh0IHg9IjE1MCIgeT0iMTg1IiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTMiIGZpbGw9IiM1QjYyNzAiIHRleHQtYW5jaG9yPSJtaWRkbGUiPlRvbWEgZGUgcHVsc288L3RleHQ+Cjwvc3ZnPgo="}, {"nombre": "Carrera técnica por parejas", "descripcion": "Por parejas, alternan quién marca el ritmo de carrera cuidando la técnica (apoyo del pie, braceo, postura del tronco); el compañero observa y da feedback al cambiar los roles.", "cursos": ["3º ESO"], "bloque": "principal", "contenidos": ["Condición física"], "subcontenidos": ["Resistencia"], "material": "Cronómetro", "duracion": 9, "imagen": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj4KICA8cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0Y3RjZGMiIvPgogIDxnIHN0cm9rZT0iIzFCMkE0QSIgc3Ryb2tlLXdpZHRoPSI0IiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiPgogICAgPGNpcmNsZSBjeD0iMTUwIiBjeT0iNTUiIHI9IjEyIiBmaWxsPSIjMUIyQTRBIi8+CiAgICA8bGluZSB4MT0iMTUwIiB5MT0iNjciIHgyPSIxNDAiIHkyPSIxMTAiLz4KICAgIDxsaW5lIHgxPSIxNDAiIHkxPSIxMTAiIHgyPSIxMTAiIHkyPSIxMzAiLz4KICAgIDxsaW5lIHgxPSIxNDAiIHkxPSIxMTAiIHgyPSIxNjUiIHkyPSIxNTAiLz4KICAgIDxsaW5lIHgxPSIxNDUiIHkxPSI4NSIgeDI9IjExNSIgeTI9IjcwIi8+CiAgICA8bGluZSB4MT0iMTQ1IiB5MT0iODUiIHgyPSIxNzUiIHkyPSIxMDUiLz4KICA8L2c+CiAgPHBhdGggZD0iTTYwIDE3NSBRMTUwIDE1NSAyNDAgMTc1IiBzdHJva2U9IiNFODU0MkEiIHN0cm9rZS13aWR0aD0iMyIgZmlsbD0ibm9uZSIgc3Ryb2tlLWRhc2hhcnJheT0iNiw2Ii8+CiAgPHRleHQgeD0iMTUwIiB5PSIxOTIiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMyIgZmlsbD0iIzVCNjI3MCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+VHJvdGUgKyBtb3ZpbGlkYWQ8L3RleHQ+Cjwvc3ZnPgo="}, {"nombre": "Marcha de recuperación con pulso final", "descripcion": "Marcha lenta durante 3 minutos y toma de pulso final para comparar con el inicial, comprobando la recuperación de la frecuencia cardiaca.", "cursos": ["3º ESO"], "bloque": "vuelta", "contenidos": ["Condición física"], "subcontenidos": ["Resistencia"], "material": "Cronómetro", "duracion": 5, "imagen": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj4KICA8cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0Y3RjZGMiIvPgogIDxnIHN0cm9rZT0iIzFCMkE0QSIgc3Ryb2tlLXdpZHRoPSI0IiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiPgogICAgPGNpcmNsZSBjeD0iMTUwIiBjeT0iNjAiIHI9IjEyIiBmaWxsPSIjMUIyQTRBIi8+CiAgICA8bGluZSB4MT0iMTUwIiB5MT0iNzIiIHgyPSIxNDUiIHkyPSIxMjAiLz4KICAgIDxsaW5lIHgxPSIxNDUiIHkxPSIxMjAiIHgyPSIxMjUiIHkyPSIxNTAiLz4KICAgIDxsaW5lIHgxPSIxNDUiIHkxPSIxMjAiIHgyPSIxNjAiIHkyPSIxNTAiLz4KICAgIDxsaW5lIHgxPSIxNDgiIHkxPSI5MCIgeDI9IjEyNSIgeTI9Ijg1Ii8+CiAgICA8bGluZSB4MT0iMTQ4IiB5MT0iOTAiIHgyPSIxNzAiIHkyPSIxMDAiLz4KICA8L2c+CiAgPGNpcmNsZSBjeD0iMTUwIiBjeT0iNjAiIHI9IjI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNDNEQ4MkUiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWRhc2hhcnJheT0iMywzIi8+CiAgPHRleHQgeD0iMTUwIiB5PSIxODUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMyIgZmlsbD0iIzVCNjI3MCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+UGFzZW8gKyByZXNwaXJhY2nDs248L3RleHQ+Cjwvc3ZnPgo="}], "sesion6": [{"nombre": "Trote con paso de banco", "descripcion": "Trote suave por el espacio, subiendo y bajando de un banco sueco cada vez que se pasa junto a él, durante 3 minutos, como activación previa al circuito.", "cursos": ["3º ESO"], "bloque": "calentamiento", "contenidos": ["Condición física"], "subcontenidos": ["Resistencia"], "material": "Bancos suecos", "duracion": 8, "imagen": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj4KICA8cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0Y3RjZGMiIvPgogIDxnIHN0cm9rZT0iIzFCMkE0QSIgc3Ryb2tlLXdpZHRoPSI0IiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiPgogICAgPGNpcmNsZSBjeD0iMTUwIiBjeT0iNTUiIHI9IjEyIiBmaWxsPSIjMUIyQTRBIi8+CiAgICA8bGluZSB4MT0iMTUwIiB5MT0iNjciIHgyPSIxNDAiIHkyPSIxMTAiLz4KICAgIDxsaW5lIHgxPSIxNDAiIHkxPSIxMTAiIHgyPSIxMTAiIHkyPSIxMzAiLz4KICAgIDxsaW5lIHgxPSIxNDAiIHkxPSIxMTAiIHgyPSIxNjUiIHkyPSIxNTAiLz4KICAgIDxsaW5lIHgxPSIxNDUiIHkxPSI4NSIgeDI9IjExNSIgeTI9IjcwIi8+CiAgICA8bGluZSB4MT0iMTQ1IiB5MT0iODUiIHgyPSIxNzUiIHkyPSIxMDUiLz4KICA8L2c+CiAgPHBhdGggZD0iTTYwIDE3NSBRMTUwIDE1NSAyNDAgMTc1IiBzdHJva2U9IiNFODU0MkEiIHN0cm9rZS13aWR0aD0iMyIgZmlsbD0ibm9uZSIgc3Ryb2tlLWRhc2hhcnJheT0iNiw2Ii8+CiAgPHRleHQgeD0iMTUwIiB5PSIxOTIiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMyIgZmlsbD0iIzVCNjI3MCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+VHJvdGUgKyBtb3ZpbGlkYWQ8L3RleHQ+Cjwvc3ZnPgo="}, {"nombre": "Estación 1 - Subida y bajada de banco", "descripcion": "Subir y bajar del banco sueco de forma continua alternando la pierna de inicio, manteniendo un ritmo constante durante 45 segundos por turno.", "cursos": ["3º ESO"], "bloque": "principal", "contenidos": ["Condición física"], "subcontenidos": ["Resistencia"], "material": "Bancos suecos", "duracion": 8, "imagen": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj4KICA8cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0Y3RjZGMiIvPgogIDxyZWN0IHg9IjcwIiB5PSIxNDAiIHdpZHRoPSIxNjAiIGhlaWdodD0iMTQiIHJ4PSIzIiBmaWxsPSIjQjdDMUQ2Ii8+CiAgPHJlY3QgeD0iODAiIHk9IjE1NCIgd2lkdGg9IjEwIiBoZWlnaHQ9IjI1IiBmaWxsPSIjQjdDMUQ2Ii8+CiAgPHJlY3QgeD0iMjEwIiB5PSIxNTQiIHdpZHRoPSIxMCIgaGVpZ2h0PSIyNSIgZmlsbD0iI0I3QzFENiIvPgogIDxnIHN0cm9rZT0iIzFCMkE0QSIgc3Ryb2tlLXdpZHRoPSI0IiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiPgogICAgPGNpcmNsZSBjeD0iMTUwIiBjeT0iNzAiIHI9IjEyIiBmaWxsPSIjMUIyQTRBIi8+CiAgICA8bGluZSB4MT0iMTUwIiB5MT0iODIiIHgyPSIxNTAiIHkyPSIxMTUiLz4KICAgIDxsaW5lIHgxPSIxNTAiIHkxPSIxMTUiIHgyPSIxMzAiIHkyPSIxNDAiLz4KICAgIDxsaW5lIHgxPSIxNTAiIHkxPSIxMTUiIHgyPSIxNzUiIHkyPSIxNTAiLz4KICAgIDxsaW5lIHgxPSIxNDUiIHkxPSI5NSIgeDI9IjEyMCIgeTI9IjEwNSIvPgogICAgPGxpbmUgeDE9IjE0NSIgeTE9Ijk1IiB4Mj0iMTc1IiB5Mj0iODAiLz4KICA8L2c+CiAgPHRleHQgeD0iMTUwIiB5PSIxOTIiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMyIgZmlsbD0iIzVCNjI3MCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+Q2lyY3VpdG8gYmFuY28gc3VlY288L3RleHQ+Cjwvc3ZnPgo="}, {"nombre": "Estación 2 - Salto lateral sobre pica", "descripcion": "Con una pica en el suelo, saltar con los dos pies juntos de un lado a otro de forma continua durante 45 segundos, manteniendo el ritmo sin pausas.", "cursos": ["3º ESO"], "bloque": "principal", "contenidos": ["Condición física"], "subcontenidos": ["Resistencia"], "material": "Picas", "duracion": 8, "imagen": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj4KICA8cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0Y3RjZGMiIvPgogIDxsaW5lIHgxPSI5MCIgeTE9IjE2MCIgeDI9IjIxMCIgeTI9IjE2MCIgc3Ryb2tlPSIjRTg1NDJBIiBzdHJva2Utd2lkdGg9IjUiLz4KICA8ZyBzdHJva2U9IiMxQjJBNEEiIHN0cm9rZS13aWR0aD0iNCIgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIj4KICAgIDxjaXJjbGUgY3g9IjE1MCIgY3k9IjcwIiByPSIxMiIgZmlsbD0iIzFCMkE0QSIvPgogICAgPGxpbmUgeDE9IjE1MCIgeTE9IjgyIiB4Mj0iMTUwIiB5Mj0iMTIwIi8+CiAgICA8bGluZSB4MT0iMTUwIiB5MT0iMTIwIiB4Mj0iMTMwIiB5Mj0iMTUwIi8+CiAgICA8bGluZSB4MT0iMTUwIiB5MT0iMTIwIiB4Mj0iMTcwIiB5Mj0iMTUwIi8+CiAgICA8bGluZSB4MT0iMTQ1IiB5MT0iOTUiIHgyPSIxMjAiIHkyPSI4NSIvPgogICAgPGxpbmUgeDE9IjE0NSIgeTE9Ijk1IiB4Mj0iMTcwIiB5Mj0iODUiLz4KICA8L2c+CiAgPHBhdGggZD0iTTEwMCAxMzAgUTE1MCAxMDAgMjAwIDEzMCIgc3Ryb2tlPSIjQjdDMUQ2IiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1kYXNoYXJyYXk9IjQsNCIgZmlsbD0ibm9uZSIvPgogIDx0ZXh0IHg9IjE1MCIgeT0iMTg1IiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTMiIGZpbGw9IiM1QjYyNzAiIHRleHQtYW5jaG9yPSJtaWRkbGUiPlNhbHRvIGxhdGVyYWwgc29icmUgcGljYTwvdGV4dD4KPC9zdmc+Cg=="}, {"nombre": "Estación 3 - Pase y persecución de balón", "descripcion": "Por parejas, uno lanza el balón rodando y el otro corre a por él para devolverlo, alternando los roles cada 45 segundos sin detener el movimiento entre repeticiones.", "cursos": ["3º ESO"], "bloque": "principal", "contenidos": ["Condición física"], "subcontenidos": ["Resistencia"], "material": "Balones", "duracion": 8, "imagen": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj4KICA8cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0Y3RjZGMiIvPgogIDxjaXJjbGUgY3g9IjIwMCIgY3k9IjExMCIgcj0iMTgiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0U4NTQyQSIgc3Ryb2tlLXdpZHRoPSI0Ii8+CiAgPHBhdGggZD0iTTE4NiA5NiBMMjE0IDEyNCBNMjE0IDk2IEwxODYgMTI0IiBzdHJva2U9IiNFODU0MkEiIHN0cm9rZS13aWR0aD0iMiIvPgogIDxnIHN0cm9rZT0iIzFCMkE0QSIgc3Ryb2tlLXdpZHRoPSI0IiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiPgogICAgPGNpcmNsZSBjeD0iMTEwIiBjeT0iNjUiIHI9IjEyIiBmaWxsPSIjMUIyQTRBIi8+CiAgICA8bGluZSB4MT0iMTEwIiB5MT0iNzciIHgyPSIxMTAiIHkyPSIxMTUiLz4KICAgIDxsaW5lIHgxPSIxMTAiIHkxPSIxMTUiIHgyPSI5MCIgeTI9IjE1MCIvPgogICAgPGxpbmUgeDE9IjExMCIgeTE9IjExNSIgeDI9IjEzMCIgeTI9IjE1MCIvPgogICAgPGxpbmUgeDE9IjExMCIgeTE9IjkwIiB4Mj0iODUiIHkyPSI4MCIvPgogICAgPGxpbmUgeDE9IjExMCIgeTE9IjkwIiB4Mj0iMTUwIiB5Mj0iMTAwIi8+CiAgPC9nPgogIDx0ZXh0IHg9IjE1MCIgeT0iMTg1IiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTMiIGZpbGw9IiM1QjYyNzAiIHRleHQtYW5jaG9yPSJtaWRkbGUiPlBhc2UgeSBwZXJzZWN1Y2nDs24gZGUgYmFsw7NuPC90ZXh0Pgo8L3N2Zz4K"}, {"nombre": "Estación 4 - Trepa controlada en espaldera", "descripcion": "Subir y bajar por la espaldera de forma controlada y continua, sin prisa pero sin parar, durante 45 segundos por turno.", "cursos": ["3º ESO"], "bloque": "principal", "contenidos": ["Condición física"], "subcontenidos": ["Resistencia"], "material": "Espalderas", "duracion": 8, "imagen": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj4KICA8cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0Y3RjZGMiIvPgogIDxnIHN0cm9rZT0iI0I3QzFENiIgc3Ryb2tlLXdpZHRoPSI0Ij4KICAgIDxsaW5lIHgxPSIyMjAiIHkxPSIyMCIgeDI9IjIyMCIgeTI9IjE4MCIvPgogICAgPGxpbmUgeDE9IjI2MCIgeTE9IjIwIiB4Mj0iMjYwIiB5Mj0iMTgwIi8+CiAgICA8bGluZSB4MT0iMjIwIiB5MT0iNDAiIHgyPSIyNjAiIHkyPSI0MCIvPgogICAgPGxpbmUgeDE9IjIyMCIgeTE9IjY1IiB4Mj0iMjYwIiB5Mj0iNjUiLz4KICAgIDxsaW5lIHgxPSIyMjAiIHkxPSI5MCIgeDI9IjI2MCIgeTI9IjkwIi8+CiAgICA8bGluZSB4MT0iMjIwIiB5MT0iMTE1IiB4Mj0iMjYwIiB5Mj0iMTE1Ii8+CiAgICA8bGluZSB4MT0iMjIwIiB5MT0iMTQwIiB4Mj0iMjYwIiB5Mj0iMTQwIi8+CiAgICA8bGluZSB4MT0iMjIwIiB5MT0iMTY1IiB4Mj0iMjYwIiB5Mj0iMTY1Ii8+CiAgPC9nPgogIDxnIHN0cm9rZT0iIzFCMkE0QSIgc3Ryb2tlLXdpZHRoPSI0IiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiPgogICAgPGNpcmNsZSBjeD0iMjM1IiBjeT0iNzUiIHI9IjEwIiBmaWxsPSIjMUIyQTRBIi8+CiAgICA8bGluZSB4MT0iMjMwIiB5MT0iODUiIHgyPSIyMjIiIHkyPSIxMTUiLz4KICAgIDxsaW5lIHgxPSIyMjIiIHkxPSIxMTUiIHgyPSIyMzAiIHkyPSIxNDAiLz4KICAgIDxsaW5lIHgxPSIyMjIiIHkxPSIxMTUiIHgyPSIyNDUiIHkyPSIxNDAiLz4KICAgIDxsaW5lIHgxPSIyMjgiIHkxPSI5NSIgeDI9IjIyMiIgeTI9IjY1Ii8+CiAgICA8bGluZSB4MT0iMjI4IiB5MT0iOTUiIHgyPSIyNDUiIHkyPSI5MCIvPgogIDwvZz4KICA8dGV4dCB4PSIxNTAiIHk9IjE5MiIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjEzIiBmaWxsPSIjNUI2MjcwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5UcmVwYSBjb250cm9sYWRhPC90ZXh0Pgo8L3N2Zz4K"}, {"nombre": "Estación 5 - Burpee suave en esterilla", "descripcion": "Sobre la esterilla, pasar de pie a manos en el suelo y viceversa a ritmo cómodo (sin salto de impacto), de forma continua durante 45 segundos.", "cursos": ["3º ESO"], "bloque": "principal", "contenidos": ["Condición física"], "subcontenidos": ["Resistencia"], "material": "Esterillas", "duracion": 8, "imagen": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj4KICA8cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0Y3RjZGMiIvPgogIDxyZWN0IHg9IjYwIiB5PSIxNTAiIHdpZHRoPSIxODAiIGhlaWdodD0iMjAiIHJ4PSI1IiBmaWxsPSIjRTdFQ0Y2IiBzdHJva2U9IiNCN0MxRDYiIHN0cm9rZS13aWR0aD0iMiIvPgogIDxnIHN0cm9rZT0iIzFCMkE0QSIgc3Ryb2tlLXdpZHRoPSI0IiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiPgogICAgPGNpcmNsZSBjeD0iMTIwIiBjeT0iMTE1IiByPSIxMSIgZmlsbD0iIzFCMkE0QSIvPgogICAgPGxpbmUgeDE9IjEyMCIgeTE9IjEyNiIgeDI9IjE1MCIgeTI9IjE0MCIvPgogICAgPGxpbmUgeDE9IjE1MCIgeTE9IjE0MCIgeDI9IjIwMCIgeTI9IjEzMCIvPgogICAgPGxpbmUgeDE9IjE1MCIgeTE9IjE0MCIgeDI9IjIwMCIgeTI9IjE1MCIvPgogICAgPGxpbmUgeDE9IjEzMCIgeTE9IjEyMiIgeDI9IjEwNSIgeTI9IjE0MCIvPgogIDwvZz4KICA8dGV4dCB4PSIxNTAiIHk9IjE4OCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjEzIiBmaWxsPSIjNUI2MjcwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5CdXJwZWUgc3VhdmUgZW4gZXN0ZXJpbGxhPC90ZXh0Pgo8L3N2Zz4K"}, {"nombre": "Vuelta a la calma en esterilla", "descripcion": "Tumbados en la esterilla, respiración profunda y estiramientos suaves de piernas y espalda para ir bajando la intensidad tras el circuito.", "cursos": ["3º ESO"], "bloque": "vuelta", "contenidos": ["Condición física"], "subcontenidos": ["Resistencia"], "material": "Esterillas", "duracion": 5, "imagen": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj4KICA8cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0Y3RjZGMiIvPgogIDxnIHN0cm9rZT0iIzFCMkE0QSIgc3Ryb2tlLXdpZHRoPSI0IiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiPgogICAgPGNpcmNsZSBjeD0iMTUwIiBjeT0iNzAiIHI9IjEyIiBmaWxsPSIjMUIyQTRBIi8+CiAgICA8bGluZSB4MT0iMTUwIiB5MT0iODIiIHgyPSIxNTAiIHkyPSIxMjAiLz4KICAgIDxsaW5lIHgxPSIxNTAiIHkxPSIxMjAiIHgyPSIxMjAiIHkyPSIxNTAiLz4KICAgIDxsaW5lIHgxPSIxNTAiIHkxPSIxMjAiIHgyPSIxODAiIHkyPSIxNTAiLz4KICAgIDxsaW5lIHgxPSIxNTAiIHkxPSI5NSIgeDI9IjEyMCIgeTI9IjkwIi8+CiAgICA8bGluZSB4MT0iMTUwIiB5MT0iOTUiIHgyPSIxODAiIHkyPSI5MCIvPgogIDwvZz4KICA8Y2lyY2xlIGN4PSIxNTAiIGN5PSI3MCIgcj0iMjQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0M0RDgyRSIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtZGFzaGFycmF5PSIzLDMiLz4KICA8dGV4dCB4PSIxNTAiIHk9IjE4NSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjEzIiBmaWxsPSIjNUI2MjcwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5SZXNwaXJhY2nDs248L3RleHQ+Cjwvc3ZnPgo="}], "sesion7": [{"nombre": "Activación con conos", "descripcion": "Trote suave bordeando conos en el perímetro del espacio durante 3 minutos, preparando el cuerpo para los cambios de ritmo.", "cursos": ["3º ESO"], "bloque": "calentamiento", "contenidos": ["Condición física"], "subcontenidos": ["Resistencia"], "material": "Conos", "duracion": 8, "imagen": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj4KICA8cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0Y3RjZGMiIvPgogIDxnIGZpbGw9IiNFODU0MkEiPgogICAgPHBvbHlnb24gcG9pbnRzPSI3MCwxNjUgODUsMTIwIDEwMCwxNjUiLz4KICAgIDxwb2x5Z29uIHBvaW50cz0iMTQwLDE2NSAxNTUsMTIwIDE3MCwxNjUiLz4KICAgIDxwb2x5Z29uIHBvaW50cz0iMjEwLDE2NSAyMjUsMTIwIDI0MCwxNjUiLz4KICA8L2c+CiAgPGcgc3Ryb2tlPSIjMUIyQTRBIiBzdHJva2Utd2lkdGg9IjQiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCI+CiAgICA8Y2lyY2xlIGN4PSIxMTAiIGN5PSI2NSIgcj0iMTEiIGZpbGw9IiMxQjJBNEEiLz4KICAgIDxsaW5lIHgxPSIxMTAiIHkxPSI3NiIgeDI9IjEwMCIgeTI9IjEwNSIvPgogICAgPGxpbmUgeDE9IjEwMCIgeTE9IjEwNSIgeDI9IjgwIiB5Mj0iOTUiLz4KICAgIDxsaW5lIHgxPSIxMDAiIHkxPSIxMDUiIHgyPSIxMTUiIHkyPSIxMzAiLz4KICAgIDxsaW5lIHgxPSIxMDUiIHkxPSI5MCIgeDI9IjEzMCIgeTI9IjgwIi8+CiAgPC9nPgogIDxwYXRoIGQ9Ik00MCAxNzUgUTE1MCAyMDAgMjYwIDE3NSIgc3Ryb2tlPSIjQjdDMUQ2IiBzdHJva2Utd2lkdGg9IjIiIGZpbGw9Im5vbmUiIHN0cm9rZS1kYXNoYXJyYXk9IjUsNSIvPgogIDx0ZXh0IHg9IjE1MCIgeT0iMTkyIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTMiIGZpbGw9IiM1QjYyNzAiIHRleHQtYW5jaG9yPSJtaWRkbGUiPlppZ3phZyBlbnRyZSBjb25vczwvdGV4dD4KPC9zdmc+Cg=="}, {"nombre": "Fartlek guiado por conos", "descripcion": "Carrera continua entre dos conos marcados; entre uno y otro se corre suave, y del segundo cono en adelante se acelera hasta el siguiente cono marcado por el profesor, repitiendo el ciclo suave-rápido.", "cursos": ["3º ESO"], "bloque": "principal", "contenidos": ["Condición física"], "subcontenidos": ["Resistencia"], "material": "Conos, cronómetro", "duracion": 14, "imagen": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj4KICA8cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0Y3RjZGMiIvPgogIDxwYXRoIGQ9Ik0zMCAxNjAgUTkwIDEwMCAxNTAgMTYwIFQyNzAgMTYwIiBzdHJva2U9IiNFODU0MkEiIHN0cm9rZS13aWR0aD0iMyIgZmlsbD0ibm9uZSIgc3Ryb2tlLWRhc2hhcnJheT0iOCw1Ii8+CiAgPGcgc3Ryb2tlPSIjMUIyQTRBIiBzdHJva2Utd2lkdGg9IjQiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCI+CiAgICA8Y2lyY2xlIGN4PSIxNTAiIGN5PSI2MCIgcj0iMTIiIGZpbGw9IiMxQjJBNEEiLz4KICAgIDxsaW5lIHgxPSIxNTAiIHkxPSI3MiIgeDI9IjE0MCIgeTI9IjExMCIvPgogICAgPGxpbmUgeDE9IjE0MCIgeTE9IjExMCIgeDI9IjExNSIgeTI9IjEzNSIvPgogICAgPGxpbmUgeDE9IjE0MCIgeTE9IjExMCIgeDI9IjE2NSIgeTI9IjE0NSIvPgogICAgPGxpbmUgeDE9IjE0NSIgeTE9Ijg1IiB4Mj0iMTE4IiB5Mj0iNzAiLz4KICAgIDxsaW5lIHgxPSIxNDUiIHkxPSI4NSIgeDI9IjE3NSIgeTI9IjEwMCIvPgogIDwvZz4KICA8dGV4dCB4PSIxNTAiIHk9IjE5MCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjEzIiBmaWxsPSIjNUI2MjcwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5GYXJ0bGVrPC90ZXh0Pgo8L3N2Zz4K"}, {"nombre": "Fartlek con banco sueco como referencia", "descripcion": "Carrera continua en la que, cada vez que se pasa junto a un banco sueco, se realiza un tramo de 15 segundos a ritmo alto, volviendo después al ritmo suave hasta el siguiente banco.", "cursos": ["3º ESO"], "bloque": "principal", "contenidos": ["Condición física"], "subcontenidos": ["Resistencia"], "material": "Bancos suecos, cronómetro", "duracion": 12, "imagen": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj4KICA8cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0Y3RjZGMiIvPgogIDxyZWN0IHg9IjcwIiB5PSIxNDAiIHdpZHRoPSIxNjAiIGhlaWdodD0iMTQiIHJ4PSIzIiBmaWxsPSIjQjdDMUQ2Ii8+CiAgPHJlY3QgeD0iODAiIHk9IjE1NCIgd2lkdGg9IjEwIiBoZWlnaHQ9IjI1IiBmaWxsPSIjQjdDMUQ2Ii8+CiAgPHJlY3QgeD0iMjEwIiB5PSIxNTQiIHdpZHRoPSIxMCIgaGVpZ2h0PSIyNSIgZmlsbD0iI0I3QzFENiIvPgogIDxnIHN0cm9rZT0iIzFCMkE0QSIgc3Ryb2tlLXdpZHRoPSI0IiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiPgogICAgPGNpcmNsZSBjeD0iMTUwIiBjeT0iNzAiIHI9IjEyIiBmaWxsPSIjMUIyQTRBIi8+CiAgICA8bGluZSB4MT0iMTUwIiB5MT0iODIiIHgyPSIxNTAiIHkyPSIxMTUiLz4KICAgIDxsaW5lIHgxPSIxNTAiIHkxPSIxMTUiIHgyPSIxMzAiIHkyPSIxNDAiLz4KICAgIDxsaW5lIHgxPSIxNTAiIHkxPSIxMTUiIHgyPSIxNzUiIHkyPSIxNTAiLz4KICAgIDxsaW5lIHgxPSIxNDUiIHkxPSI5NSIgeDI9IjEyMCIgeTI9IjEwNSIvPgogICAgPGxpbmUgeDE9IjE0NSIgeTE9Ijk1IiB4Mj0iMTc1IiB5Mj0iODAiLz4KICA8L2c+CiAgPHRleHQgeD0iMTUwIiB5PSIxOTIiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMyIgZmlsbD0iIzVCNjI3MCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+Q2lyY3VpdG8gYmFuY28gc3VlY288L3RleHQ+Cjwvc3ZnPgo="}, {"nombre": "Fartlek por parejas con control de pulso", "descripcion": "Por parejas, uno marca los cambios de ritmo (acelerar/suave) y el otro le sigue; cada 4 minutos se paran a tomarse el pulso y cambian los roles.", "cursos": ["3º ESO"], "bloque": "principal", "contenidos": ["Condición física"], "subcontenidos": ["Resistencia"], "material": "Cronómetro", "duracion": 12, "imagen": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj4KICA8cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0Y3RjZGMiIvPgogIDxnIHN0cm9rZT0iIzFCMkE0QSIgc3Ryb2tlLXdpZHRoPSI0IiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiPgogICAgPGNpcmNsZSBjeD0iMTMwIiBjeT0iNjUiIHI9IjEyIiBmaWxsPSIjMUIyQTRBIi8+CiAgICA8bGluZSB4MT0iMTMwIiB5MT0iNzciIHgyPSIxMzAiIHkyPSIxMjAiLz4KICAgIDxsaW5lIHgxPSIxMzAiIHkxPSIxMjAiIHgyPSIxMTAiIHkyPSIxNTUiLz4KICAgIDxsaW5lIHgxPSIxMzAiIHkxPSIxMjAiIHgyPSIxNTAiIHkyPSIxNTUiLz4KICAgIDxsaW5lIHgxPSIxMzAiIHkxPSI5NSIgeDI9IjEwNSIgeTI9IjkwIi8+CiAgICA8bGluZSB4MT0iMTMwIiB5MT0iOTUiIHgyPSIxNzUiIHkyPSIxMDUiLz4KICAgIDxsaW5lIHgxPSIxNzUiIHkxPSIxMDUiIHgyPSIxOTAiIHkyPSI5MCIvPgogIDwvZz4KICA8cGF0aCBkPSJNMTk1IDk1IGw4IC0xMCBsNiAxNCBsNiAtMjAgbDYgMTYgbDEwIC04IiBzdHJva2U9IiNFODU0MkEiIHN0cm9rZS13aWR0aD0iMyIgZmlsbD0ibm9uZSIvPgogIDx0ZXh0IHg9IjE1MCIgeT0iMTg1IiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTMiIGZpbGw9IiM1QjYyNzAiIHRleHQtYW5jaG9yPSJtaWRkbGUiPlRvbWEgZGUgcHVsc288L3RleHQ+Cjwvc3ZnPgo="}, {"nombre": "Marcha de recuperación final", "descripcion": "Marcha lenta durante 3 minutos, dejando que el ritmo cardiaco baje progresivamente tras los cambios de intensidad del fartlek.", "cursos": ["3º ESO"], "bloque": "vuelta", "contenidos": ["Condición física"], "subcontenidos": ["Resistencia"], "material": "Ninguno", "duracion": 5, "imagen": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj4KICA8cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0Y3RjZGMiIvPgogIDxnIHN0cm9rZT0iIzFCMkE0QSIgc3Ryb2tlLXdpZHRoPSI0IiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiPgogICAgPGNpcmNsZSBjeD0iMTUwIiBjeT0iNjAiIHI9IjEyIiBmaWxsPSIjMUIyQTRBIi8+CiAgICA8bGluZSB4MT0iMTUwIiB5MT0iNzIiIHgyPSIxNDUiIHkyPSIxMjAiLz4KICAgIDxsaW5lIHgxPSIxNDUiIHkxPSIxMjAiIHgyPSIxMjUiIHkyPSIxNTAiLz4KICAgIDxsaW5lIHgxPSIxNDUiIHkxPSIxMjAiIHgyPSIxNjAiIHkyPSIxNTAiLz4KICAgIDxsaW5lIHgxPSIxNDgiIHkxPSI5MCIgeDI9IjEyNSIgeTI9Ijg1Ii8+CiAgICA8bGluZSB4MT0iMTQ4IiB5MT0iOTAiIHgyPSIxNzAiIHkyPSIxMDAiLz4KICA8L2c+CiAgPGNpcmNsZSBjeD0iMTUwIiBjeT0iNjAiIHI9IjI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNDNEQ4MkUiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWRhc2hhcnJheT0iMywzIi8+CiAgPHRleHQgeD0iMTUwIiB5PSIxODUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMyIgZmlsbD0iIzVCNjI3MCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+UGFzZW8gKyByZXNwaXJhY2nDs248L3RleHQ+Cjwvc3ZnPgo="}], "sesion8": [{"nombre": "Desplazamientos de animales entre líneas de tiza", "descripcion": "Marcar con tiza dos líneas paralelas; recorrer la distancia imitando desplazamientos de animales (oso a cuatro patas, cangrejo, rana), activando la musculatura global.", "cursos": ["3º ESO"], "bloque": "calentamiento", "contenidos": ["Condición física"], "subcontenidos": ["Fuerza"], "material": "Tizas", "duracion": 8, "imagen": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj4KICA8cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0Y3RjZGMiIvPgogIDxsaW5lIHgxPSI0MCIgeTE9IjE3MCIgeDI9IjI2MCIgeTI9IjE3MCIgc3Ryb2tlPSIjQjdDMUQ2IiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1kYXNoYXJyYXk9IjQsNCIvPgogIDxsaW5lIHgxPSI5MCIgeTE9IjE2MCIgeDI9IjkwIiB5Mj0iMTgwIiBzdHJva2U9IiNFODU0MkEiIHN0cm9rZS13aWR0aD0iMyIvPgogIDxsaW5lIHgxPSIyMTAiIHkxPSIxNjAiIHgyPSIyMTAiIHkyPSIxODAiIHN0cm9rZT0iI0U4NTQyQSIgc3Ryb2tlLXdpZHRoPSIzIi8+CiAgPGcgc3Ryb2tlPSIjMUIyQTRBIiBzdHJva2Utd2lkdGg9IjQiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCI+CiAgICA8Y2lyY2xlIGN4PSIxNDAiIGN5PSIxMjAiIHI9IjExIiBmaWxsPSIjMUIyQTRBIi8+CiAgICA8bGluZSB4MT0iMTUwIiB5MT0iMTI1IiB4Mj0iMTg1IiB5Mj0iMTIwIi8+CiAgICA8bGluZSB4MT0iMTQwIiB5MT0iMTMxIiB4Mj0iMTQwIiB5Mj0iMTUwIi8+CiAgICA8bGluZSB4MT0iMTg1IiB5MT0iMTIwIiB4Mj0iMTg1IiB5Mj0iMTUwIi8+CiAgICA8bGluZSB4MT0iMTQwIiB5MT0iMTUwIiB4Mj0iMTMwIiB5Mj0iMTY1Ii8+CiAgICA8bGluZSB4MT0iMTg1IiB5MT0iMTUwIiB4Mj0iMTk1IiB5Mj0iMTY1Ii8+CiAgPC9nPgogIDx0ZXh0IHg9IjE1MCIgeT0iMTkyIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTMiIGZpbGw9IiM1QjYyNzAiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkRlc3BsYXphbWllbnRvIGFuaW1hbDwvdGV4dD4KPC9zdmc+Cg=="}, {"nombre": "Carretillas entre líneas de tiza", "descripcion": "Por parejas, uno camina con las manos mientras el otro le sujeta los pies elevados, recorriendo la distancia marcada entre dos líneas de tiza; cambian los roles a la vuelta.", "cursos": ["3º ESO"], "bloque": "principal", "contenidos": ["Condición física"], "subcontenidos": ["Fuerza"], "material": "Tizas", "duracion": 10, "imagen": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj4KICA8cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0Y3RjZGMiIvPgogIDxsaW5lIHgxPSI2MCIgeTE9IjE1MCIgeDI9IjYwIiB5Mj0iMTcwIiBzdHJva2U9IiNFODU0MkEiIHN0cm9rZS13aWR0aD0iMyIvPgogIDxsaW5lIHgxPSIyNDAiIHkxPSIxNTAiIHgyPSIyNDAiIHkyPSIxNzAiIHN0cm9rZT0iI0U4NTQyQSIgc3Ryb2tlLXdpZHRoPSIzIi8+CiAgPGcgc3Ryb2tlPSIjMUIyQTRBIiBzdHJva2Utd2lkdGg9IjQiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCI+CiAgICA8Y2lyY2xlIGN4PSIxMzAiIGN5PSIxMjUiIHI9IjEwIiBmaWxsPSIjMUIyQTRBIi8+CiAgICA8bGluZSB4MT0iMTQwIiB5MT0iMTI4IiB4Mj0iMTc1IiB5Mj0iMTI4Ii8+CiAgICA8bGluZSB4MT0iMTMwIiB5MT0iMTM1IiB4Mj0iMTMwIiB5Mj0iMTUwIi8+CiAgICA8bGluZSB4MT0iMTc1IiB5MT0iMTI4IiB4Mj0iMTg1IiB5Mj0iMTUwIi8+CiAgICA8Y2lyY2xlIGN4PSIyMDAiIGN5PSI5MCIgcj0iMTAiIGZpbGw9IiMxQjJBNEEiLz4KICAgIDxsaW5lIHgxPSIyMDAiIHkxPSIxMDAiIHgyPSIxODUiIHkyPSIxMjgiLz4KICAgIDxsaW5lIHgxPSIyMDAiIHkxPSIxMTAiIHgyPSIyMjAiIHkyPSIxMDAiLz4KICA8L2c+CiAgPHRleHQgeD0iMTUwIiB5PSIxODgiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMyIgZmlsbD0iIzVCNjI3MCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+Q2FycmV0aWxsYXMgZW50cmUgbMOtbmVhczwvdGV4dD4KPC9zdmc+Cg=="}, {"nombre": "Empuje por parejas en colchoneta", "descripcion": "Por parejas, sentados espalda con espalda sobre la colchoneta, empujan con la espalda intentando desplazar al compañero fuera de una zona marcada con tiza, sin usar las manos.", "cursos": ["3º ESO"], "bloque": "principal", "contenidos": ["Condición física"], "subcontenidos": ["Fuerza"], "material": "Colchonetas, tizas", "duracion": 10, "imagen": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj4KICA8cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0Y3RjZGMiIvPgogIDxyZWN0IHg9IjYwIiB5PSIxNDAiIHdpZHRoPSIxODAiIGhlaWdodD0iMzAiIHJ4PSI2IiBmaWxsPSIjRTdFQ0Y2IiBzdHJva2U9IiNCN0MxRDYiIHN0cm9rZS13aWR0aD0iMiIvPgogIDxsaW5lIHgxPSIxNTAiIHkxPSIxNDAiIHgyPSIxNTAiIHkyPSIxNzAiIHN0cm9rZT0iI0U4NTQyQSIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtZGFzaGFycmF5PSIzLDMiLz4KICA8ZyBzdHJva2U9IiMxQjJBNEEiIHN0cm9rZS13aWR0aD0iNCIgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIj4KICAgIDxjaXJjbGUgY3g9IjEwNSIgY3k9IjEwNSIgcj0iMTEiIGZpbGw9IiMxQjJBNEEiLz4KICAgIDxsaW5lIHgxPSIxMDUiIHkxPSIxMTYiIHgyPSIxMDUiIHkyPSIxNDAiLz4KICAgIDxsaW5lIHgxPSIxMDUiIHkxPSIxMjAiIHgyPSIxNDAiIHkyPSIxMjIiLz4KICA8L2c+CiAgPGcgc3Ryb2tlPSIjRTg1NDJBIiBzdHJva2Utd2lkdGg9IjQiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCI+CiAgICA8Y2lyY2xlIGN4PSIxOTUiIGN5PSIxMDUiIHI9IjExIiBmaWxsPSIjRTg1NDJBIi8+CiAgICA8bGluZSB4MT0iMTk1IiB5MT0iMTE2IiB4Mj0iMTk1IiB5Mj0iMTQwIi8+CiAgICA8bGluZSB4MT0iMTk1IiB5MT0iMTIwIiB4Mj0iMTYwIiB5Mj0iMTIyIi8+CiAgPC9nPgogIDx0ZXh0IHg9IjE1MCIgeT0iMTg4IiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTMiIGZpbGw9IiM1QjYyNzAiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkVtcHVqZSBwb3IgcGFyZWphczwvdGV4dD4KPC9zdmc+Cg=="}, {"nombre": "Circuito de fuerza en banco sueco", "descripcion": "Estaciones en el banco sueco: apoyos de manos para flexiones inclinadas, subidas y bajadas con impulso de piernas, y fondos de tríceps apoyando la espalda en el banco.", "cursos": ["3º ESO"], "bloque": "principal", "contenidos": ["Condición física"], "subcontenidos": ["Fuerza"], "material": "Bancos suecos", "duracion": 12, "imagen": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj4KICA8cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0Y3RjZGMiIvPgogIDxyZWN0IHg9IjkwIiB5PSIxMzAiIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQiIHJ4PSIzIiBmaWxsPSIjQjdDMUQ2Ii8+CiAgPHJlY3QgeD0iMTAwIiB5PSIxNDQiIHdpZHRoPSIxMCIgaGVpZ2h0PSIyMiIgZmlsbD0iI0I3QzFENiIvPgogIDxyZWN0IHg9IjIxMCIgeT0iMTQ0IiB3aWR0aD0iMTAiIGhlaWdodD0iMjIiIGZpbGw9IiNCN0MxRDYiLz4KICA8ZyBzdHJva2U9IiMxQjJBNEEiIHN0cm9rZS13aWR0aD0iNCIgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIj4KICAgIDxjaXJjbGUgY3g9IjgwIiBjeT0iMTIwIiByPSIxMCIgZmlsbD0iIzFCMkE0QSIvPgogICAgPGxpbmUgeDE9Ijg4IiB5MT0iMTI2IiB4Mj0iMTA1IiB5Mj0iMTMyIi8+CiAgICA8bGluZSB4MT0iODAiIHkxPSIxMzAiIHgyPSI2MCIgeTI9IjE1MCIvPgogICAgPGxpbmUgeDE9IjEwNSIgeTE9IjEzMiIgeDI9IjExNSIgeTI9IjE1MCIvPgogIDwvZz4KICA8dGV4dCB4PSIxNTAiIHk9IjE4OCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjEzIiBmaWxsPSIjNUI2MjcwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5GdWVyemEgZW4gYmFuY28gc3VlY288L3RleHQ+Cjwvc3ZnPgo="}, {"nombre": "Estiramiento final en colchoneta", "descripcion": "Tumbados en la colchoneta, estiramientos suaves de piernas, brazos y espalda centrados en los grupos musculares trabajados durante la sesión.", "cursos": ["3º ESO"], "bloque": "vuelta", "contenidos": ["Condición física"], "subcontenidos": ["Fuerza"], "material": "Colchonetas", "duracion": 5, "imagen": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj4KICA8cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0Y3RjZGMiIvPgogIDxyZWN0IHg9IjYwIiB5PSIxMzAiIHdpZHRoPSIxODAiIGhlaWdodD0iMzUiIHJ4PSI2IiBmaWxsPSIjRTdFQ0Y2IiBzdHJva2U9IiNCN0MxRDYiIHN0cm9rZS13aWR0aD0iMiIvPgogIDxnIHN0cm9rZT0iIzFCMkE0QSIgc3Ryb2tlLXdpZHRoPSI0IiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiPgogICAgPGNpcmNsZSBjeD0iOTAiIGN5PSIxMjAiIHI9IjEyIiBmaWxsPSIjMUIyQTRBIi8+CiAgICA8bGluZSB4MT0iMTAyIiB5MT0iMTIyIiB4Mj0iMTcwIiB5Mj0iMTIyIi8+CiAgICA8bGluZSB4MT0iMTcwIiB5MT0iMTIyIiB4Mj0iMjAwIiB5Mj0iMTAwIi8+CiAgICA8bGluZSB4MT0iMTcwIiB5MT0iMTIyIiB4Mj0iMjAwIiB5Mj0iMTQwIi8+CiAgPC9nPgogIDx0ZXh0IHg9IjE1MCIgeT0iMTg4IiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTMiIGZpbGw9IiM1QjYyNzAiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkVzdGlyYW1pZW50byBlbiBjb2xjaG9uZXRhPC90ZXh0Pgo8L3N2Zz4K"}], "sesion9": [{"nombre": "Activación con saltos entre aros", "descripcion": "Colocar varios aros en el suelo en fila; saltar con los pies juntos dentro y fuera de cada aro de forma continua durante 3 minutos, activando piernas y core.", "cursos": ["3º ESO"], "bloque": "calentamiento", "contenidos": ["Condición física"], "subcontenidos": ["Fuerza"], "material": "Aros", "duracion": 8, "imagen": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj4KICA8cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0Y3RjZGMiIvPgogIDxlbGxpcHNlIGN4PSI5MCIgY3k9IjE2NSIgcng9IjM1IiByeT0iMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0U4NTQyQSIgc3Ryb2tlLXdpZHRoPSI0Ii8+CiAgPGVsbGlwc2UgY3g9IjIxMCIgY3k9IjE2NSIgcng9IjM1IiByeT0iMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0U4NTQyQSIgc3Ryb2tlLXdpZHRoPSI0Ii8+CiAgPGcgc3Ryb2tlPSIjMUIyQTRBIiBzdHJva2Utd2lkdGg9IjQiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCI+CiAgICA8Y2lyY2xlIGN4PSIxNTAiIGN5PSI5MCIgcj0iMTIiIGZpbGw9IiMxQjJBNEEiLz4KICAgIDxsaW5lIHgxPSIxNTAiIHkxPSIxMDIiIHgyPSIxNDUiIHkyPSIxMzUiLz4KICAgIDxsaW5lIHgxPSIxNDUiIHkxPSIxMzUiIHgyPSIxMjUiIHkyPSIxNTAiLz4KICAgIDxsaW5lIHgxPSIxNDUiIHkxPSIxMzUiIHgyPSIxNzAiIHkyPSIxNTAiLz4KICAgIDxsaW5lIHgxPSIxNDgiIHkxPSIxMTIiIHgyPSIxMjAiIHkyPSIxMDUiLz4KICAgIDxsaW5lIHgxPSIxNDgiIHkxPSIxMTIiIHgyPSIxNzYiIHkyPSIxMDUiLz4KICA8L2c+CiAgPHBhdGggZD0iTTEyMCAxMDAgUTE1MCA3NSAxODAgMTAwIiBzdHJva2U9IiNCN0MxRDYiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWRhc2hhcnJheT0iMywzIiBmaWxsPSJub25lIi8+CiAgPHRleHQgeD0iMTUwIiB5PSIxODgiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMyIgZmlsbD0iIzVCNjI3MCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+U2FsdG8gZW50cmUgYXJvczwvdGV4dD4KPC9zdmc+Cg=="}, {"nombre": "Estación 1 - Pases de balón medicinal por parejas", "descripcion": "Por parejas, a un metro y medio de distancia, pases de balón medicinal de pecho y por encima de la cabeza, alternando el tipo de pase cada 10 repeticiones.", "cursos": ["3º ESO"], "bloque": "principal", "contenidos": ["Condición física"], "subcontenidos": ["Fuerza"], "material": "Balones medicinales", "duracion": 10, "imagen": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj4KICA8cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0Y3RjZGMiIvPgogIDxjaXJjbGUgY3g9IjE1MCIgY3k9IjEwNSIgcj0iMjIiIGZpbGw9IiNFODU0MkEiLz4KICA8ZyBzdHJva2U9IiMxQjJBNEEiIHN0cm9rZS13aWR0aD0iNCIgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIj4KICAgIDxjaXJjbGUgY3g9IjkwIiBjeT0iNzAiIHI9IjExIiBmaWxsPSIjMUIyQTRBIi8+CiAgICA8bGluZSB4MT0iOTAiIHkxPSI4MSIgeDI9IjkwIiB5Mj0iMTE1Ii8+CiAgICA8bGluZSB4MT0iOTAiIHkxPSIxMTUiIHgyPSI3MiIgeTI9IjE1MCIvPgogICAgPGxpbmUgeDE9IjkwIiB5MT0iMTE1IiB4Mj0iMTA4IiB5Mj0iMTUwIi8+CiAgICA8bGluZSB4MT0iOTAiIHkxPSI5NSIgeDI9IjEyOCIgeTI9IjEwNSIvPgogIDwvZz4KICA8ZyBzdHJva2U9IiNFODU0MkEiIHN0cm9rZS13aWR0aD0iNCIgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIj4KICAgIDxjaXJjbGUgY3g9IjIxNSIgY3k9IjcwIiByPSIxMSIgZmlsbD0iI0U4NTQyQSIvPgogICAgPGxpbmUgeDE9IjIxNSIgeTE9IjgxIiB4Mj0iMjE1IiB5Mj0iMTE1Ii8+CiAgICA8bGluZSB4MT0iMjE1IiB5MT0iMTE1IiB4Mj0iMTk3IiB5Mj0iMTUwIi8+CiAgICA8bGluZSB4MT0iMjE1IiB5MT0iMTE1IiB4Mj0iMjMzIiB5Mj0iMTUwIi8+CiAgICA8bGluZSB4MT0iMjE1IiB5MT0iOTUiIHgyPSIxNzIiIHkyPSIxMDUiLz4KICA8L2c+CiAgPHRleHQgeD0iMTUwIiB5PSIxODUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMyIgZmlsbD0iIzVCNjI3MCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+UGFzZSBiYWzDs24gbWVkaWNpbmFsPC90ZXh0Pgo8L3N2Zz4K"}, {"nombre": "Estación 2 - Trepa controlada en espaldera", "descripcion": "Subir y bajar por la espaldera de forma controlada, manteniendo el core activado, durante 45 segundos por turno.", "cursos": ["3º ESO"], "bloque": "principal", "contenidos": ["Condición física"], "subcontenidos": ["Fuerza"], "material": "Espalderas", "duracion": 9, "imagen": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj4KICA8cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0Y3RjZGMiIvPgogIDxnIHN0cm9rZT0iI0I3QzFENiIgc3Ryb2tlLXdpZHRoPSI0Ij4KICAgIDxsaW5lIHgxPSIyMjAiIHkxPSIyMCIgeDI9IjIyMCIgeTI9IjE4MCIvPgogICAgPGxpbmUgeDE9IjI2MCIgeTE9IjIwIiB4Mj0iMjYwIiB5Mj0iMTgwIi8+CiAgICA8bGluZSB4MT0iMjIwIiB5MT0iNDAiIHgyPSIyNjAiIHkyPSI0MCIvPgogICAgPGxpbmUgeDE9IjIyMCIgeTE9IjY1IiB4Mj0iMjYwIiB5Mj0iNjUiLz4KICAgIDxsaW5lIHgxPSIyMjAiIHkxPSI5MCIgeDI9IjI2MCIgeTI9IjkwIi8+CiAgICA8bGluZSB4MT0iMjIwIiB5MT0iMTE1IiB4Mj0iMjYwIiB5Mj0iMTE1Ii8+CiAgICA8bGluZSB4MT0iMjIwIiB5MT0iMTQwIiB4Mj0iMjYwIiB5Mj0iMTQwIi8+CiAgICA8bGluZSB4MT0iMjIwIiB5MT0iMTY1IiB4Mj0iMjYwIiB5Mj0iMTY1Ii8+CiAgPC9nPgogIDxnIHN0cm9rZT0iIzFCMkE0QSIgc3Ryb2tlLXdpZHRoPSI0IiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiPgogICAgPGNpcmNsZSBjeD0iMjM1IiBjeT0iNzUiIHI9IjEwIiBmaWxsPSIjMUIyQTRBIi8+CiAgICA8bGluZSB4MT0iMjMwIiB5MT0iODUiIHgyPSIyMjIiIHkyPSIxMTUiLz4KICAgIDxsaW5lIHgxPSIyMjIiIHkxPSIxMTUiIHgyPSIyMzAiIHkyPSIxNDAiLz4KICAgIDxsaW5lIHgxPSIyMjIiIHkxPSIxMTUiIHgyPSIyNDUiIHkyPSIxNDAiLz4KICAgIDxsaW5lIHgxPSIyMjgiIHkxPSI5NSIgeDI9IjIyMiIgeTI9IjY1Ii8+CiAgICA8bGluZSB4MT0iMjI4IiB5MT0iOTUiIHgyPSIyNDUiIHkyPSI5MCIvPgogIDwvZz4KICA8dGV4dCB4PSIxNTAiIHk9IjE5MiIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjEzIiBmaWxsPSIjNUI2MjcwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5UcmVwYSBjb250cm9sYWRhPC90ZXh0Pgo8L3N2Zz4K"}, {"nombre": "Estación 3 - Fondos y step-ups en banco sueco", "descripcion": "Alternar 10 fondos de tríceps apoyando la espalda en el banco sueco con 10 subidas y bajadas del banco impulsando con las piernas.", "cursos": ["3º ESO"], "bloque": "principal", "contenidos": ["Condición física"], "subcontenidos": ["Fuerza"], "material": "Bancos suecos", "duracion": 10, "imagen": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj4KICA8cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0Y3RjZGMiIvPgogIDxyZWN0IHg9IjkwIiB5PSIxMzAiIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQiIHJ4PSIzIiBmaWxsPSIjQjdDMUQ2Ii8+CiAgPHJlY3QgeD0iMTAwIiB5PSIxNDQiIHdpZHRoPSIxMCIgaGVpZ2h0PSIyMiIgZmlsbD0iI0I3QzFENiIvPgogIDxyZWN0IHg9IjIxMCIgeT0iMTQ0IiB3aWR0aD0iMTAiIGhlaWdodD0iMjIiIGZpbGw9IiNCN0MxRDYiLz4KICA8ZyBzdHJva2U9IiMxQjJBNEEiIHN0cm9rZS13aWR0aD0iNCIgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIj4KICAgIDxjaXJjbGUgY3g9IjgwIiBjeT0iMTIwIiByPSIxMCIgZmlsbD0iIzFCMkE0QSIvPgogICAgPGxpbmUgeDE9Ijg4IiB5MT0iMTI2IiB4Mj0iMTA1IiB5Mj0iMTMyIi8+CiAgICA8bGluZSB4MT0iODAiIHkxPSIxMzAiIHgyPSI2MCIgeTI9IjE1MCIvPgogICAgPGxpbmUgeDE9IjEwNSIgeTE9IjEzMiIgeDI9IjExNSIgeTI9IjE1MCIvPgogIDwvZz4KICA8dGV4dCB4PSIxNTAiIHk9IjE4OCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjEzIiBmaWxsPSIjNUI2MjcwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5GdWVyemEgZW4gYmFuY28gc3VlY288L3RleHQ+Cjwvc3ZnPgo="}, {"nombre": "Estación 4 - Sentadilla con balón medicinal", "descripcion": "Sujetando el balón medicinal a la altura del pecho, realizar sentadillas controladas, bajando hasta que los muslos queden paralelos al suelo, durante 45 segundos.", "cursos": ["3º ESO"], "bloque": "principal", "contenidos": ["Condición física"], "subcontenidos": ["Fuerza"], "material": "Balones medicinales", "duracion": 9, "imagen": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj4KICA8cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0Y3RjZGMiIvPgogIDxjaXJjbGUgY3g9IjE1MCIgY3k9IjEwNSIgcj0iMjIiIGZpbGw9IiNFODU0MkEiLz4KICA8ZyBzdHJva2U9IiMxQjJBNEEiIHN0cm9rZS13aWR0aD0iNCIgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIj4KICAgIDxjaXJjbGUgY3g9IjkwIiBjeT0iNzAiIHI9IjExIiBmaWxsPSIjMUIyQTRBIi8+CiAgICA8bGluZSB4MT0iOTAiIHkxPSI4MSIgeDI9IjkwIiB5Mj0iMTE1Ii8+CiAgICA8bGluZSB4MT0iOTAiIHkxPSIxMTUiIHgyPSI3MiIgeTI9IjE1MCIvPgogICAgPGxpbmUgeDE9IjkwIiB5MT0iMTE1IiB4Mj0iMTA4IiB5Mj0iMTUwIi8+CiAgICA8bGluZSB4MT0iOTAiIHkxPSI5NSIgeDI9IjEyOCIgeTI9IjEwNSIvPgogIDwvZz4KICA8ZyBzdHJva2U9IiNFODU0MkEiIHN0cm9rZS13aWR0aD0iNCIgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIj4KICAgIDxjaXJjbGUgY3g9IjIxNSIgY3k9IjcwIiByPSIxMSIgZmlsbD0iI0U4NTQyQSIvPgogICAgPGxpbmUgeDE9IjIxNSIgeTE9IjgxIiB4Mj0iMjE1IiB5Mj0iMTE1Ii8+CiAgICA8bGluZSB4MT0iMjE1IiB5MT0iMTE1IiB4Mj0iMTk3IiB5Mj0iMTUwIi8+CiAgICA8bGluZSB4MT0iMjE1IiB5MT0iMTE1IiB4Mj0iMjMzIiB5Mj0iMTUwIi8+CiAgICA8bGluZSB4MT0iMjE1IiB5MT0iOTUiIHgyPSIxNzIiIHkyPSIxMDUiLz4KICA8L2c+CiAgPHRleHQgeD0iMTUwIiB5PSIxODUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMyIgZmlsbD0iIzVCNjI3MCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+UGFzZSBiYWzDs24gbWVkaWNpbmFsPC90ZXh0Pgo8L3N2Zz4K"}, {"nombre": "Vuelta a la calma con aros", "descripcion": "Sentados con un aro apoyado en el regazo, respiración profunda y estiramientos suaves de brazos y espalda, celebrando el trabajo realizado en el circuito.", "cursos": ["3º ESO"], "bloque": "vuelta", "contenidos": ["Condición física"], "subcontenidos": ["Fuerza"], "material": "Aros", "duracion": 5, "imagen": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj4KICA8cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0Y3RjZGMiIvPgogIDxnIHN0cm9rZT0iIzFCMkE0QSIgc3Ryb2tlLXdpZHRoPSI0IiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiPgogICAgPGNpcmNsZSBjeD0iMTUwIiBjeT0iNzAiIHI9IjEyIiBmaWxsPSIjMUIyQTRBIi8+CiAgICA8bGluZSB4MT0iMTUwIiB5MT0iODIiIHgyPSIxNTAiIHkyPSIxMjAiLz4KICAgIDxsaW5lIHgxPSIxNTAiIHkxPSIxMjAiIHgyPSIxMjAiIHkyPSIxNTAiLz4KICAgIDxsaW5lIHgxPSIxNTAiIHkxPSIxMjAiIHgyPSIxODAiIHkyPSIxNTAiLz4KICAgIDxsaW5lIHgxPSIxNTAiIHkxPSI5NSIgeDI9IjEyMCIgeTI9IjkwIi8+CiAgICA8bGluZSB4MT0iMTUwIiB5MT0iOTUiIHgyPSIxODAiIHkyPSI5MCIvPgogIDwvZz4KICA8Y2lyY2xlIGN4PSIxNTAiIGN5PSI3MCIgcj0iMjQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0M0RDgyRSIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtZGFzaGFycmF5PSIzLDMiLz4KICA8dGV4dCB4PSIxNTAiIHk9IjE4NSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjEzIiBmaWxsPSIjNUI2MjcwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5SZXNwaXJhY2nDs248L3RleHQ+Cjwvc3ZnPgo="}]};
+
+function loadEjercicios(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? (JSON.parse(raw) || []) : [];
+  }catch(e){ return []; }
+}
+function saveEjercicios(list){
+  try{
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+  }catch(e){
+    if(e.name==='QuotaExceededError' || e.code===22){
+      alert('Se ha llenado el espacio de almacenamiento del navegador (demasiadas imágenes o ejercicios). Las imágenes ya se comprimen automáticamente; si el aviso persiste, borra alguna imagen de un ejercicio antiguo que ya no uses.');
+    } else {
+      alert('No se ha podido guardar: ' + e.message);
+    }
+  }
+  syncFirebase('bancoEF/ejercicios', list);
+}
+
+function compressImage(file, maxDim, quality){
+  maxDim = maxDim || 480;
+  quality = quality || 0.7;
+  return new Promise((resolve, reject)=>{
+    const reader = new FileReader();
+    reader.onload = ev=>{
+      const img = new Image();
+      img.onload = ()=>{
+        let w = img.width, h = img.height;
+        if(w>=h){ if(w>maxDim){ h = Math.round(h*maxDim/w); w = maxDim; } }
+        else { if(h>maxDim){ w = Math.round(w*maxDim/h); h = maxDim; } }
+        const canvas = document.createElement('canvas');
+        canvas.width = w; canvas.height = h;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, w, h);
+        resolve(canvas.toDataURL('image/jpeg', quality));
+      };
+      img.onerror = ()=>reject(new Error('No se pudo leer la imagen'));
+      img.src = ev.target.result;
+    };
+    reader.onerror = ()=>reject(new Error('No se pudo leer el archivo'));
+    reader.readAsDataURL(file);
+  });
+}
+
+function aplicarBatchesPendientes(lista){
+  let aplicados = [];
+  try{ aplicados = JSON.parse(localStorage.getItem(BATCHES_KEY)) || []; }catch(e){ aplicados = []; }
+  let huboNuevas = false;
+  Object.keys(BATCHES).forEach(clave=>{
+    if(!aplicados.includes(clave)){
+      BATCHES[clave].forEach((item,i)=>{
+        lista.push(Object.assign({id: clave+'_'+i, imagen:null, origen:'batch'}, item));
+      });
+      aplicados.push(clave);
+      huboNuevas = true;
+    }
+  });
+  if(huboNuevas){
+    localStorage.setItem(BATCHES_KEY, JSON.stringify(aplicados));
+    saveEjercicios(lista);
+  }
+  return lista;
+}
+
+let ejercicios = aplicarBatchesPendientes(loadEjercicios());
+
+const DEFAULT_ESCALA = [
+  {label:"Insuficiente", valor:1},
+  {label:"Suficiente", valor:2},
+  {label:"Bien", valor:3},
+  {label:"Excelente", valor:4}
+];
+const DEFAULT_RUBRICA = { evaluar:false, criterios:["",""], escala: JSON.parse(JSON.stringify(DEFAULT_ESCALA)), nAlumnos:25, grupoSeleccionado:"" };
+
+function loadSesion(){
+  try{
+    const s = JSON.parse(localStorage.getItem(SESSION_KEY)) || {nombre:"", items:[]};
+    if(!s.rubrica){ s.rubrica = JSON.parse(JSON.stringify(DEFAULT_RUBRICA)); }
+    if(s.rubrica.grupoSeleccionado===undefined){ s.rubrica.grupoSeleccionado = ""; }
+    if(s.rubrica.evaluar===undefined){ s.rubrica.evaluar = false; }
+    return s;
+  }catch(e){ return {nombre:"", items:[], rubrica: JSON.parse(JSON.stringify(DEFAULT_RUBRICA))}; }
+}
+function saveSesion(s){
+  try{ localStorage.setItem(SESSION_KEY, JSON.stringify(s)); }
+  catch(e){ alert('No se ha podido guardar la sesión: ' + e.message); }
+}
+let sesionActual = loadSesion();
+
+/* ===================== TABS ===================== */
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('view-'+btn.dataset.view).classList.add('active');
+    if(btn.dataset.view==='sesion'){ renderSesionBanco(); renderLanes(); renderRubrica(); }
+    if(btn.dataset.view==='banco'){ renderBanco(); }
+    if(btn.dataset.view==='alumnos'){ renderGrupos(); }
+  });
+});
+
+/* ===================== FILTROS (vista banco) ===================== */
+let filtros = { curso:null, bloque:null, contenido:null, search:"" };
+
+function buildChipGroup(container, values, filtroKey){
+  container.innerHTML = "";
+  values.forEach(v=>{
+    const chip = document.createElement('div');
+    chip.className = 'chip';
+    chip.textContent = v;
+    chip.addEventListener('click', ()=>{
+      filtros[filtroKey] = filtros[filtroKey]===v ? null : v;
+      [...container.children].forEach(c=>c.classList.remove('active'));
+      if(filtros[filtroKey]) chip.classList.add('active');
+      renderBanco();
+    });
+    container.appendChild(chip);
+  });
+}
+buildChipGroup(document.getElementById('f-curso'), CURSOS, 'curso');
+buildChipGroup(document.getElementById('f-bloque'), Object.values(BLOQUES), 'bloque');
+buildChipGroup(document.getElementById('f-contenido'), CONTENIDOS, 'contenido');
+
+document.getElementById('f-search').addEventListener('input', e=>{
+  filtros.search = e.target.value.toLowerCase();
+  renderBanco();
+});
+document.getElementById('btn-clear-filters').addEventListener('click', ()=>{
+  filtros = {curso:null, bloque:null, contenido:null, search:""};
+  document.getElementById('f-search').value = "";
+  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+  renderBanco();
+});
+
+document.getElementById('btn-quitar-duplicados').addEventListener('click', ()=>{
+  const porClave = {};
+  ejercicios.forEach(ej=>{
+    const clave = (ej.nombre||'').trim().toLowerCase() + '|' + (ej.descripcion||'').trim().toLowerCase();
+    if(!porClave[clave]) porClave[clave] = [];
+    porClave[clave].push(ej);
+  });
+  let quitados = 0;
+  const sinDuplicados = [];
+  Object.values(porClave).forEach(copias=>{
+    if(copias.length===1){ sinDuplicados.push(copias[0]); return; }
+    // Si hay duplicados, priorizamos quedarnos con uno añadido a mano (no de batch) si existe
+    const manual = copias.find(c=>c.origen!=='batch');
+    sinDuplicados.push(manual || copias[0]);
+    quitados += copias.length - 1;
+  });
+  if(quitados===0){ alert('No se han encontrado ejercicios duplicados.'); return; }
+  if(confirm(`Se han encontrado ${quitados} ejercicio(s) duplicado(s) (mismo nombre y descripción). Se conservará, en cada caso, el que hayas añadido tú a mano si lo hay. ¿Quitar los duplicados?`)){
+    ejercicios = sinDuplicados;
+    saveEjercicios(ejercicios);
+    renderBanco();
+    alert(`Listo, se han quitado ${quitados} duplicado(s).`);
+  }
+});
+
+/* ===================== COPIA DE SEGURIDAD ===================== */
+document.getElementById('btn-exportar-backup').addEventListener('click', ()=>{
+  const backup = {
+    fecha: new Date().toISOString(),
+    ejercicios: ejercicios,
+    grupos: grupos
+  };
+  const blob = new Blob([JSON.stringify(backup, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const fechaCorta = new Date().toISOString().slice(0,10);
+  a.href = url;
+  a.download = `banco-ef-copia-${fechaCorta}.json`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+});
+
+document.getElementById('btn-importar-backup').addEventListener('click', ()=>{
+  document.getElementById('input-importar-backup').click();
+});
+
+document.getElementById('input-importar-backup').addEventListener('change', e=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = ev=>{
+    try{
+      const backup = JSON.parse(ev.target.result);
+      if(!backup.ejercicios || !Array.isArray(backup.ejercicios)){
+        alert('Ese archivo no parece una copia de seguridad válida de Banco EF.');
+        return;
+      }
+      const idsActuales = new Set(ejercicios.map(x=>x.id));
+      const nuevos = backup.ejercicios.filter(x=>!idsActuales.has(x.id));
+      if(confirm(`Este archivo tiene ${backup.ejercicios.length} ejercicio(s). Se añadirán ${nuevos.length} que no tienes ya aquí (no se borra nada de lo que tienes ahora). ¿Continuar?`)){
+        ejercicios = ejercicios.concat(nuevos);
+        saveEjercicios(ejercicios);
+        if(backup.grupos){ grupos = Object.assign({}, grupos, backup.grupos); saveGrupos(grupos); }
+        renderBanco();
+        alert(`Restaurado: ${nuevos.length} ejercicio(s) añadido(s).`);
+      }
+    }catch(err){
+      alert('No se ha podido leer el archivo: ' + err.message);
+    }
+  };
+  reader.readAsText(file);
+  e.target.value = "";
+});
+
+function matchesFiltros(ej){
+  if(filtros.curso && !ej.cursos.includes(filtros.curso)) return false;
+  if(filtros.bloque && BLOQUES[ej.bloque] !== filtros.bloque) return false;
+  if(filtros.contenido && !ej.contenidos.includes(filtros.contenido)) return false;
+  if(filtros.search){
+    const hay = (ej.nombre+" "+ej.descripcion).toLowerCase();
+    if(!hay.includes(filtros.search)) return false;
+  }
+  return true;
+}
+
+function cardHTML(ej, opts={}){
+  const imagenValida = ej.imagen && typeof ej.imagen === 'string' && ej.imagen.indexOf('data:image') === 0;
+  const imgStyle = imagenValida ? `style="background-image:url('${ej.imagen}')"` : "";
+  const imgContent = imagenValida ? "" : "Sin imagen";
+  return `
+  <div class="card" data-id="${ej.id}">
+    <div class="card-img" ${imgStyle}>${imgContent}</div>
+    <div class="card-body">
+      <h3>${ej.nombre}</h3>
+      <p class="card-desc">${ej.descripcion || ""}</p>
+      <div class="tag-row">
+        ${ej.cursos.map(c=>`<span class="tag curso">${c}</span>`).join("")}
+        <span class="tag bloque">${BLOQUES[ej.bloque]}</span>
+        ${ej.contenidos.map(c=>`<span class="tag contenido">${c}</span>`).join("")}
+        ${(ej.subcontenidos||[]).map(c=>`<span class="tag contenido" style="opacity:0.7;">${c}</span>`).join("")}
+      </div>
+      <div class="card-meta"><span>${ej.duracion} min</span><span>${ej.material || ""}</span></div>
+      <div class="card-actions">
+        ${opts.addToSession ? `<button class="btn btn-primary btn-add-sesion" data-id="${ej.id}">+ Añadir a sesión</button>` : ""}
+        ${opts.addToSession ? `<button class="btn btn-ghost btn-add-estacion" data-id="${ej.id}">+ Estación</button>` : ""}
+        ${opts.manage && !ej.imagen ? `<button class="btn btn-ghost btn-add-imagen" data-id="${ej.id}">+ Añadir imagen</button>` : ""}
+        ${opts.manage ? `<button class="btn btn-ghost btn-editar" data-id="${ej.id}">Editar</button><button class="btn btn-danger btn-borrar" data-id="${ej.id}">Borrar</button>` : ""}
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderBanco(){
+  const grid = document.getElementById('grid-ejercicios');
+  const filtered = ejercicios.filter(matchesFiltros);
+  grid.innerHTML = filtered.map(ej=>cardHTML(ej,{manage:true})).join("");
+  document.getElementById('empty-banco').style.display = ejercicios.length===0 ? 'block' : 'none';
+
+  grid.querySelectorAll('.btn-borrar').forEach(b=>b.addEventListener('click', e=>{
+    const id = e.target.dataset.id;
+    if(confirm('¿Borrar este ejercicio del banco?')){
+      ejercicios = ejercicios.filter(x=>x.id!==id);
+      saveEjercicios(ejercicios);
+      renderBanco();
+    }
+  }));
+  grid.querySelectorAll('.btn-editar').forEach(b=>b.addEventListener('click', e=>{
+    editarEjercicio(e.target.dataset.id);
+  }));
+  grid.querySelectorAll('.btn-add-imagen').forEach(b=>b.addEventListener('click', e=>{
+    quickImagenTargetId = e.target.dataset.id;
+    document.getElementById('quick-img-input').click();
+  }));
+}
+
+let quickImagenTargetId = null;
+document.getElementById('quick-img-input').addEventListener('change', e=>{
+  const file = e.target.files[0];
+  if(!file || !quickImagenTargetId) return;
+  const targetId = quickImagenTargetId;
+  compressImage(file).then(dataUrl=>{
+    ejercicios = ejercicios.map(x=> x.id===targetId ? Object.assign({}, x, {imagen: dataUrl}) : x);
+    saveEjercicios(ejercicios);
+    quickImagenTargetId = null;
+    renderBanco();
+  }).catch(err=>{
+    alert('No se pudo procesar la imagen: ' + err.message);
+  });
+  e.target.value = "";
+});
+
+/* ===================== AÑADIR / EDITAR EJERCICIO ===================== */
+function buildCheckboxGroup(container, values, name){
+  container.innerHTML = values.map(v=>`
+    <label><input type="checkbox" name="${name}" value="${v}"> ${v}</label>
+  `).join("");
+}
+buildCheckboxGroup(document.getElementById('new-cursos'), CURSOS, 'curso');
+
+function renderContenidosCheckboxes(){
+  const container = document.getElementById('new-contenidos');
+  container.innerHTML = CONTENIDOS.map(v=>`
+    <label><input type="checkbox" class="contenido-cb" name="contenido" value="${v}"> ${v}</label>
+  `).join("");
+  container.querySelectorAll('.contenido-cb').forEach(cb=>cb.addEventListener('change', renderSubcontenidos));
+}
+function renderSubcontenidos(preselected){
+  const seleccionados = [...document.querySelectorAll('.contenido-cb:checked')].map(c=>c.value);
+  const wrapper = document.getElementById('subcontenidos-wrapper');
+  const pre = preselected || [];
+  wrapper.innerHTML = seleccionados.filter(c=>SUBCONTENIDOS[c] && SUBCONTENIDOS[c].length>0).map(c=>`
+    <div style="margin-bottom:8px;">
+      <label style="text-transform:none; font-weight:600; font-size:0.78rem; color:var(--ink-soft);">${c} — subcategoría</label>
+      <div class="checkbox-group">
+        ${SUBCONTENIDOS[c].map(sub=>`<label><input type="checkbox" class="subcontenido-cb" name="subcontenido" value="${sub}" ${pre.includes(sub)?'checked':''}> ${sub}</label>`).join("")}
+      </div>
+    </div>
+  `).join("");
+}
+renderContenidosCheckboxes();
+
+let imagenActual = null;
+document.getElementById('img-drop-zone').addEventListener('click', ()=>document.getElementById('new-img-input').click());
+document.getElementById('new-img-input').addEventListener('change', e=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  compressImage(file).then(dataUrl=>{
+    imagenActual = dataUrl;
+    const prev = document.getElementById('new-img-preview');
+    prev.src = imagenActual;
+    prev.style.display = 'block';
+  }).catch(err=>{
+    alert('No se pudo procesar la imagen: ' + err.message);
+  });
+});
+
+let editandoId = null;
+
+function limpiarForm(){
+  document.getElementById('new-nombre').value = "";
+  document.getElementById('new-desc').value = "";
+  document.getElementById('new-duracion').value = 5;
+  document.getElementById('new-material').value = "";
+  document.getElementById('new-bloque').value = "calentamiento";
+  document.querySelectorAll('#new-cursos input, #new-contenidos input').forEach(c=>c.checked=false);
+  renderSubcontenidos();
+  document.getElementById('new-img-preview').style.display = 'none';
+  imagenActual = null;
+  editandoId = null;
+  document.getElementById('btn-guardar-ejercicio').textContent = "Guardar ejercicio";
+}
+document.getElementById('btn-limpiar-form').addEventListener('click', limpiarForm);
+
+function editarEjercicio(id){
+  const ej = ejercicios.find(x=>x.id===id);
+  if(!ej) return;
+  editandoId = id;
+  document.getElementById('new-nombre').value = ej.nombre;
+  document.getElementById('new-desc').value = ej.descripcion;
+  document.getElementById('new-duracion').value = ej.duracion;
+  document.getElementById('new-material').value = ej.material;
+  document.getElementById('new-bloque').value = ej.bloque;
+  document.querySelectorAll('#new-cursos input').forEach(c=>c.checked = ej.cursos.includes(c.value));
+  document.querySelectorAll('#new-contenidos input').forEach(c=>c.checked = ej.contenidos.includes(c.value));
+  renderSubcontenidos(ej.subcontenidos||[]);
+  imagenActual = ej.imagen || null;
+  const prev = document.getElementById('new-img-preview');
+  if(imagenActual){ prev.src = imagenActual; prev.style.display='block'; } else { prev.style.display='none'; }
+  document.getElementById('btn-guardar-ejercicio').textContent = "Guardar cambios";
+  document.querySelector('.tab-btn[data-view="anadir"]').click();
+}
+
+document.getElementById('btn-importar').addEventListener('click', ()=>{
+  const msg = document.getElementById('import-msg');
+  const raw = document.getElementById('import-textarea').value.trim();
+  if(!raw){ msg.textContent = "Pega primero el bloque JSON."; msg.style.color = "#B23A2A"; return; }
+  let data;
+  try{ data = JSON.parse(raw); }catch(e){ msg.textContent = "Ese texto no es JSON válido. Revisa el formato."; msg.style.color="#B23A2A"; return; }
+  if(!Array.isArray(data)){ data = [data]; }
+  let añadidos = 0;
+  data.forEach(item=>{
+    if(!item.nombre) return;
+    ejercicios.push({
+      id: 'ej_'+Date.now()+'_'+Math.random().toString(36).slice(2,7),
+      nombre: item.nombre,
+      descripcion: item.descripcion || "",
+      imagen: item.imagen || null,
+      cursos: item.cursos || [],
+      bloque: item.bloque || "principal",
+      contenidos: item.contenidos || [],
+      subcontenidos: item.subcontenidos || [],
+      material: item.material || "",
+      duracion: parseInt(item.duracion) || 5
+    });
+    añadidos++;
+  });
+  saveEjercicios(ejercicios);
+  msg.textContent = `${añadidos} ejercicio(s) importado(s) correctamente.`;
+  msg.style.color = "#3F7A3F";
+  document.getElementById('import-textarea').value = "";
+  renderBanco();
+});
+
+document.getElementById('btn-guardar-ejercicio').addEventListener('click', ()=>{
+  const nombre = document.getElementById('new-nombre').value.trim();
+  if(!nombre){ alert('Ponle un nombre al ejercicio.'); return; }
+  const cursos = [...document.querySelectorAll('#new-cursos input:checked')].map(c=>c.value);
+  const contenidos = [...document.querySelectorAll('#new-contenidos input:checked')].map(c=>c.value);
+  const subcontenidos = [...document.querySelectorAll('.subcontenido-cb:checked')].map(c=>c.value);
+  const data = {
+    id: editandoId || ('ej_'+Date.now()),
+    nombre,
+    descripcion: document.getElementById('new-desc').value.trim(),
+    imagen: imagenActual,
+    cursos,
+    bloque: document.getElementById('new-bloque').value,
+    contenidos,
+    subcontenidos,
+    material: document.getElementById('new-material').value.trim(),
+    duracion: parseInt(document.getElementById('new-duracion').value) || 5,
+    origen: 'manual'
+  };
+  if(editandoId){
+    ejercicios = ejercicios.map(x=>x.id===editandoId ? data : x);
+  } else {
+    ejercicios.push(data);
+  }
+  saveEjercicios(ejercicios);
+  limpiarForm();
+  renderBanco();
+  document.querySelector('.tab-btn[data-view="banco"]').click();
+});
+
+/* ===================== DISEÑAR SESIÓN ===================== */
+const sessCursoSelect = document.getElementById('sess-curso');
+CURSOS.forEach(c=>{
+  const opt = document.createElement('option');
+  opt.value = c; opt.textContent = c;
+  sessCursoSelect.appendChild(opt);
+});
+let sessFiltro = { curso:"", search:"" };
+sessCursoSelect.addEventListener('change', e=>{ sessFiltro.curso = e.target.value; renderSesionBanco(); });
+document.getElementById('sess-search').addEventListener('input', e=>{ sessFiltro.search = e.target.value.toLowerCase(); renderSesionBanco(); });
+
+function renderSesionBanco(){
+  const grid = document.getElementById('grid-sesion-banco');
+  const filtered = ejercicios.filter(ej=>{
+    if(sessFiltro.curso && !ej.cursos.includes(sessFiltro.curso)) return false;
+    if(sessFiltro.search){
+      const hay=(ej.nombre+" "+ej.descripcion).toLowerCase();
+      if(!hay.includes(sessFiltro.search)) return false;
+    }
+    return true;
+  });
+  grid.innerHTML = filtered.map(ej=>cardHTML(ej,{addToSession:true})).join("");
+  grid.querySelectorAll('.btn-add-sesion').forEach(b=>b.addEventListener('click', e=>{
+    const ej = ejercicios.find(x=>x.id===e.target.dataset.id);
+    sesionActual.items.push({ejId: ej.id, nombre:ej.nombre, duracion:ej.duracion, bloque:ej.bloque});
+    saveSesion(sesionActual);
+    renderLanes();
+  }));
+  grid.querySelectorAll('.btn-add-estacion').forEach(b=>b.addEventListener('click', e=>{
+    const ej = ejercicios.find(x=>x.id===e.target.dataset.id);
+    circuitoEstaciones.push({ejId: ej.id, nombre:ej.nombre, duracion:ej.duracion});
+    renderCircuitoPanel();
+  }));
+}
+
+/* ===================== CREADOR DE CIRCUITOS ===================== */
+let circuitoEstaciones = [];
+
+document.getElementById('btn-toggle-circuito').addEventListener('click', ()=>{
+  const panel = document.getElementById('circuito-panel');
+  const abierto = panel.style.display !== 'none';
+  panel.style.display = abierto ? 'none' : 'block';
+  if(!abierto){ renderCircuitoPanel(); }
+});
+
+function renderCircuitoPanel(){
+  const cont = document.getElementById('circuito-estaciones');
+  if(circuitoEstaciones.length===0){
+    cont.innerHTML = `<div class="lane-empty">Aún no hay estaciones añadidas</div>`;
+    return;
+  }
+  cont.innerHTML = circuitoEstaciones.map((est,idx)=>`
+    <div class="sess-item">
+      <span class="name">${idx+1}. ${est.nombre}</span>
+      <input type="number" min="1" value="${est.duracion}" class="circuito-duracion-input" data-idx="${idx}" style="width:55px; padding:4px 6px; font-size:0.8rem;">
+      <span class="dur">min</span>
+      <button class="mini-btn btn-quitar-estacion" data-idx="${idx}">✕</button>
+    </div>
+  `).join("");
+  cont.querySelectorAll('.circuito-duracion-input').forEach(inp=>inp.addEventListener('input', e=>{
+    circuitoEstaciones[parseInt(e.target.dataset.idx)].duracion = parseInt(e.target.value)||1;
+  }));
+  cont.querySelectorAll('.btn-quitar-estacion').forEach(b=>b.addEventListener('click', e=>{
+    circuitoEstaciones.splice(parseInt(e.target.dataset.idx),1);
+    renderCircuitoPanel();
+  }));
+}
+
+document.getElementById('btn-generar-circuito').addEventListener('click', ()=>{
+  if(circuitoEstaciones.length===0){ alert('Añade al menos una estación desde el banco (botón "+ Estación").'); return; }
+  const vueltas = parseInt(document.getElementById('circuito-vueltas').value)||1;
+  for(let v=0; v<vueltas; v++){
+    circuitoEstaciones.forEach(est=>{
+      sesionActual.items.push({ejId: est.ejId, nombre: est.nombre + ` (vuelta ${v+1})`, duracion: est.duracion, bloque:'principal'});
+    });
+  }
+  saveSesion(sesionActual);
+  renderLanes();
+  circuitoEstaciones = [];
+  document.getElementById('circuito-panel').style.display = 'none';
+});
+
+document.getElementById('btn-cancelar-circuito').addEventListener('click', ()=>{
+  circuitoEstaciones = [];
+  document.getElementById('circuito-panel').style.display = 'none';
+});
+
+document.getElementById('sess-nombre').addEventListener('input', e=>{
+  sesionActual.nombre = e.target.value; saveSesion(sesionActual);
+});
+
+function renderLanes(){
+  document.getElementById('sess-nombre').value = sesionActual.nombre || "";
+  Object.keys(BLOQUES).forEach(bloqueKey=>{
+    const container = document.getElementById('lane-'+bloqueKey);
+    const items = sesionActual.items.filter(i=>i.bloque===bloqueKey);
+    if(items.length===0){
+      container.innerHTML = `<div class="lane-empty">Sin ejercicios todavía</div>`;
+    } else {
+      container.innerHTML = items.map((it,idx)=>{
+        const globalIdx = sesionActual.items.indexOf(it);
+        return `
+        <div class="sess-item">
+          <span class="name">${it.nombre}</span>
+          <span class="dur">${it.duracion} min</span>
+          <button class="mini-btn btn-quitar" data-idx="${globalIdx}">✕</button>
+        </div>`;
+      }).join("");
+    }
+    const totalMin = items.reduce((a,i)=>a+i.duracion,0);
+    container.parentElement.querySelector('.lane-min').textContent = totalMin+' min';
+  });
+  document.getElementById('sess-total').textContent = sesionActual.items.reduce((a,i)=>a+i.duracion,0)+' min';
+
+  document.querySelectorAll('.btn-quitar').forEach(b=>b.addEventListener('click', e=>{
+    sesionActual.items.splice(parseInt(e.target.dataset.idx),1);
+    saveSesion(sesionActual);
+    renderLanes();
+  }));
+}
+
+document.getElementById('btn-vaciar-sesion').addEventListener('click', ()=>{
+  if(confirm('¿Vaciar toda la sesión actual?')){
+    sesionActual = {nombre:sesionActual.nombre, items:[], rubrica: JSON.parse(JSON.stringify(DEFAULT_RUBRICA))};
+    saveSesion(sesionActual);
+    renderLanes();
+    renderRubrica();
+  }
+});
+
+/* ===================== RUBRICA DE EVALUACION ===================== */
+function renderRubrica(){
+  const critBox = document.getElementById('rubric-criterios');
+  critBox.innerHTML = sesionActual.rubrica.criterios.map((c,idx)=>`
+    <div class="rubric-crit-row">
+      <input type="text" data-idx="${idx}" class="rubric-crit-input" placeholder="Criterio ${idx+1}" value="${c.replace(/"/g,'&quot;')}">
+      ${sesionActual.rubrica.criterios.length>2 ? `<button class="mini-btn btn-quitar-criterio" data-idx="${idx}">✕</button>` : ""}
+    </div>
+  `).join("");
+  critBox.querySelectorAll('.rubric-crit-input').forEach(inp=>inp.addEventListener('input', e=>{
+    sesionActual.rubrica.criterios[parseInt(e.target.dataset.idx)] = e.target.value;
+    saveSesion(sesionActual);
+  }));
+  critBox.querySelectorAll('.btn-quitar-criterio').forEach(b=>b.addEventListener('click', e=>{
+    sesionActual.rubrica.criterios.splice(parseInt(e.target.dataset.idx),1);
+    saveSesion(sesionActual);
+    renderRubrica();
+  }));
+  document.getElementById('btn-add-criterio').disabled = sesionActual.rubrica.criterios.length>=3;
+  document.getElementById('btn-add-criterio').style.opacity = sesionActual.rubrica.criterios.length>=3 ? 0.4 : 1;
+
+  const escalaBox = document.getElementById('rubric-escala');
+  escalaBox.innerHTML = sesionActual.rubrica.escala.map((n,idx)=>`
+    <div class="scale-row">
+      <input type="text" class="scale-label-input" data-idx="${idx}" value="${n.label.replace(/"/g,'&quot;')}" placeholder="Etiqueta">
+      <input type="number" class="scale-valor-input" data-idx="${idx}" value="${n.valor}">
+      ${sesionActual.rubrica.escala.length>2 ? `<button class="mini-btn btn-quitar-nivel" data-idx="${idx}">✕</button>` : ""}
+    </div>
+  `).join("");
+  escalaBox.querySelectorAll('.scale-label-input').forEach(inp=>inp.addEventListener('input', e=>{
+    sesionActual.rubrica.escala[parseInt(e.target.dataset.idx)].label = e.target.value;
+    saveSesion(sesionActual);
+  }));
+  escalaBox.querySelectorAll('.scale-valor-input').forEach(inp=>inp.addEventListener('input', e=>{
+    sesionActual.rubrica.escala[parseInt(e.target.dataset.idx)].valor = parseFloat(e.target.value)||0;
+    saveSesion(sesionActual);
+  }));
+  escalaBox.querySelectorAll('.btn-quitar-nivel').forEach(b=>b.addEventListener('click', e=>{
+    sesionActual.rubrica.escala.splice(parseInt(e.target.dataset.idx),1);
+    saveSesion(sesionActual);
+    renderRubrica();
+  }));
+
+  document.getElementById('rubric-n-alumnos').value = sesionActual.rubrica.nAlumnos || 25;
+  document.getElementById('rubric-evaluar-toggle').checked = !!sesionActual.rubrica.evaluar;
+  document.getElementById('rubric-detalle').style.display = sesionActual.rubrica.evaluar ? 'block' : 'none';
+  renderGrupoSelect();
+}
+
+document.getElementById('rubric-evaluar-toggle').addEventListener('change', e=>{
+  sesionActual.rubrica.evaluar = e.target.checked;
+  saveSesion(sesionActual);
+  document.getElementById('rubric-detalle').style.display = e.target.checked ? 'block' : 'none';
+});
+
+document.getElementById('btn-add-criterio').addEventListener('click', ()=>{
+  if(sesionActual.rubrica.criterios.length<3){
+    sesionActual.rubrica.criterios.push("");
+    saveSesion(sesionActual);
+    renderRubrica();
+  }
+});
+document.getElementById('btn-add-nivel').addEventListener('click', ()=>{
+  sesionActual.rubrica.escala.push({label:"Nuevo nivel", valor: sesionActual.rubrica.escala.length+1});
+  saveSesion(sesionActual);
+  renderRubrica();
+});
+document.getElementById('rubric-n-alumnos').addEventListener('input', e=>{
+  sesionActual.rubrica.nAlumnos = parseInt(e.target.value)||25;
+  saveSesion(sesionActual);
+});
+
+/* ===================== GRUPOS DE ALUMNOS ===================== */
+const GRUPOS_KEY = "bancoEF_grupos_v1";
+function loadGrupos(){
+  try{ return JSON.parse(localStorage.getItem(GRUPOS_KEY)) || {}; }catch(e){ return {}; }
+}
+function saveGrupos(g){
+  try{ localStorage.setItem(GRUPOS_KEY, JSON.stringify(g)); }
+  catch(e){ alert('No se han podido guardar los grupos: ' + e.message); }
+  syncFirebase('bancoEF/grupos', g);
+}
+let grupos = loadGrupos();
+
+function renderGrupos(){
+  const cont = document.getElementById('lista-grupos');
+  const nombres = Object.keys(grupos);
+  if(nombres.length===0){
+    cont.innerHTML = `<div class="empty"><div class="display">Aún no hay grupos guardados</div></div>`;
+  } else {
+    cont.innerHTML = nombres.map(n=>`
+      <div class="form-card" style="max-width:100%; padding:16px 18px; display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <strong>${n}</strong>
+          <div style="font-size:0.8rem; color:var(--ink-soft);">${grupos[n].length} alumno(s)</div>
+        </div>
+        <div style="display:flex; gap:8px;">
+          <button class="btn btn-ghost btn-editar-grupo" data-nombre="${n}">Editar</button>
+          <button class="btn btn-danger btn-borrar-grupo" data-nombre="${n}">Borrar</button>
+        </div>
+      </div>
+    `).join("");
+    cont.querySelectorAll('.btn-borrar-grupo').forEach(b=>b.addEventListener('click', e=>{
+      const n = e.target.dataset.nombre;
+      if(confirm(`¿Borrar el grupo "${n}"?`)){
+        delete grupos[n];
+        saveGrupos(grupos);
+        renderGrupos();
+        renderGrupoSelect();
+      }
+    }));
+    cont.querySelectorAll('.btn-editar-grupo').forEach(b=>b.addEventListener('click', e=>{
+      const n = e.target.dataset.nombre;
+      document.getElementById('grupo-nombre').value = n;
+      document.getElementById('grupo-alumnos').value = grupos[n].join("\n");
+      window.scrollTo({top:0, behavior:'smooth'});
+    }));
+  }
+  renderGrupoSelect();
+}
+
+function renderGrupoSelect(){
+  const sel = document.getElementById('rubric-grupo-select');
+  const actual = sel.value;
+  sel.innerHTML = `<option value="">Sin grupo (líneas en blanco al imprimir)</option>` +
+    Object.keys(grupos).map(n=>`<option value="${n}">${n} (${grupos[n].length})</option>`).join("");
+  if(Object.keys(grupos).includes(sesionActual.rubrica.grupoSeleccionado)){
+    sel.value = sesionActual.rubrica.grupoSeleccionado;
+  }
+}
+
+document.getElementById('btn-guardar-grupo').addEventListener('click', ()=>{
+  const nombre = document.getElementById('grupo-nombre').value.trim();
+  if(!nombre){ alert('Ponle un nombre al grupo (ej: 3º ESO A).'); return; }
+  const alumnos = document.getElementById('grupo-alumnos').value.split("\n").map(s=>s.trim()).filter(s=>s.length>0);
+  grupos[nombre] = alumnos;
+  saveGrupos(grupos);
+  document.getElementById('grupo-nombre').value = "";
+  document.getElementById('grupo-alumnos').value = "";
+  renderGrupos();
+});
+document.getElementById('btn-limpiar-grupo').addEventListener('click', ()=>{
+  document.getElementById('grupo-nombre').value = "";
+  document.getElementById('grupo-alumnos').value = "";
+});
+document.getElementById('rubric-grupo-select').addEventListener('change', e=>{
+  sesionActual.rubrica.grupoSeleccionado = e.target.value;
+  saveSesion(sesionActual);
+});
+
+document.getElementById('btn-imprimir-sesion').addEventListener('click', ()=>{
+ try{
+  const printArea = document.getElementById('printArea');
+  let html = `<div class="print-header"><h2 style="font-family:'Oswald',sans-serif;margin:0;">${sesionActual.nombre || 'Sesión sin nombre'}</h2>
+  <p style="margin:4px 0 0 0; color:#5B6270;">Duración total: ${(sesionActual.items||[]).reduce((a,i)=>a+(i.duracion||0),0)} min</p></div>`;
+  Object.keys(BLOQUES).forEach(bloqueKey=>{
+    const items = (sesionActual.items||[]).filter(i=>i.bloque===bloqueKey);
+    html += `<div class="print-lane"><h4>${BLOQUES[bloqueKey]}</h4>`;
+    if(items.length===0){ html += `<div class="print-ex">—</div>`; }
+    else { items.forEach(it=>{
+      const ejOriginal = ejercicios.find(x=>x.id===it.ejId);
+      const desc = ejOriginal && ejOriginal.descripcion ? `<div class="print-ex-desc">${ejOriginal.descripcion}</div>` : "";
+      const img = ejOriginal && ejOriginal.imagen ? `<img class="print-ex-img" src="${ejOriginal.imagen}">` : "";
+      html += `<div class="print-ex"><div class="print-ex-row">${img}<div><div class="print-ex-title">${it.nombre} — ${it.duracion} min</div>${desc}</div></div></div>`;
+    }); }
+    html += `</div>`;
+  });
+
+  const rub = sesionActual.rubrica || {};
+  const criteriosValidos = rub.evaluar ? (rub.criterios||[]).filter(c=>c && c.trim()!=="") : [];
+  if(criteriosValidos.length>0){
+    let rubHtml = `<div class="print-rubric"><h4 style="font-family:'Oswald',sans-serif;margin:18px 0 4px;">Rúbrica de evaluación</h4>`;
+    rubHtml += `<table><thead><tr><th>Alumno/a</th>`;
+    criteriosValidos.forEach(c=>{ rubHtml += `<th>${c}</th>`; });
+    rubHtml += `<th>Nota (media)</th></tr></thead><tbody>`;
+    const nombreGrupo = rub.grupoSeleccionado;
+    const alumnosGrupo = (nombreGrupo && grupos && grupos[nombreGrupo]) ? grupos[nombreGrupo] : null;
+    const nFilas = alumnosGrupo ? alumnosGrupo.length : (rub.nAlumnos || 25);
+    for(let i=0;i<nFilas;i++){
+      const nombreAlumno = alumnosGrupo ? alumnosGrupo[i] : "&nbsp;";
+      rubHtml += `<tr><td>${nombreAlumno}</td>`;
+      criteriosValidos.forEach(()=>{ rubHtml += `<td>&nbsp;</td>`; });
+      rubHtml += `<td>&nbsp;</td></tr>`;
+    }
+    rubHtml += `</tbody></table>`;
+    rubHtml += `<div class="legend">Escala: ${(rub.escala||[]).map(n=>`${n.label} = ${n.valor}`).join(' · ')}. Nota = media de los criterios marcados.</div>`;
+    rubHtml += `</div>`;
+    html += rubHtml;
+  }
+
+  const printDoc = `<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">
+  <title>${(sesionActual.nombre || 'Sesión de EF').replace(/</g,'')}</title>
+  <style>
+    body{ font-family: Arial, sans-serif; color:#22262B; padding:24px; max-width:800px; margin:0 auto; }
+    .print-header{ border-bottom:3px solid #E8542A; padding-bottom:10px; margin-bottom:16px; }
+    .print-lane h4{ background:#1B2A4A; color:white; padding:5px 10px; border-radius:4px; font-size:0.95rem; margin:14px 0 6px; }
+    .print-ex{ padding:8px 0 8px 12px; border-bottom:1px dashed #ddd; font-size:0.95rem; }
+    .print-ex-row{ display:flex; gap:12px; align-items:flex-start; }
+    .print-ex-img{ width:90px; height:60px; object-fit:contain; background:#F7F6F2; border-radius:4px; flex-shrink:0; }
+    .print-ex-title{ font-weight:600; }
+    .print-ex-desc{ font-size:0.88rem; color:#444; margin-top:3px; line-height:1.4; }
+    .print-rubric table{ width:100%; border-collapse:collapse; margin-top:10px; font-size:0.85rem; }
+    .print-rubric th, .print-rubric td{ border:1px solid #ccc; padding:5px 6px; text-align:left; }
+    .print-rubric th{ background:#EFEFEF; }
+    .print-rubric .legend{ font-size:0.8rem; color:#555; margin-top:6px; }
+    .print-btn{ margin-top:20px; padding:10px 18px; background:#E8542A; color:white; border:none; border-radius:6px; font-size:0.9rem; cursor:pointer; }
+    @media print{ .print-btn{ display:none; } }
+  </style>
+  </head><body>
+  ${html}
+  <button class="print-btn" onclick="window.print()">Imprimir esta página</button>
+  </body></html>`;
+
+  const ventana = window.open('', '_blank');
+  if(!ventana){
+    alert('El navegador ha bloqueado la ventana nueva. Permite las ventanas emergentes para este archivo e inténtalo de nuevo.');
+    return;
+  }
+  ventana.document.open();
+  ventana.document.write(printDoc);
+  ventana.document.close();
+ }catch(err){
+   alert('No se ha podido generar la impresión. Detalle del error: ' + err.message);
+   console.error('Error al imprimir la sesión:', err);
+ }
+});
+
+/* ===================== INIT ===================== */
+renderBanco();
+</script>
+</body>
+</html>
