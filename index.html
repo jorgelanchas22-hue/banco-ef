@@ -1346,6 +1346,7 @@ document.getElementById('btn-importar-sesion-json').addEventListener('click', ()
     items: datos.items.map((it,i)=>({
       ejId: it.ejId || ('manual_'+Date.now()+'_'+i),
       nombre: it.nombre || 'Ejercicio sin nombre',
+      descripcion: it.descripcion || "",
       duracion: parseInt(it.duracion)||5,
       bloque: it.bloque || 'principal'
     })),
