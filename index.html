@@ -1138,7 +1138,7 @@ function renderSesionBanco(){
   }));
   grid.querySelectorAll('.btn-add-estacion').forEach(b=>b.addEventListener('click', e=>{
     const ej = ejercicios.find(x=>x.id===e.target.dataset.id);
-    circuitoEstaciones.push({ejId: ej.id, nombre:ej.nombre, duracion:ej.duracion});
+    circuitoEstaciones.push({ejId: ej.id, nombre:ej.nombre, descripcion: ej.descripcion || ""});
     renderCircuitoPanel();
   }));
 }
@@ -1608,7 +1608,7 @@ document.getElementById('btn-imprimir-sesion').addEventListener('click', ()=>{
     if(items.length===0){ html += `<div class="print-ex">—</div>`; }
     else { items.forEach(it=>{
       const ejOriginal = ejercicios.find(x=>x.id===it.ejId);
-      const descTexto = (ejOriginal && ejOriginal.descripcion) || it.descripcion || "";
+      const descTexto = it.descripcion || (ejOriginal && ejOriginal.descripcion) || "";
       const desc = descTexto ? `<div class="print-ex-desc">${descTexto}</div>` : "";
       const img = ejOriginal && ejOriginal.imagen ? `<img class="print-ex-img" src="${ejOriginal.imagen}">` : "";
       html += `<div class="print-ex"><div class="print-ex-row">${img}<div><div class="print-ex-title">${it.nombre} — ${it.duracion} min</div>${desc}</div></div></div>`;
