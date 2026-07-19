@@ -321,15 +321,15 @@
 
         <div id="circuito-panel" style="display:none; background:var(--chalk); border:1.5px dashed var(--track); border-radius:8px; padding:12px; margin-bottom:14px;">
           <div style="font-size:0.78rem; color:var(--ink-soft); margin-bottom:8px;">
-            Marca "+ Estación" en los ejercicios del banco (a la izquierda) para añadirlos aquí como estaciones del circuito, en el orden en que los vayas marcando. También puedes crear una estación nueva sin guardarla en el banco:
+            Marca "+ Estación" en un ejercicio del banco (a la izquierda), o crea una estación nueva aquí mismo:
           </div>
           <div style="display:flex; gap:6px; margin-bottom:6px;">
             <input type="text" id="nueva-estacion-nombre" placeholder="Nombre de la estación" style="flex:2;">
             <input type="number" id="nueva-estacion-duracion" min="1" value="8" placeholder="min" style="width:60px;">
           </div>
-          <div style="display:flex; gap:6px; margin-bottom:10px;">
-            <input type="text" id="nueva-estacion-desc" placeholder="Descripción (opcional)" style="flex:1;">
-            <button class="btn btn-ghost" id="btn-add-nueva-estacion">+ Añadir</button>
+          <textarea id="nueva-estacion-desc" rows="3" placeholder="Describe en qué consiste esta estación (opcional)..." style="width:100%; margin-bottom:8px;"></textarea>
+          <div class="form-actions" style="margin-top:0; margin-bottom:10px;">
+            <button class="btn btn-ghost" id="btn-add-nueva-estacion">+ Añadir estación</button>
           </div>
           <div id="circuito-estaciones"></div>
           <div style="display:flex; align-items:center; gap:10px; margin-top:10px; flex-wrap:wrap;">
