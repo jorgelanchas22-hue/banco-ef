@@ -282,6 +282,12 @@
   <section id="view-sesion" class="view">
     <div class="session-layout">
       <div>
+        <div class="form-card" style="max-width:100%; margin-bottom:16px;">
+          <h3 style="margin-top:0;">📚 Sesiones guardadas</h3>
+          <input type="text" id="buscar-sesiones-guardadas" placeholder="Buscar por nombre de sesión..." style="width:100%; margin-bottom:10px;">
+          <div id="lista-sesiones-guardadas"></div>
+        </div>
+
         <div class="filterbar">
           <div class="field">
             <label>Curso de la sesión</label>
@@ -344,7 +350,19 @@
             <div class="rubric-sub">Criterios (mismo peso, máx. 3)</div>
             <div id="rubric-criterios"></div>
             <button class="rubric-add" id="btn-add-criterio">+ Añadir criterio</button>
-            <button class="rubric-add" id="btn-sugerir-criterios" style="margin-top:4px;">🔄 Sugerir según el contenido de la sesión</button>
+
+            <div class="rubric-sub">Rellenar con plantilla de criterios</div>
+            <div style="display:flex; gap:6px; align-items:center;">
+              <select id="select-plantilla-criterios" style="flex:1;">
+                <option value="">Elige una plantilla...</option>
+                <option value="contenido">🔄 Según el contenido de esta sesión</option>
+                <option value="boja1eso">📋 BOJA 1º ESO</option>
+                <option value="boja3eso">📋 BOJA 3º ESO</option>
+                <option value="bojaentregas">📋 BOJA 2º/4º ESO (Entregas EF: Rigor/Autonomía/Comunicación)</option>
+                <option value="bojabach">📋 BOJA Bachillerato</option>
+              </select>
+              <button class="btn btn-ghost" id="btn-aplicar-plantilla">Aplicar</button>
+            </div>
 
             <div class="rubric-sub">Escala (valores fijos, no rangos)</div>
             <div id="rubric-escala"></div>
@@ -362,6 +380,7 @@
 
         <div class="form-actions">
           <button class="btn btn-ghost" id="btn-vaciar-sesion">Vaciar</button>
+          <button class="btn btn-ghost" id="btn-guardar-biblioteca">💾 Guardar en biblioteca</button>
           <button class="btn btn-primary" id="btn-imprimir-sesion">Imprimir sesión</button>
         </div>
       </div>
@@ -533,6 +552,16 @@ function cargarDesdeFirebase(){
     const remote = snap.val();
     if(remote){ grupos = Object.assign({}, grupos, remote); saveGrupos(grupos); }
   }).catch(err=>console.error('Error cargando grupos de Firebase:', err));
+  firebaseDB.ref('bancoEF/sesionesGuardadas').once('value').then(snap=>{
+    const remote = snap.val();
+    if(remote && Array.isArray(remote) && remote.length>0){
+      const remoteIds = new Set(remote.map(x=>x.id));
+      const soloLocal = sesionesGuardadas.filter(x=>!remoteIds.has(x.id));
+      sesionesGuardadas = remote.concat(soloLocal);
+      saveSesionesGuardadas(sesionesGuardadas);
+      if(document.getElementById('view-sesion').classList.contains('active')){ renderSesionesGuardadas(); }
+    }
+  }).catch(err=>console.error('Error cargando sesiones guardadas de Firebase:', err));
 }
 
 function syncFirebase(path, data){
@@ -546,7 +575,7 @@ function syncFirebase(path, data){
 
 
 /* ===================== DATOS BASE ===================== */
-const CURSOS = ["1º ESO","2º ESO","3º ESO","4º ESO","1º Bach","2º Bach"];
+const CURSOS = ["1º ESO","2º ESO","3º ESO","4º ESO","1º Bach"];
 const BLOQUES = { calentamiento:"Calentamiento", principal:"Parte principal", vuelta:"Vuelta a la calma" };
 const CONTENIDOS = ["Condición física","Juegos y deportes","Expresión corporal","Orientación","Otros"];
 const SUBCONTENIDOS = {
@@ -671,7 +700,7 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
     document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
     btn.classList.add('active');
     document.getElementById('view-'+btn.dataset.view).classList.add('active');
-    if(btn.dataset.view==='sesion'){ renderSesionBanco(); renderLanes(); renderRubrica(); }
+    if(btn.dataset.view==='sesion'){ renderSesionBanco(); renderLanes(); renderRubrica(); renderSesionesGuardadas(); }
     if(btn.dataset.view==='banco'){ renderBanco(); }
     if(btn.dataset.view==='alumnos'){ renderGrupos(); }
   });
@@ -1178,6 +1207,84 @@ document.getElementById('btn-vaciar-sesion').addEventListener('click', ()=>{
   }
 });
 
+/* ===================== BIBLIOTECA DE SESIONES GUARDADAS ===================== */
+const SESIONES_GUARDADAS_KEY = "bancoEF_sesionesGuardadas_v1";
+function loadSesionesGuardadas(){
+  try{ return JSON.parse(localStorage.getItem(SESIONES_GUARDADAS_KEY)) || []; }catch(e){ return []; }
+}
+function saveSesionesGuardadas(lista){
+  try{ localStorage.setItem(SESIONES_GUARDADAS_KEY, JSON.stringify(lista)); }
+  catch(e){ alert('No se han podido guardar las sesiones: ' + e.message); }
+  syncFirebase('bancoEF/sesionesGuardadas', lista);
+}
+let sesionesGuardadas = loadSesionesGuardadas();
+let filtroSesionesGuardadas = "";
+
+function renderSesionesGuardadas(){
+  const cont = document.getElementById('lista-sesiones-guardadas');
+  const filtradas = sesionesGuardadas.filter(s=>(s.nombre||'').toLowerCase().includes(filtroSesionesGuardadas.toLowerCase()));
+  if(filtradas.length===0){
+    cont.innerHTML = `<div class="lane-empty">${sesionesGuardadas.length===0 ? 'Aún no has guardado ninguna sesión.' : 'Ninguna sesión coincide con la búsqueda.'}</div>`;
+    return;
+  }
+  cont.innerHTML = filtradas.map(s=>{
+    const totalMin = (s.items||[]).reduce((a,i)=>a+(i.duracion||0),0);
+    return `
+    <div class="sess-item" style="align-items:center;">
+      <span class="name"><strong>${s.nombre||'Sin nombre'}</strong> — ${(s.items||[]).length} ejercicio(s), ${totalMin} min</span>
+      <button class="btn btn-ghost btn-cargar-sesion" data-id="${s.id}">Cargar</button>
+      <button class="btn btn-danger btn-borrar-sesion-guardada" data-id="${s.id}">Borrar</button>
+    </div>`;
+  }).join("");
+  cont.querySelectorAll('.btn-cargar-sesion').forEach(b=>b.addEventListener('click', e=>{
+    const s = sesionesGuardadas.find(x=>x.id===e.target.dataset.id);
+    if(!s) return;
+    if(confirm(`¿Cargar "${s.nombre}"? Esto sustituirá la sesión que tengas ahora mismo en el diseñador (la actual no se pierde si ya la guardaste antes).`)){
+      sesionActual = JSON.parse(JSON.stringify(s));
+      delete sesionActual.id;
+      saveSesion(sesionActual);
+      renderLanes();
+      renderRubrica();
+    }
+  }));
+  cont.querySelectorAll('.btn-borrar-sesion-guardada').forEach(b=>b.addEventListener('click', e=>{
+    if(confirm('¿Borrar esta sesión de la biblioteca?')){
+      sesionesGuardadas = sesionesGuardadas.filter(x=>x.id!==e.target.dataset.id);
+      saveSesionesGuardadas(sesionesGuardadas);
+      renderSesionesGuardadas();
+    }
+  }));
+}
+
+document.getElementById('buscar-sesiones-guardadas').addEventListener('input', e=>{
+  filtroSesionesGuardadas = e.target.value;
+  renderSesionesGuardadas();
+});
+
+document.getElementById('btn-guardar-biblioteca').addEventListener('click', ()=>{
+  if(!sesionActual.nombre || sesionActual.nombre.trim()===""){
+    alert('Ponle un nombre a la sesión (arriba del todo) antes de guardarla en la biblioteca.');
+    return;
+  }
+  if(sesionActual.items.length===0){
+    alert('Añade al menos un ejercicio antes de guardar la sesión.');
+    return;
+  }
+  const existente = sesionesGuardadas.find(s=>s.nombre.trim().toLowerCase()===sesionActual.nombre.trim().toLowerCase());
+  const copia = JSON.parse(JSON.stringify(sesionActual));
+  if(existente){
+    if(!confirm(`Ya existe una sesión guardada con el nombre "${sesionActual.nombre}". ¿Sobrescribirla?`)) return;
+    copia.id = existente.id;
+    sesionesGuardadas = sesionesGuardadas.map(s=>s.id===existente.id ? copia : s);
+  } else {
+    copia.id = 'ses_'+Date.now();
+    sesionesGuardadas.push(copia);
+  }
+  saveSesionesGuardadas(sesionesGuardadas);
+  renderSesionesGuardadas();
+  alert(`Sesión "${sesionActual.nombre}" guardada en la biblioteca.`);
+});
+
 /* ===================== RUBRICA DE EVALUACION ===================== */
 function renderRubrica(){
   const critBox = document.getElementById('rubric-criterios');
@@ -1265,12 +1372,37 @@ document.getElementById('btn-add-criterio').addEventListener('click', ()=>{
     renderRubrica();
   }
 });
-document.getElementById('btn-sugerir-criterios').addEventListener('click', ()=>{
-  if(confirm('Esto sustituirá los criterios actuales por sugerencias según el contenido de los ejercicios de esta sesión. ¿Continuar?')){
-    sesionActual.rubrica.criterios = sugerirCriterios();
-    saveSesion(sesionActual);
-    renderRubrica();
-  }
+const PLANTILLAS_CRITERIOS = {
+  boja1eso: [
+    "Planifica y aplica hábitos saludables en su práctica motriz",
+    "Resuelve situaciones motrices individuales y cooperativas con autonomía creciente",
+    "Respeta a los demás, las normas y muestra actitudes de juego limpio"
+  ],
+  boja3eso: [
+    "Planifica y autorregula de forma autónoma su actividad física, incorporando hábitos saludables",
+    "Desarrolla y adapta proyectos motores ante situaciones de creciente incertidumbre",
+    "Coopera, respeta la diversidad y actúa con actitud crítica ante comportamientos antideportivos"
+  ],
+  bojaentregas: [
+    "Rigor y contenido (vinculación con lo trabajado)",
+    "Proceso y autonomía (uso de herramientas, autorregulación)",
+    "Comunicación final del resultado"
+  ],
+  bojabach: [
+    "Planifica y autoevalúa de forma autónoma su propia práctica motriz",
+    "Resuelve con eficacia y autonomía las situaciones motrices planteadas",
+    "Muestra respeto, juego limpio y autorregulación emocional ante el éxito o el fracaso"
+  ]
+};
+
+document.getElementById('btn-aplicar-plantilla').addEventListener('click', ()=>{
+  const sel = document.getElementById('select-plantilla-criterios');
+  const valor = sel.value;
+  if(!valor){ alert('Elige antes una plantilla del desplegable.'); return; }
+  if(!confirm('Esto sustituirá los criterios actuales por los de la plantilla elegida. ¿Continuar?')) return;
+  sesionActual.rubrica.criterios = valor==='contenido' ? sugerirCriterios() : PLANTILLAS_CRITERIOS[valor];
+  saveSesion(sesionActual);
+  renderRubrica();
 });
 document.getElementById('btn-add-nivel').addEventListener('click', ()=>{
   sesionActual.rubrica.escala.push({label:"Nuevo nivel", valor: sesionActual.rubrica.escala.length+1});
