@@ -286,6 +286,15 @@
           <h3 style="margin-top:0;">📚 Sesiones guardadas</h3>
           <input type="text" id="buscar-sesiones-guardadas" placeholder="Buscar por nombre de sesión..." style="width:100%; margin-bottom:10px;">
           <div id="lista-sesiones-guardadas"></div>
+
+          <details style="margin-top:12px;">
+            <summary style="cursor:pointer; font-size:0.82rem; color:var(--ink-soft); font-weight:600;">➕ Pegar una sesión completa en JSON</summary>
+            <textarea id="import-sesion-json" rows="5" placeholder='{"nombre":"Mi sesión", "items":[{"nombre":"Ejercicio 1","descripcion":"...","duracion":10,"bloque":"calentamiento"}, {"nombre":"Ejercicio 2","duracion":15,"bloque":"principal"}]}' style="width:100%; font-family:monospace; font-size:0.78rem; margin-top:8px;"></textarea>
+            <div class="form-actions">
+              <button class="btn btn-primary" id="btn-importar-sesion-json">Añadir a la biblioteca</button>
+            </div>
+            <div id="import-sesion-msg" style="font-size:0.8rem; margin-top:6px;"></div>
+          </details>
         </div>
 
         <div class="filterbar">
@@ -1259,6 +1268,43 @@ function renderSesionesGuardadas(){
 document.getElementById('buscar-sesiones-guardadas').addEventListener('input', e=>{
   filtroSesionesGuardadas = e.target.value;
   renderSesionesGuardadas();
+});
+
+document.getElementById('btn-importar-sesion-json').addEventListener('click', ()=>{
+  const msg = document.getElementById('import-sesion-msg');
+  const raw = document.getElementById('import-sesion-json').value.trim();
+  if(!raw){ msg.textContent = "Pega primero el JSON de la sesión."; msg.style.color = "#B23A2A"; return; }
+  let datos;
+  try{ datos = JSON.parse(raw); }catch(e){ msg.textContent = "Ese texto no es JSON válido. Revisa el formato."; msg.style.color="#B23A2A"; return; }
+  if(!datos.nombre || !Array.isArray(datos.items)){
+    msg.textContent = 'El JSON debe tener al menos "nombre" y "items" (una lista de ejercicios).';
+    msg.style.color = "#B23A2A";
+    return;
+  }
+  const nuevaSesion = {
+    id: 'ses_'+Date.now(),
+    nombre: datos.nombre,
+    items: datos.items.map((it,i)=>({
+      ejId: it.ejId || ('manual_'+Date.now()+'_'+i),
+      nombre: it.nombre || 'Ejercicio sin nombre',
+      duracion: parseInt(it.duracion)||5,
+      bloque: it.bloque || 'principal'
+    })),
+    rubrica: datos.rubrica || JSON.parse(JSON.stringify(DEFAULT_RUBRICA))
+  };
+  const existente = sesionesGuardadas.find(s=>s.nombre.trim().toLowerCase()===nuevaSesion.nombre.trim().toLowerCase());
+  if(existente){
+    if(!confirm(`Ya existe una sesión guardada con el nombre "${nuevaSesion.nombre}". ¿Sobrescribirla?`)) return;
+    nuevaSesion.id = existente.id;
+    sesionesGuardadas = sesionesGuardadas.map(s=>s.id===existente.id ? nuevaSesion : s);
+  } else {
+    sesionesGuardadas.push(nuevaSesion);
+  }
+  saveSesionesGuardadas(sesionesGuardadas);
+  renderSesionesGuardadas();
+  document.getElementById('import-sesion-json').value = "";
+  msg.textContent = `Sesión "${nuevaSesion.nombre}" añadida a la biblioteca (${nuevaSesion.items.length} ejercicio(s)).`;
+  msg.style.color = "#3F7A3F";
 });
 
 document.getElementById('btn-guardar-biblioteca').addEventListener('click', ()=>{
