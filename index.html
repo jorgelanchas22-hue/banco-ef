@@ -321,15 +321,29 @@
 
         <div id="circuito-panel" style="display:none; background:var(--chalk); border:1.5px dashed var(--track); border-radius:8px; padding:12px; margin-bottom:14px;">
           <div style="font-size:0.78rem; color:var(--ink-soft); margin-bottom:8px;">
-            Marca "+ Estación" en los ejercicios del banco (a la izquierda) para añadirlos aquí como estaciones del circuito, en el orden en que los vayas marcando.
+            Marca "+ Estación" en los ejercicios del banco (a la izquierda) para añadirlos aquí como estaciones del circuito, en el orden en que los vayas marcando. También puedes crear una estación nueva sin guardarla en el banco:
+          </div>
+          <div style="display:flex; gap:6px; margin-bottom:6px;">
+            <input type="text" id="nueva-estacion-nombre" placeholder="Nombre de la estación" style="flex:2;">
+            <input type="number" id="nueva-estacion-duracion" min="1" value="8" placeholder="min" style="width:60px;">
+          </div>
+          <div style="display:flex; gap:6px; margin-bottom:10px;">
+            <input type="text" id="nueva-estacion-desc" placeholder="Descripción (opcional)" style="flex:1;">
+            <button class="btn btn-ghost" id="btn-add-nueva-estacion">+ Añadir</button>
           </div>
           <div id="circuito-estaciones"></div>
-          <div style="display:flex; align-items:center; gap:10px; margin-top:10px;">
+          <div style="display:flex; align-items:center; gap:10px; margin-top:10px; flex-wrap:wrap;">
             <label style="font-size:0.78rem; color:var(--ink-soft); text-transform:uppercase; font-weight:600;">Nº de vueltas</label>
             <input type="number" id="circuito-vueltas" min="1" value="2" style="width:70px;">
+            <label style="font-size:0.78rem; color:var(--ink-soft); text-transform:uppercase; font-weight:600;">Bloque destino</label>
+            <select id="circuito-bloque-destino">
+              <option value="calentamiento">Calentamiento</option>
+              <option value="principal" selected>Parte principal</option>
+              <option value="vuelta">Vuelta a la calma</option>
+            </select>
           </div>
           <div class="form-actions">
-            <button class="btn btn-primary" id="btn-generar-circuito">Generar circuito en Parte principal</button>
+            <button class="btn btn-primary" id="btn-generar-circuito">Generar circuito</button>
             <button class="btn btn-ghost" id="btn-cancelar-circuito">Cancelar</button>
           </div>
         </div>
@@ -1131,6 +1145,24 @@ document.getElementById('btn-toggle-circuito').addEventListener('click', ()=>{
   if(!abierto){ renderCircuitoPanel(); }
 });
 
+document.getElementById('btn-add-nueva-estacion').addEventListener('click', ()=>{
+  const nombreInput = document.getElementById('nueva-estacion-nombre');
+  const duracionInput = document.getElementById('nueva-estacion-duracion');
+  const descInput = document.getElementById('nueva-estacion-desc');
+  const nombre = nombreInput.value.trim();
+  if(!nombre){ alert('Ponle un nombre a la estación.'); return; }
+  circuitoEstaciones.push({
+    ejId: 'circ_'+Date.now(),
+    nombre: nombre,
+    duracion: parseInt(duracionInput.value)||8,
+    descripcion: descInput.value.trim()
+  });
+  nombreInput.value = "";
+  duracionInput.value = "8";
+  descInput.value = "";
+  renderCircuitoPanel();
+});
+
 function renderCircuitoPanel(){
   const cont = document.getElementById('circuito-estaciones');
   if(circuitoEstaciones.length===0){
@@ -1155,11 +1187,12 @@ function renderCircuitoPanel(){
 }
 
 document.getElementById('btn-generar-circuito').addEventListener('click', ()=>{
-  if(circuitoEstaciones.length===0){ alert('Añade al menos una estación desde el banco (botón "+ Estación").'); return; }
+  if(circuitoEstaciones.length===0){ alert('Añade al menos una estación desde el banco (botón "+ Estación") o crea una nueva.'); return; }
   const vueltas = parseInt(document.getElementById('circuito-vueltas').value)||1;
+  const bloqueDestino = document.getElementById('circuito-bloque-destino').value;
   for(let v=0; v<vueltas; v++){
     circuitoEstaciones.forEach(est=>{
-      sesionActual.items.push({ejId: est.ejId, nombre: est.nombre + ` (vuelta ${v+1})`, duracion: est.duracion, bloque:'principal'});
+      sesionActual.items.push({ejId: est.ejId, nombre: est.nombre + ` (vuelta ${v+1})`, duracion: est.duracion, bloque:bloqueDestino, descripcion: est.descripcion || undefined});
     });
   }
   saveSesion(sesionActual);
@@ -1549,7 +1582,8 @@ document.getElementById('btn-imprimir-sesion').addEventListener('click', ()=>{
     if(items.length===0){ html += `<div class="print-ex">—</div>`; }
     else { items.forEach(it=>{
       const ejOriginal = ejercicios.find(x=>x.id===it.ejId);
-      const desc = ejOriginal && ejOriginal.descripcion ? `<div class="print-ex-desc">${ejOriginal.descripcion}</div>` : "";
+      const descTexto = (ejOriginal && ejOriginal.descripcion) || it.descripcion || "";
+      const desc = descTexto ? `<div class="print-ex-desc">${descTexto}</div>` : "";
       const img = ejOriginal && ejOriginal.imagen ? `<img class="print-ex-img" src="${ejOriginal.imagen}">` : "";
       html += `<div class="print-ex"><div class="print-ex-row">${img}<div><div class="print-ex-title">${it.nombre} — ${it.duracion} min</div>${desc}</div></div></div>`;
     }); }
