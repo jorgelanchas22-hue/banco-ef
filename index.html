@@ -1277,6 +1277,23 @@ document.getElementById('btn-vaciar-sesion').addEventListener('click', ()=>{
 
 /* ===================== BIBLIOTECA DE SESIONES GUARDADAS ===================== */
 const SESIONES_GUARDADAS_KEY = "bancoEF_sesionesGuardadas_v1";
+const SESIONES_BATCHES_KEY = "bancoEF_sesionesBatchesAplicados_v1";
+const SESIONES_PRECARGADAS = {
+  "juegos_velocidad": {
+    "nombre": "Juegos de velocidad",
+    "items": [
+      {"nombre": "Calentamiento", "descripcion": "Calentamiento general previo a la fase principal.", "duracion": 10, "bloque": "calentamiento"},
+      {"nombre": "Tocado", "descripcion": "Por parejas que se desplazan por todo el terreno caminando uno detrás de otro. Cuando el alumno que va detrás decide tocar la espalda de su compañero, este debe atrapar a su pareja, que escapará de él. Cuando sea atrapado se cambian los papeles y comienza de nuevo. (Organización: parejas. Sin material.)", "duracion": 6, "bloque": "principal"},
+      {"nombre": "El gato y el ratón", "descripcion": "Por parejas formando un círculo, los miembros de cada pareja se colocan uno detrás de otro y el de detrás se agarra a la cintura del de delante. La pareja que indique el profesor se queda: uno será el gato y perseguirá al ratón intentando tocarlo. Si el ratón se agarra al último integrante de cualquier pareja, deja de ser perseguido y el miembro que estaba delante pasa a convertirse en el nuevo ratón y debe escapar del gato. Cuando el gato toca al ratón se cambian los papeles. (Organización: parejas en círculo. Sin material.)", "duracion": 6, "bloque": "principal"},
+      {"nombre": "El gato travieso", "descripcion": "Un alumno se queda y será el gato travieso, que debe perseguir al resto de compañeros. Cuando toca a uno de ellos, el alumno tocado debe continuar corriendo con una mano colocada en el lugar donde fue tocado. Si vuelve a ser tocado, colocará la otra mano en el nuevo lugar. A indicación del profesor se cambia de gato. (Organización: gran grupo. Sin material.)", "duracion": 6, "bloque": "principal"},
+      {"nombre": "La cacería", "descripcion": "Un alumno será el cazador y se sitúa en el centro del terreno. El resto forma varios grupos y a cada miembro se le asigna el nombre de un animal salvaje, colocándose cada grupo en un extremo. Cuando el cazador dice en voz alta el nombre de un animal, los alumnos nombrados salen corriendo hacia el otro lado del terreno y el cazador intenta tocar a alguno. El alumno tocado se coloca en la zona central junto al cazador, donde cerrará el paso al resto de animales sin poder moverse del lugar. El juego continúa hasta que no quede nadie por atrapar. El último alumno en ser pillado pasa a ser el nuevo cazador. (Organización: gran grupo dividido en varios grupos. Sin material.)", "duracion": 6, "bloque": "principal"},
+      {"nombre": "El lobo y las ovejas", "descripcion": "En un extremo del terreno se coloca el lobo en cuadrupedia y el resto de la clase se sitúa cerca de él para provocarlo. Cuando el lobo decide levantarse y perseguir a las ovejas, estas deben escapar y llegar a su refugio, delimitado por unos bancos. Si una oveja es tocada por el lobo antes de alcanzar el refugio, ambos intercambian sus papeles. (Organización: gran grupo. Material: bancos suecos.)", "duracion": 6, "bloque": "principal"},
+      {"nombre": "Recoger el material", "descripcion": "Recogida y organización del material utilizado durante la sesión.", "duracion": 2, "bloque": "vuelta"},
+      {"nombre": "Estiramientos", "descripcion": "Realización de estiramientos para finalizar la sesión.", "duracion": 3, "bloque": "vuelta"}
+    ]
+  }
+};
+
 function loadSesionesGuardadas(){
   try{ return JSON.parse(localStorage.getItem(SESIONES_GUARDADAS_KEY)) || []; }catch(e){ return []; }
 }
@@ -1285,7 +1302,32 @@ function saveSesionesGuardadas(lista){
   catch(e){ alert('No se han podido guardar las sesiones: ' + e.message); }
   syncFirebase('bancoEF/sesionesGuardadas', lista);
 }
-let sesionesGuardadas = loadSesionesGuardadas();
+
+function aplicarSesionesPrecargadas(lista){
+  let aplicados = [];
+  try{ aplicados = JSON.parse(localStorage.getItem(SESIONES_BATCHES_KEY)) || []; }catch(e){ aplicados = []; }
+  let hubo = false;
+  Object.keys(SESIONES_PRECARGADAS).forEach(clave=>{
+    if(!aplicados.includes(clave)){
+      const s = JSON.parse(JSON.stringify(SESIONES_PRECARGADAS[clave]));
+      s.id = 'ses_'+clave;
+      s.items = s.items.map((it,i)=>Object.assign({ejId:'manual_'+clave+'_'+i}, it));
+      s.rubrica = JSON.parse(JSON.stringify(DEFAULT_RUBRICA));
+      // Si ya existe una sesión guardada con el mismo nombre, la sustituye
+      lista = lista.filter(x=>x.nombre.trim().toLowerCase()!==s.nombre.trim().toLowerCase());
+      lista.push(s);
+      aplicados.push(clave);
+      hubo = true;
+    }
+  });
+  if(hubo){
+    localStorage.setItem(SESIONES_BATCHES_KEY, JSON.stringify(aplicados));
+    saveSesionesGuardadas(lista);
+  }
+  return lista;
+}
+
+let sesionesGuardadas = aplicarSesionesPrecargadas(loadSesionesGuardadas());
 let filtroSesionesGuardadas = "";
 
 function renderSesionesGuardadas(){
