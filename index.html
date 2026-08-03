@@ -545,11 +545,7 @@ function firebaseConfigurado(){
 
 function actualizarEstadoSync(texto){
   const el = document.getElementById('sync-status');
-  if(el){
-    el.textContent = texto;
-    el.style.color = texto.indexOf('⚠️') === 0 ? '#ff6b6b' : '#B7C1D6';
-    el.style.fontWeight = texto.indexOf('⚠️') === 0 ? '600' : 'normal';
-  }
+  if(el) el.textContent = texto;
 }
 
 if(firebaseConfigurado()){
@@ -580,10 +576,13 @@ function marcarErrorCargaFirebase(origen, err){
 function cargarDesdeFirebase(){
   firebaseDB.ref('bancoEF/ejercicios').once('value').then(snap=>{
     const remote = snap.val();
+    const listaLocal = Array.isArray(ejercicios) ? ejercicios : [];
     if(remote && Array.isArray(remote) && remote.length>0){
-      const idsLocales = new Set(ejercicios.map(x=>x.id));
-      const soloRemoto = remote.filter(x=>!idsLocales.has(x.id));
-      ejercicios = ejercicios.concat(soloRemoto);
+      const idsLocales = new Set(listaLocal.map(x=>x && x.id));
+      const soloRemoto = remote.filter(x=>x && !idsLocales.has(x.id));
+      ejercicios = listaLocal.concat(soloRemoto);
+    } else {
+      ejercicios = listaLocal;
     }
     saveEjercicios(ejercicios);
     renderBanco();
@@ -591,14 +590,16 @@ function cargarDesdeFirebase(){
   }).catch(err=>marcarErrorCargaFirebase('los ejercicios', err));
   firebaseDB.ref('bancoEF/grupos').once('value').then(snap=>{
     const remote = snap.val();
-    if(remote){ grupos = Object.assign({}, remote, grupos); saveGrupos(grupos); }
+    const localObj = (grupos && typeof grupos==='object') ? grupos : {};
+    if(remote){ grupos = Object.assign({}, remote, localObj); saveGrupos(grupos); }
   }).catch(err=>marcarErrorCargaFirebase('los grupos', err));
   firebaseDB.ref('bancoEF/sesionesGuardadas').once('value').then(snap=>{
     const remote = snap.val();
+    const listaLocal = Array.isArray(sesionesGuardadas) ? sesionesGuardadas : [];
     if(remote && Array.isArray(remote) && remote.length>0){
-      const idsLocales = new Set(sesionesGuardadas.map(x=>x.id));
-      const soloRemoto = remote.filter(x=>!idsLocales.has(x.id));
-      sesionesGuardadas = sesionesGuardadas.concat(soloRemoto);
+      const idsLocales = new Set(listaLocal.map(x=>x && x.id));
+      const soloRemoto = remote.filter(x=>x && !idsLocales.has(x.id));
+      sesionesGuardadas = listaLocal.concat(soloRemoto);
       sesionesGuardadas = dedupeSesionesPrecargadas(sesionesGuardadas);
       saveSesionesGuardadas(sesionesGuardadas);
       if(document.getElementById('view-sesion').classList.contains('active')){ renderSesionesGuardadas(); }
@@ -626,13 +627,14 @@ function syncFirebase(path, data, esReintento){
 // para no borrar por accidente algo añadido desde otra pestaña/dispositivo.
 function syncFirebaseArrayMerge(path, localList, esReintento){
   if(!(firebaseListo && firebaseDB)) return;
+  const listaLocal = Array.isArray(localList) ? localList : [];
   firebaseDB.ref(path).once('value').then(snap=>{
     const remote = snap.val();
-    let fusionado = localList;
+    let fusionado = listaLocal;
     if(remote && Array.isArray(remote)){
-      const idsLocales = new Set(localList.map(x=>x.id));
-      const soloRemoto = remote.filter(x=>!idsLocales.has(x.id));
-      fusionado = localList.concat(soloRemoto);
+      const idsLocales = new Set(listaLocal.map(x=>x && x.id));
+      const soloRemoto = remote.filter(x=>x && !idsLocales.has(x.id));
+      fusionado = listaLocal.concat(soloRemoto);
     }
     firebaseDB.ref(path).set(fusionado).then(()=>{
       if(esReintento) actualizarEstadoSync('☁️ Sincronizado');
@@ -640,7 +642,7 @@ function syncFirebaseArrayMerge(path, localList, esReintento){
       console.error('Error guardando en Firebase:', err);
       if(!esReintento){
         actualizarEstadoSync('⚠️ Error de sincronización, reintentando...');
-        setTimeout(()=>syncFirebaseArrayMerge(path, localList, true), 4000);
+        setTimeout(()=>syncFirebaseArrayMerge(path, listaLocal, true), 4000);
       } else {
         actualizarEstadoSync('⚠️ Error de sincronización');
       }
