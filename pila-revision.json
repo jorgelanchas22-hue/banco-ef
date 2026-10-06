@@ -1,0 +1,3382 @@
+{
+  "resumen": {
+    "unidades": [
+      {
+        "id": "16-1",
+        "nombre": "Plan de entrenamiento",
+        "edad": 16,
+        "sesiones": 15,
+        "fichas": 74
+      },
+      {
+        "id": "16-2",
+        "nombre": "Mimo, malabares y equilibrio",
+        "edad": 16,
+        "sesiones": 6,
+        "fichas": 41
+      },
+      {
+        "id": "16-3",
+        "nombre": "Fisioterapia y primeros auxilios",
+        "edad": 16,
+        "sesiones": 9,
+        "fichas": 9
+      },
+      {
+        "id": "16-4",
+        "nombre": "Tenis",
+        "edad": 16,
+        "sesiones": 9,
+        "fichas": 51
+      },
+      {
+        "id": "16-5",
+        "nombre": "Béisbol",
+        "edad": 16,
+        "sesiones": 6,
+        "fichas": 25
+      },
+      {
+        "id": "16-6",
+        "nombre": "Street dance",
+        "edad": 16,
+        "sesiones": 6,
+        "fichas": 43
+      },
+      {
+        "id": "16-7",
+        "nombre": "Bicicleta",
+        "edad": 16,
+        "sesiones": 6,
+        "fichas": 31
+      },
+      {
+        "id": "17-1",
+        "nombre": "Nuevas tendencias de entrenamiento",
+        "edad": 17,
+        "sesiones": 15,
+        "fichas": 121
+      },
+      {
+        "id": "17-2",
+        "nombre": "Pádel",
+        "edad": 17,
+        "sesiones": 9,
+        "fichas": 34
+      },
+      {
+        "id": "17-3",
+        "nombre": "Hockey",
+        "edad": 17,
+        "sesiones": 9,
+        "fichas": 35
+      },
+      {
+        "id": "17-4",
+        "nombre": "Tenis de mesa",
+        "edad": 17,
+        "sesiones": 9,
+        "fichas": 45
+      },
+      {
+        "id": "17-5",
+        "nombre": "Deportes adaptados",
+        "edad": 17,
+        "sesiones": 6,
+        "fichas": 26
+      },
+      {
+        "id": "17-6",
+        "nombre": "Percusión corporal",
+        "edad": 17,
+        "sesiones": 6,
+        "fichas": 27
+      },
+      {
+        "id": "17-7",
+        "nombre": "Tiro con arco",
+        "edad": 17,
+        "sesiones": 6,
+        "fichas": 21
+      }
+    ],
+    "sesionesRevisadas": 117,
+    "fichas": 583,
+    "pasosNumeradosRevisados": 779,
+    "nota": "Las fichas reúnen actividades principales con sus variantes. Se excluyen explicaciones y recogida de material. Algunas prácticas se han adaptado para el aula. Los 5 minutos por ficha son una propuesta editable, no una duración atribuida al libro."
+  },
+  "sesiones": [
+    {
+      "age": 16,
+      "unit": 1,
+      "unitName": "Mi plan de entrenamiento",
+      "session": 1,
+      "title": "Entrenamiento total",
+      "pdf": 14,
+      "printed": 25,
+      "materials": "Vallas, bancos suecos, balones medicinales de dos kilos."
+    },
+    {
+      "age": 16,
+      "unit": 1,
+      "unitName": "Mi plan de entrenamiento",
+      "session": 2,
+      "title": "Interval training",
+      "pdf": 15,
+      "printed": 27,
+      "materials": "Conos, pelotas, cronómetro."
+    },
+    {
+      "age": 16,
+      "unit": 1,
+      "unitName": "Mi plan de entrenamiento",
+      "session": 3,
+      "title": "Entrenamiento rotativo continuo por estaciones",
+      "pdf": 16,
+      "printed": 29,
+      "materials": "Conos, colchonetas."
+    },
+    {
+      "age": 16,
+      "unit": 1,
+      "unitName": "Mi plan de entrenamiento",
+      "session": 4,
+      "title": "Entrenamiento intermitente",
+      "pdf": 17,
+      "printed": 31,
+      "materials": "Conos, bancos suecos."
+    },
+    {
+      "age": 16,
+      "unit": 1,
+      "unitName": "Mi plan de entrenamiento",
+      "session": 5,
+      "title": "Fuerza con gomas elásticas",
+      "pdf": 18,
+      "printed": 33,
+      "materials": "Gomas elásticas, sillas, espalderas, colchonetas."
+    },
+    {
+      "age": 16,
+      "unit": 1,
+      "unitName": "Mi plan de entrenamiento",
+      "session": 6,
+      "title": "Multilanzamientos",
+      "pdf": 19,
+      "printed": 35,
+      "materials": "Balones medicinales de dos y tres kilos."
+    },
+    {
+      "age": 16,
+      "unit": 1,
+      "unitName": "Mi plan de entrenamiento",
+      "session": 7,
+      "title": "Circuito de fuerza por parejas",
+      "pdf": 20,
+      "printed": 37,
+      "materials": "Colchonetas."
+    },
+    {
+      "age": 16,
+      "unit": 1,
+      "unitName": "Mi plan de entrenamiento",
+      "session": 8,
+      "title": "Velocidad de desplazamiento facilitada",
+      "pdf": 21,
+      "printed": 39,
+      "materials": "Conos."
+    },
+    {
+      "age": 16,
+      "unit": 1,
+      "unitName": "Mi plan de entrenamiento",
+      "session": 9,
+      "title": "Velocidad aceleración",
+      "pdf": 22,
+      "printed": 41,
+      "materials": "Conos."
+    },
+    {
+      "age": 16,
+      "unit": 1,
+      "unitName": "Mi plan de entrenamiento",
+      "session": 10,
+      "title": "Velocidad gestual",
+      "pdf": 23,
+      "printed": 43,
+      "materials": "Conos, pelotas, pañuelos, cuerdas, balones de baloncesto, sacos."
+    },
+    {
+      "age": 16,
+      "unit": 1,
+      "unitName": "Mi plan de entrenamiento",
+      "session": 11,
+      "title": "Sistema dinámico de flexibilidad",
+      "pdf": 24,
+      "printed": 45,
+      "materials": "Balones de balonmano, vallas."
+    },
+    {
+      "age": 16,
+      "unit": 1,
+      "unitName": "Mi plan de entrenamiento",
+      "session": 12,
+      "title": "Facilitación neuromuscular propioceptiva por parejas",
+      "pdf": 25,
+      "printed": 47,
+      "materials": "Colchonetas."
+    },
+    {
+      "age": 16,
+      "unit": 1,
+      "unitName": "Mi plan de entrenamiento",
+      "session": 13,
+      "title": "Yoga dinámico",
+      "pdf": 26,
+      "printed": 49,
+      "materials": "Colchonetas o esterillas."
+    },
+    {
+      "age": 16,
+      "unit": 1,
+      "unitName": "Mi plan de entrenamiento",
+      "session": 14,
+      "title": "Método Pilates",
+      "pdf": 27,
+      "printed": 51,
+      "materials": "Colchonetas o esterillas."
+    },
+    {
+      "age": 16,
+      "unit": 1,
+      "unitName": "Mi plan de entrenamiento",
+      "session": 15,
+      "title": "Método Pilates",
+      "pdf": 29,
+      "printed": 55,
+      "materials": "Colchonetas o esterillas."
+    },
+    {
+      "age": 16,
+      "unit": 2,
+      "unitName": "Más difícil todavía",
+      "session": 1,
+      "title": "Mimo y pantomima",
+      "pdf": 37,
+      "printed": 71,
+      "materials": "Espejo, silla o cajón."
+    },
+    {
+      "age": 16,
+      "unit": 2,
+      "unitName": "Más difícil todavía",
+      "session": 2,
+      "title": "Malabares con dos y tres pelotas",
+      "pdf": 39,
+      "printed": 75,
+      "materials": "Pelotas de malabares o similar (de tenis, de arroz…)."
+    },
+    {
+      "age": 16,
+      "unit": 2,
+      "unitName": "Más difícil todavía",
+      "session": 3,
+      "title": "Malabares con tres pelotas",
+      "pdf": 41,
+      "printed": 79,
+      "materials": "Pelotas de malabares o similar (de tenis, de arroz…)."
+    },
+    {
+      "age": 16,
+      "unit": 2,
+      "unitName": "Más difícil todavía",
+      "session": 4,
+      "title": "Malabares con cuatro pelotas",
+      "pdf": 42,
+      "printed": 81,
+      "materials": "Pelotas de malabares o similar (de tenis, de arroz…)."
+    },
+    {
+      "age": 16,
+      "unit": 2,
+      "unitName": "Más difícil todavía",
+      "session": 5,
+      "title": "Malabares con aros y mazas",
+      "pdf": 43,
+      "printed": 83,
+      "materials": "Aros, mazas."
+    },
+    {
+      "age": 16,
+      "unit": 2,
+      "unitName": "Más difícil todavía",
+      "session": 6,
+      "title": "Equilibrios y funambulismo",
+      "pdf": 44,
+      "printed": 85,
+      "materials": "Picas, pelotas, sillas, platos chinos, varillas finas, colchonetas, pelotas gigantes, rulos americanos o similar, bancos suecos, colchoneta, cuerdas."
+    },
+    {
+      "age": 16,
+      "unit": 3,
+      "unitName": "Fisioterapia básica",
+      "session": 1,
+      "title": "Masajes",
+      "pdf": 50,
+      "printed": 97,
+      "materials": "Mesas, esterillas, aceite o crema corporal de masaje, toallas."
+    },
+    {
+      "age": 16,
+      "unit": 3,
+      "unitName": "Fisioterapia básica",
+      "session": 2,
+      "title": "Masajes",
+      "pdf": 51,
+      "printed": 99,
+      "materials": "Mesas, esterillas, aceite o crema corporal de masaje, toallas."
+    },
+    {
+      "age": 16,
+      "unit": 3,
+      "unitName": "Fisioterapia básica",
+      "session": 3,
+      "title": "Masajes",
+      "pdf": 52,
+      "printed": 101,
+      "materials": "Mesas, esterillas, aceite o crema corporal de masaje, toallas."
+    },
+    {
+      "age": 16,
+      "unit": 3,
+      "unitName": "Fisioterapia básica",
+      "session": 4,
+      "title": "Vendaje funcional del tobillo",
+      "pdf": 53,
+      "printed": 103,
+      "materials": "Mesas, prevendaje de espuma fina (pretape), esparadrapo (tape), tijeras de punta roma."
+    },
+    {
+      "age": 16,
+      "unit": 3,
+      "unitName": "Fisioterapia básica",
+      "session": 5,
+      "title": "Vendaje funcional de la muñeca",
+      "pdf": 54,
+      "printed": 105,
+      "materials": "Mesas, sillas, prevendaje de espuma fina (pretape), esparadrapo (tape), tijeras de punta roma."
+    },
+    {
+      "age": 16,
+      "unit": 3,
+      "unitName": "Fisioterapia básica",
+      "session": 6,
+      "title": "Vendaje funcional del dedo pulgar",
+      "pdf": 55,
+      "printed": 107,
+      "materials": "Mesas, sillas, esparadrapo (tape), tijeras de punta roma."
+    },
+    {
+      "age": 16,
+      "unit": 3,
+      "unitName": "Fisioterapia básica",
+      "session": 7,
+      "title": "Cadena de supervivencia y posición antishock",
+      "pdf": 56,
+      "printed": 109,
+      "materials": "Colchonetas, sábanas isotérmicas o algo similar."
+    },
+    {
+      "age": 16,
+      "unit": 3,
+      "unitName": "Fisioterapia básica",
+      "session": 8,
+      "title": "Movilización, recogida y transporte de accidentados",
+      "pdf": 57,
+      "printed": 111,
+      "materials": "Sillas, colchonetas pequeñas, camillas rígidas si de dispone de ellas."
+    },
+    {
+      "age": 16,
+      "unit": 3,
+      "unitName": "Fisioterapia básica",
+      "session": 9,
+      "title": "Maniobras vitales",
+      "pdf": 58,
+      "printed": 113,
+      "materials": "Colchonetas, mascarillas, muñecos de reanimación cardiopulmonar, alcohol, algo- dón, almohadas o rulos. 1"
+    },
+    {
+      "age": 16,
+      "unit": 4,
+      "unitName": "Un deporte de caballeros",
+      "session": 1,
+      "title": "Familiarización con el material",
+      "pdf": 69,
+      "printed": 135,
+      "materials": "Raquetas de tenis, pelotas de tenis, aros."
+    },
+    {
+      "age": 16,
+      "unit": 4,
+      "unitName": "Un deporte de caballeros",
+      "session": 2,
+      "title": "El golpe de fondo de derecha",
+      "pdf": 70,
+      "printed": 137,
+      "materials": "Raquetas de tenis, pelotas de tenis, tizas."
+    },
+    {
+      "age": 16,
+      "unit": 4,
+      "unitName": "Un deporte de caballeros",
+      "session": 3,
+      "title": "El golpe de fondo de revés",
+      "pdf": 71,
+      "printed": 139,
+      "materials": "Raquetas de tenis, pelotas de tenis, redes."
+    },
+    {
+      "age": 16,
+      "unit": 4,
+      "unitName": "Un deporte de caballeros",
+      "session": 4,
+      "title": "El servicio",
+      "pdf": 72,
+      "printed": 141,
+      "materials": "Raquetas de tenis, pelotas de tenis, tizas, redes."
+    },
+    {
+      "age": 16,
+      "unit": 4,
+      "unitName": "Un deporte de caballeros",
+      "session": 5,
+      "title": "Golpes de fondo y servicio",
+      "pdf": 73,
+      "printed": 143,
+      "materials": "Raquetas de tenis, pelotas de tenis, redes, tizas."
+    },
+    {
+      "age": 16,
+      "unit": 4,
+      "unitName": "Un deporte de caballeros",
+      "session": 6,
+      "title": "La volea",
+      "pdf": 74,
+      "printed": 145,
+      "materials": "Raquetas de tenis, pelotas de tenis, redes, tizas."
+    },
+    {
+      "age": 16,
+      "unit": 4,
+      "unitName": "Un deporte de caballeros",
+      "session": 7,
+      "title": "El globo",
+      "pdf": 75,
+      "printed": 147,
+      "materials": "Raquetas de tenis, pelotas de tenis, redes, tizas."
+    },
+    {
+      "age": 16,
+      "unit": 4,
+      "unitName": "Un deporte de caballeros",
+      "session": 8,
+      "title": "El remate",
+      "pdf": 76,
+      "printed": 149,
+      "materials": "Raquetas de tenis, pelotas de tenis, redes, tizas."
+    },
+    {
+      "age": 16,
+      "unit": 4,
+      "unitName": "Un deporte de caballeros",
+      "session": 9,
+      "title": "Juego real",
+      "pdf": 77,
+      "printed": 151,
+      "materials": "Raquetas de tenis, pelotas de tenis, redes, tizas."
+    },
+    {
+      "age": 16,
+      "unit": 5,
+      "unitName": "Béisbol",
+      "session": 1,
+      "title": "El campo de juego",
+      "pdf": 85,
+      "printed": 167,
+      "materials": "Tizas, conos, aros o cualquier otro material que sirva para marcar el campo de juego."
+    },
+    {
+      "age": 16,
+      "unit": 5,
+      "unitName": "Béisbol",
+      "session": 2,
+      "title": "Agarre de la pelota y lanzamiento",
+      "pdf": 86,
+      "printed": 169,
+      "materials": "Pelotas de béisbol o de tenis, guantes o similar, tizas."
+    },
+    {
+      "age": 16,
+      "unit": 5,
+      "unitName": "Béisbol",
+      "session": 3,
+      "title": "Lanzamiento y recepción",
+      "pdf": 87,
+      "printed": 171,
+      "materials": "Bates de béisbol o similar, pelotas de béisbol o de tenis, guantes o similar, tizas."
+    },
+    {
+      "age": 16,
+      "unit": 5,
+      "unitName": "Béisbol",
+      "session": 4,
+      "title": "Bateo",
+      "pdf": 88,
+      "printed": 173,
+      "materials": "Bates de béisbol o similar, pelotas de béisbol o tenis, bating-tees o similar, tizas."
+    },
+    {
+      "age": 16,
+      "unit": 5,
+      "unitName": "Béisbol",
+      "session": 5,
+      "title": "Bateo y carrera por las bases",
+      "pdf": 89,
+      "printed": 175,
+      "materials": "Bates de béisbol o similar, pelotas de béisbol o tenis."
+    },
+    {
+      "age": 16,
+      "unit": 5,
+      "unitName": "Béisbol",
+      "session": 6,
+      "title": "Juego real",
+      "pdf": 90,
+      "printed": 177,
+      "materials": "Bates de béisbol o similar, pelotas de béisbol o de tenis, guantes o similar."
+    },
+    {
+      "age": 16,
+      "unit": 6,
+      "unitName": "Street dance",
+      "session": 1,
+      "title": "Break dance",
+      "pdf": 99,
+      "printed": 195,
+      "materials": "Espejo, reproductor de cd, música recomendada."
+    },
+    {
+      "age": 16,
+      "unit": 6,
+      "unitName": "Street dance",
+      "session": 2,
+      "title": "Break dance",
+      "pdf": 100,
+      "printed": 197,
+      "materials": "Espejo, reproductor de cd, música recomendada, colchonetas."
+    },
+    {
+      "age": 16,
+      "unit": 6,
+      "unitName": "Street dance",
+      "session": 3,
+      "title": "Funky y hip-hop",
+      "pdf": 101,
+      "printed": 199,
+      "materials": "Espejo, reproductor de cd, música recomendada."
+    },
+    {
+      "age": 16,
+      "unit": 6,
+      "unitName": "Street dance",
+      "session": 4,
+      "title": "Funky y hip-hop",
+      "pdf": 103,
+      "printed": 203,
+      "materials": "Espejo, reproductor de cd, música recomendada."
+    },
+    {
+      "age": 16,
+      "unit": 6,
+      "unitName": "Street dance",
+      "session": 5,
+      "title": "Locking",
+      "pdf": 104,
+      "printed": 205,
+      "materials": "Espejo, reproductor de cd, música recomendada."
+    },
+    {
+      "age": 16,
+      "unit": 6,
+      "unitName": "Street dance",
+      "session": 6,
+      "title": "Batallas",
+      "pdf": 106,
+      "printed": 209,
+      "materials": "Reproductor de cd, música recomendada."
+    },
+    {
+      "age": 16,
+      "unit": 7,
+      "unitName": "Sobre dos ruedas",
+      "session": 1,
+      "title": "Partes de la bicicleta, ajustes y reparaciones",
+      "pdf": 115,
+      "printed": 227,
+      "materials": "Bicicletas, cámaras de bicicleta, desmontables, papel de lija, parches, disolución, bombas de hinchar, cubos con agua."
+    },
+    {
+      "age": 16,
+      "unit": 7,
+      "unitName": "Sobre dos ruedas",
+      "session": 2,
+      "title": "Conducción y equilibrio sobre la bicicleta",
+      "pdf": 116,
+      "printed": 229,
+      "materials": "Bicicletas, cascos, conos."
+    },
+    {
+      "age": 16,
+      "unit": 7,
+      "unitName": "Sobre dos ruedas",
+      "session": 3,
+      "title": "Desplazamientos y posiciones sobre la bicicleta",
+      "pdf": 117,
+      "printed": 231,
+      "materials": "Bicicletas, cascos, pelotas."
+    },
+    {
+      "age": 16,
+      "unit": 7,
+      "unitName": "Sobre dos ruedas",
+      "session": 4,
+      "title": "Frenadas y conducción",
+      "pdf": 118,
+      "printed": 233,
+      "materials": "Bicicletas, cascos, tiza, conos, pica, pelotas de tenis, aros."
+    },
+    {
+      "age": 16,
+      "unit": 7,
+      "unitName": "Sobre dos ruedas",
+      "session": 5,
+      "title": "Desarrollos, curvas y conducción",
+      "pdf": 119,
+      "printed": 235,
+      "materials": "Bicicletas, cascos, tizas, tablones, goma elástica, conos."
+    },
+    {
+      "age": 16,
+      "unit": 7,
+      "unitName": "Sobre dos ruedas",
+      "session": 6,
+      "title": "Paso de obstáculos y gymkhana",
+      "pdf": 120,
+      "printed": 237,
+      "materials": "Bicicletas, cascos, picas, plinto, colchonetas, tizas, conos, cuerdas, gomas elásti- cas, trampolín de saltos, botellas de agua vacías, aros."
+    },
+    {
+      "age": 17,
+      "unit": 1,
+      "unitName": "Nuevas tendencias de entrenamiento",
+      "session": 1,
+      "title": "Entrenamiento cardiovascular con cuerda",
+      "pdf": 127,
+      "printed": 251,
+      "materials": "Cuerdas."
+    },
+    {
+      "age": 17,
+      "unit": 1,
+      "unitName": "Nuevas tendencias de entrenamiento",
+      "session": 2,
+      "title": "Entrenamiento cardiovascular con soga (rope training)",
+      "pdf": 128,
+      "printed": 253,
+      "materials": "Sogas."
+    },
+    {
+      "age": 17,
+      "unit": 1,
+      "unitName": "Nuevas tendencias de entrenamiento",
+      "session": 3,
+      "title": "Técnicas miofasciales",
+      "pdf": 129,
+      "printed": 255,
+      "materials": "Pelotas de tenis y/o rodillos de espuma."
+    },
+    {
+      "age": 17,
+      "unit": 1,
+      "unitName": "Nuevas tendencias de entrenamiento",
+      "session": 4,
+      "title": "Entrenamiento del core",
+      "pdf": 131,
+      "printed": 259,
+      "materials": "Colchonetas, balones medicinales."
+    },
+    {
+      "age": 17,
+      "unit": 1,
+      "unitName": "Nuevas tendencias de entrenamiento",
+      "session": 5,
+      "title": "Espalda sana",
+      "pdf": 133,
+      "printed": 263,
+      "materials": "Pelotas de fitball, colchonetas, paredes."
+    },
+    {
+      "age": 17,
+      "unit": 1,
+      "unitName": "Nuevas tendencias de entrenamiento",
+      "session": 6,
+      "title": "Entrenamiento con kettlebells (pesas rusas)",
+      "pdf": 135,
+      "printed": 267,
+      "materials": "Kettlebells, bidones y/o garrafas de agua."
+    },
+    {
+      "age": 17,
+      "unit": 1,
+      "unitName": "Nuevas tendencias de entrenamiento",
+      "session": 7,
+      "title": "Entrenamiento de crossfit",
+      "pdf": 137,
+      "printed": 271,
+      "materials": "Barras o picas, balones medicinales."
+    },
+    {
+      "age": 17,
+      "unit": 1,
+      "unitName": "Nuevas tendencias de entrenamiento",
+      "session": 8,
+      "title": "Entrenamiento de crossfit wod",
+      "pdf": 138,
+      "printed": 273,
+      "materials": "Barras o picas, balones medicinales."
+    },
+    {
+      "age": 17,
+      "unit": 1,
+      "unitName": "Nuevas tendencias de entrenamiento",
+      "session": 9,
+      "title": "Entrenamiento de crossfit wod por amrap",
+      "pdf": 139,
+      "printed": 274,
+      "materials": "Barras o picas."
+    },
+    {
+      "age": 17,
+      "unit": 1,
+      "unitName": "Nuevas tendencias de entrenamiento",
+      "session": 10,
+      "title": "Entrenamiento en suspensión TRX",
+      "pdf": 139,
+      "printed": 275,
+      "materials": "Cintas TRX o cuerdas, espalderas."
+    },
+    {
+      "age": 17,
+      "unit": 1,
+      "unitName": "Nuevas tendencias de entrenamiento",
+      "session": 11,
+      "title": "Entrenamiento en suspensión TRX",
+      "pdf": 141,
+      "printed": 279,
+      "materials": "Cintas TRX o cuerdas, espalderas."
+    },
+    {
+      "age": 17,
+      "unit": 1,
+      "unitName": "Nuevas tendencias de entrenamiento",
+      "session": 12,
+      "title": "Entrenamiento con pelotas de fitball",
+      "pdf": 142,
+      "printed": 281,
+      "materials": "Pelotas de fitball, mancuernas."
+    },
+    {
+      "age": 17,
+      "unit": 1,
+      "unitName": "Nuevas tendencias de entrenamiento",
+      "session": 13,
+      "title": "Entrenamiento con pelotas de fitball",
+      "pdf": 144,
+      "printed": 285,
+      "materials": "Pelotas de fitball, mancuernas."
+    },
+    {
+      "age": 17,
+      "unit": 1,
+      "unitName": "Nuevas tendencias de entrenamiento",
+      "session": 14,
+      "title": "Entrenamiento hiit",
+      "pdf": 146,
+      "printed": 289,
+      "materials": "Esterillas."
+    },
+    {
+      "age": 17,
+      "unit": 1,
+      "unitName": "Nuevas tendencias de entrenamiento",
+      "session": 15,
+      "title": "Entrenamiento tabata",
+      "pdf": 147,
+      "printed": 291,
+      "materials": "Bancos suecos, esterillas."
+    },
+    {
+      "age": 17,
+      "unit": 2,
+      "unitName": "Pádel para todos",
+      "session": 1,
+      "title": "Empuñadura continental",
+      "pdf": 161,
+      "printed": 319,
+      "materials": "Palas de pádel, pelotas de pádel y/o de tenis, conos."
+    },
+    {
+      "age": 17,
+      "unit": 2,
+      "unitName": "Pádel para todos",
+      "session": 2,
+      "title": "Posición de espera y punto de impacto",
+      "pdf": 162,
+      "printed": 321,
+      "materials": "Palas de pádel, pelotas de pádel y/o de tenis, conos."
+    },
+    {
+      "age": 17,
+      "unit": 2,
+      "unitName": "Pádel para todos",
+      "session": 3,
+      "title": "Volea de derecha y de revés",
+      "pdf": 163,
+      "printed": 323,
+      "materials": "Palas de pádel, pelotas de goma-espuma, pelotas de pádel y/o de tenis, redes o gomas elásticas, conos."
+    },
+    {
+      "age": 17,
+      "unit": 2,
+      "unitName": "Pádel para todos",
+      "session": 4,
+      "title": "Saque y golpe de derecha desde el fondo de la pista",
+      "pdf": 164,
+      "printed": 325,
+      "materials": "Palas de pádel, pelotas de pádel y/o de tenis, redes o gomas elásticas."
+    },
+    {
+      "age": 17,
+      "unit": 2,
+      "unitName": "Pádel para todos",
+      "session": 5,
+      "title": "Golpe de revés",
+      "pdf": 165,
+      "printed": 327,
+      "materials": "Palas de pádel, pelotas de pádel y/o de tenis, redes o gomas elásticas."
+    },
+    {
+      "age": 17,
+      "unit": 2,
+      "unitName": "Pádel para todos",
+      "session": 6,
+      "title": "Golpe lateral de pared, de derecha y de revés",
+      "pdf": 166,
+      "printed": 329,
+      "materials": "Palas de pádel, pelotas de pádel y/o de tenis, redes o gomas elásticas, conos."
+    },
+    {
+      "age": 17,
+      "unit": 2,
+      "unitName": "Pádel para todos",
+      "session": 7,
+      "title": "Golpe de vuelta de pared, de derecha y de revés",
+      "pdf": 167,
+      "printed": 331,
+      "materials": "Palas de pádel, pelotas de pádel y/o de tenis, redes o gomas elásticas, conos."
+    },
+    {
+      "age": 17,
+      "unit": 2,
+      "unitName": "Pádel para todos",
+      "session": 8,
+      "title": "Iniciación al juego real",
+      "pdf": 168,
+      "printed": 333,
+      "materials": "Palas de pádel, pelotas de pádel y/o de tenis, redes o gomas elásticas, conos."
+    },
+    {
+      "age": 17,
+      "unit": 2,
+      "unitName": "Pádel para todos",
+      "session": 9,
+      "title": "Torneo de juego real",
+      "pdf": 169,
+      "printed": 334,
+      "materials": "Palas de pádel, pelotas de pádel y/o de tenis, redes o gomas elásticas, conos."
+    },
+    {
+      "age": 17,
+      "unit": 3,
+      "unitName": "Hockey hierba",
+      "session": 1,
+      "title": "Familiarización con el material",
+      "pdf": 175,
+      "printed": 347,
+      "materials": "Sticks de hockey hierba o floorball, pelotas de diferentes pesos y tamaños, bates, picas, bolas de hockey."
+    },
+    {
+      "age": 17,
+      "unit": 3,
+      "unitName": "Hockey hierba",
+      "session": 2,
+      "title": "Conducciones y pases",
+      "pdf": 176,
+      "printed": 349,
+      "materials": "Sticks de hockey hierba o floorball, bolas de hockey, conos, aros."
+    },
+    {
+      "age": 17,
+      "unit": 3,
+      "unitName": "Hockey hierba",
+      "session": 3,
+      "title": "Conducciones y pases",
+      "pdf": 177,
+      "printed": 351,
+      "materials": "Sticks de hockey hierba o floorball, bolas de hockey, conos."
+    },
+    {
+      "age": 17,
+      "unit": 3,
+      "unitName": "Hockey hierba",
+      "session": 4,
+      "title": "Técnicas básicas",
+      "pdf": 178,
+      "printed": 353,
+      "materials": "Sticks de hockey hierba o floorball, bolas de hockey, pelota de playa."
+    },
+    {
+      "age": 17,
+      "unit": 3,
+      "unitName": "Hockey hierba",
+      "session": 5,
+      "title": "Técnica y táctica ofensiva",
+      "pdf": 179,
+      "printed": 355,
+      "materials": "Sticks de hockey hierba o floorball, bolas de hockey, bolos, conos, petos de colores."
+    },
+    {
+      "age": 17,
+      "unit": 3,
+      "unitName": "Hockey hierba",
+      "session": 6,
+      "title": "Situaciones reducidas del juego real",
+      "pdf": 180,
+      "printed": 357,
+      "materials": "Sticks de hockey hierba o floorball, bolas de hockey, petos de colores."
+    },
+    {
+      "age": 17,
+      "unit": 3,
+      "unitName": "Hockey hierba",
+      "session": 7,
+      "title": "Técnica y táctica defensiva",
+      "pdf": 181,
+      "printed": 359,
+      "materials": "Sticks de hockey hierba o floorball, bolas de hockey, conos, petos de colores."
+    },
+    {
+      "age": 17,
+      "unit": 3,
+      "unitName": "Hockey hierba",
+      "session": 8,
+      "title": "Introducción al juego real",
+      "pdf": 182,
+      "printed": 361,
+      "materials": "Sticks de hockey hierba o floorball, bolas de hockey, petos de colores."
+    },
+    {
+      "age": 17,
+      "unit": 3,
+      "unitName": "Hockey hierba",
+      "session": 9,
+      "title": "Torneo de juego real",
+      "pdf": 183,
+      "printed": 362,
+      "materials": "Sticks de hockey hierba o floorball, bolas de hockey, petos de colores."
+    },
+    {
+      "age": 17,
+      "unit": 4,
+      "unitName": "Tenis de mesa",
+      "session": 1,
+      "title": "Familiarización con la raqueta y la forma de empuñarla",
+      "pdf": 189,
+      "printed": 375,
+      "materials": "Raquetas de tenis de mesa, pelotas de tenis de mesa."
+    },
+    {
+      "age": 17,
+      "unit": 4,
+      "unitName": "Tenis de mesa",
+      "session": 2,
+      "title": "Golpes básicos, el saque",
+      "pdf": 190,
+      "printed": 377,
+      "materials": "Raquetas de tenis de mesa, pelotas de tenis de mesa, mesas de tenis de mesa, redes y soportes, tizas."
+    },
+    {
+      "age": 17,
+      "unit": 4,
+      "unitName": "Tenis de mesa",
+      "session": 3,
+      "title": "Golpes básicos, drive y revés",
+      "pdf": 191,
+      "printed": 379,
+      "materials": "Raquetas de tenis de mesa, pelotas de tenis de mesa, conos, mesas de tenis de mesa, redes y soportes, tizas."
+    },
+    {
+      "age": 17,
+      "unit": 4,
+      "unitName": "Tenis de mesa",
+      "session": 4,
+      "title": "Juego defensivo y ofensivo en el tenis de mesa",
+      "pdf": 192,
+      "printed": 381,
+      "materials": "Raquetas de tenis de mesa, pelotas de tenis de mesa, mesas, tizas, mesas de tenis de mesa, redes y soportes."
+    },
+    {
+      "age": 17,
+      "unit": 4,
+      "unitName": "Tenis de mesa",
+      "session": 5,
+      "title": "Golpes básicos, top-spin de derecha",
+      "pdf": 193,
+      "printed": 383,
+      "materials": "Pelotas, raquetas de tenis de mesa, pelotas de tenis de mesa, pupitres, mesas de tenis de mesa, redes y soportes, pelotas de goma espuma."
+    },
+    {
+      "age": 17,
+      "unit": 4,
+      "unitName": "Tenis de mesa",
+      "session": 6,
+      "title": "Golpes básicos, top-spin de revés",
+      "pdf": 194,
+      "printed": 385,
+      "materials": "Discos voladores o frisbees, raquetas de tenis de mesa, pelotas de tenis de mesa, mesas de tenis de mesa, redes y soportes, picas."
+    },
+    {
+      "age": 17,
+      "unit": 4,
+      "unitName": "Tenis de mesa",
+      "session": 7,
+      "title": "Golpes básicos, el remate",
+      "pdf": 195,
+      "printed": 387,
+      "materials": "Raquetas de tenis de mesa, pelotas de tenis de mesa, mesas de tenis de mesa, redes y soportes, aros."
+    },
+    {
+      "age": 17,
+      "unit": 4,
+      "unitName": "Tenis de mesa",
+      "session": 8,
+      "title": "El juego de dobles",
+      "pdf": 196,
+      "printed": 389,
+      "materials": "Indiacas, raquetas de tenis de mesa, pelotas de tenis de mesa, mesas de tenis de mesa, redes y soportes."
+    },
+    {
+      "age": 17,
+      "unit": 4,
+      "unitName": "Tenis de mesa",
+      "session": 9,
+      "title": "Torneo de juego real con tanteo",
+      "pdf": 197,
+      "printed": 391,
+      "materials": "Raquetas de tenis de mesa, pelotas de tenis de mesa, mesas de tenis de mesa, redes y soportes."
+    },
+    {
+      "age": 17,
+      "unit": 5,
+      "unitName": "Deportes paralímpicos",
+      "session": 1,
+      "title": "Iniciación al voleibol sentado, pase de antebrazos",
+      "pdf": 204,
+      "printed": 405,
+      "materials": "Balones de voleibol foam, redes de voleibol o gomas elásticas, postes de voleibol o soportes que permitan colocar la red a 1 metro de altura."
+    },
+    {
+      "age": 17,
+      "unit": 5,
+      "unitName": "Deportes paralímpicos",
+      "session": 2,
+      "title": "Iniciación al voleibol sentado, pase de dedos",
+      "pdf": 205,
+      "printed": 407,
+      "materials": "Balones de voleibol foam, redes de voleibol o gomas elásticas, postes de voleibol o soportes que permitan colocar la red a 1 metro de altura."
+    },
+    {
+      "age": 17,
+      "unit": 5,
+      "unitName": "Deportes paralímpicos",
+      "session": 3,
+      "title": "Iniciación al voleibol sentado, el saque y el remate",
+      "pdf": 206,
+      "printed": 409,
+      "materials": "Balones de voleibol foam, redes de voleibol o gomas elásticas, postes de voleibol o soportes que permitan colocar la red a 1 metro de altura."
+    },
+    {
+      "age": 17,
+      "unit": 5,
+      "unitName": "Deportes paralímpicos",
+      "session": 4,
+      "title": "Iniciación al voleibol sentado, juego real",
+      "pdf": 207,
+      "printed": 411,
+      "materials": "Balones de voleibol foam, redes de voleibol o gomas elásticas, postes de voleibol o soportes que permitan colocar la red a 1 metro de altura, cinta métrica, tizas."
+    },
+    {
+      "age": 17,
+      "unit": 5,
+      "unitName": "Deportes paralímpicos",
+      "session": 5,
+      "title": "Iniciación al goalball",
+      "pdf": 208,
+      "printed": 413,
+      "materials": "Antifaces negros, balones sonoros de goalball o similares (ver Anexos), conos, cin- ta métrica, tizas."
+    },
+    {
+      "age": 17,
+      "unit": 5,
+      "unitName": "Deportes paralímpicos",
+      "session": 6,
+      "title": "Iniciación al goalball, juego real",
+      "pdf": 209,
+      "printed": 415,
+      "materials": "Antifaces negros, balones sonoros de goalball o similares (ver Anexos), cinta mé- trica, cinta adhesiva, conos."
+    },
+    {
+      "age": 17,
+      "unit": 6,
+      "unitName": "Coreografía de percusión corporal",
+      "session": 1,
+      "title": "Iniciación al ritmo",
+      "pdf": 217,
+      "printed": 431,
+      "materials": "Ordenador portátil, equipo de música, música variada, papel, lápiz."
+    },
+    {
+      "age": 17,
+      "unit": 6,
+      "unitName": "Coreografía de percusión corporal",
+      "session": 2,
+      "title": "Asimilación de los conceptos básicos del ritmo",
+      "pdf": 218,
+      "printed": 433,
+      "materials": "Equipo de música, música variada."
+    },
+    {
+      "age": 17,
+      "unit": 6,
+      "unitName": "Coreografía de percusión corporal",
+      "session": 3,
+      "title": "La frase musical y el bloque musical",
+      "pdf": 219,
+      "printed": 435,
+      "materials": "Equipo de música, música variada, papel, lápiz."
+    },
+    {
+      "age": 17,
+      "unit": 6,
+      "unitName": "Coreografía de percusión corporal",
+      "session": 4,
+      "title": "Sonidos básicos de percusión corporal",
+      "pdf": 220,
+      "printed": 437,
+      "materials": "Sillas."
+    },
+    {
+      "age": 17,
+      "unit": 6,
+      "unitName": "Coreografía de percusión corporal",
+      "session": 5,
+      "title": "Coreografías de percusión corporal",
+      "pdf": 221,
+      "printed": 439,
+      "materials": "Ninguno."
+    },
+    {
+      "age": 17,
+      "unit": 6,
+      "unitName": "Coreografía de percusión corporal",
+      "session": 6,
+      "title": "Muestra de coreografías de percusión corporal",
+      "pdf": 223,
+      "printed": 442,
+      "materials": "Cámara de video, hoja de evaluación de las coreografías (ver Anexos)."
+    },
+    {
+      "age": 17,
+      "unit": 7,
+      "unitName": "Por el bosque con Robin Hood",
+      "session": 1,
+      "title": "Familiarización con el material y medidas de seguridad",
+      "pdf": 229,
+      "printed": 455,
+      "materials": "Arcos, flechas sin punta, carcajes, cintas de color rojo y azul."
+    },
+    {
+      "age": 17,
+      "unit": 7,
+      "unitName": "Por el bosque con Robin Hood",
+      "session": 2,
+      "title": "Técnica de lanzamiento en T",
+      "pdf": 230,
+      "printed": 457,
+      "materials": "Arcos, flechas, dianas, carcaj, protectores de brazo"
+    },
+    {
+      "age": 17,
+      "unit": 7,
+      "unitName": "Por el bosque con Robin Hood",
+      "session": 3,
+      "title": "Lanzamientos",
+      "pdf": 231,
+      "printed": 459,
+      "materials": "Arcos, flechas, dianas, carcajes, protectores de brazo, globos."
+    },
+    {
+      "age": 17,
+      "unit": 7,
+      "unitName": "Por el bosque con Robin Hood",
+      "session": 4,
+      "title": "Juegos competitivos y técnicas de respiración",
+      "pdf": 232,
+      "printed": 461,
+      "materials": "Arcos, flechas, dianas, carcajes, protectores de brazo, colchonetas, tizas, equipo de música, música relajante."
+    },
+    {
+      "age": 17,
+      "unit": 7,
+      "unitName": "Por el bosque con Robin Hood",
+      "session": 5,
+      "title": "Juegos cooperativos de lanzamiento",
+      "pdf": 233,
+      "printed": 463,
+      "materials": "Arcos, flechas, dianas, carcajes, protectores, aros, hoja tamaño A3 con cuatro bar- cos dibujados."
+    },
+    {
+      "age": 17,
+      "unit": 7,
+      "unitName": "Por el bosque con Robin Hood",
+      "session": 6,
+      "title": "Conocimiento",
+      "pdf": 234,
+      "printed": 465,
+      "materials": "Arcos, flechas, dianas, carcajes, protectores."
+    }
+  ],
+  "exclusiones": [
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 1,
+        "sesion": 1,
+        "actividad": 2,
+        "inicioPagina": 25,
+        "hojaPDF": 14,
+        "tituloSesion": "Entrenamiento total"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 1,
+        "sesion": 1,
+        "actividad": 3,
+        "inicioPagina": 25,
+        "hojaPDF": 14,
+        "tituloSesion": "Entrenamiento total"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 1,
+        "sesion": 2,
+        "actividad": 2,
+        "inicioPagina": 27,
+        "hojaPDF": 15,
+        "tituloSesion": "Interval training"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 1,
+        "sesion": 2,
+        "actividad": 3,
+        "inicioPagina": 27,
+        "hojaPDF": 15,
+        "tituloSesion": "Interval training"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 1,
+        "sesion": 2,
+        "actividad": 5,
+        "inicioPagina": 27,
+        "hojaPDF": 15,
+        "tituloSesion": "Interval training"
+      },
+      "motivo": "Pausa de recuperación, no ejercicio independiente."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 1,
+        "sesion": 3,
+        "actividad": 2,
+        "inicioPagina": 29,
+        "hojaPDF": 16,
+        "tituloSesion": "Entrenamiento rotativo continuo por estaciones"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 1,
+        "sesion": 3,
+        "actividad": 3,
+        "inicioPagina": 29,
+        "hojaPDF": 16,
+        "tituloSesion": "Entrenamiento rotativo continuo por estaciones"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 1,
+        "sesion": 4,
+        "actividad": 2,
+        "inicioPagina": 31,
+        "hojaPDF": 17,
+        "tituloSesion": "Entrenamiento intermitente"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 1,
+        "sesion": 4,
+        "actividad": 3,
+        "inicioPagina": 31,
+        "hojaPDF": 17,
+        "tituloSesion": "Entrenamiento intermitente"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 1,
+        "sesion": 5,
+        "actividad": 2,
+        "inicioPagina": 33,
+        "hojaPDF": 18,
+        "tituloSesion": "Fuerza con gomas elásticas"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 1,
+        "sesion": 5,
+        "actividad": 3,
+        "inicioPagina": 33,
+        "hojaPDF": 18,
+        "tituloSesion": "Fuerza con gomas elásticas"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 1,
+        "sesion": 7,
+        "actividad": 2,
+        "inicioPagina": 37,
+        "hojaPDF": 20,
+        "tituloSesion": "Circuito de fuerza por parejas"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 1,
+        "sesion": 8,
+        "actividad": 2,
+        "inicioPagina": 39,
+        "hojaPDF": 21,
+        "tituloSesion": "Velocidad de desplazamiento facilitada"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 1,
+        "sesion": 9,
+        "actividad": 2,
+        "inicioPagina": 41,
+        "hojaPDF": 22,
+        "tituloSesion": "Velocidad aceleración"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 1,
+        "sesion": 11,
+        "actividad": 2,
+        "inicioPagina": 45,
+        "hojaPDF": 24,
+        "tituloSesion": "Sistema dinámico de flexibilidad"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 1,
+        "sesion": 11,
+        "actividad": 3,
+        "inicioPagina": 45,
+        "hojaPDF": 24,
+        "tituloSesion": "Sistema dinámico de flexibilidad"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 1,
+        "sesion": 12,
+        "actividad": 2,
+        "inicioPagina": 47,
+        "hojaPDF": 25,
+        "tituloSesion": "Facilitación neuromuscular propioceptiva por parejas"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 1,
+        "sesion": 12,
+        "actividad": 3,
+        "inicioPagina": 47,
+        "hojaPDF": 25,
+        "tituloSesion": "Facilitación neuromuscular propioceptiva por parejas"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 1,
+        "sesion": 13,
+        "actividad": 2,
+        "inicioPagina": 49,
+        "hojaPDF": 26,
+        "tituloSesion": "Yoga dinámico"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 1,
+        "sesion": 13,
+        "actividad": 3,
+        "inicioPagina": 49,
+        "hojaPDF": 26,
+        "tituloSesion": "Yoga dinámico"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 1,
+        "sesion": 14,
+        "actividad": 2,
+        "inicioPagina": 51,
+        "hojaPDF": 27,
+        "tituloSesion": "Método Pilates"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 1,
+        "sesion": 14,
+        "actividad": 3,
+        "inicioPagina": 51,
+        "hojaPDF": 27,
+        "tituloSesion": "Método Pilates"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 1,
+        "sesion": 15,
+        "actividad": 2,
+        "inicioPagina": 55,
+        "hojaPDF": 29,
+        "tituloSesion": "Método Pilates"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 2,
+        "sesion": 1,
+        "actividad": 2,
+        "inicioPagina": 71,
+        "hojaPDF": 37,
+        "tituloSesion": "Mimo y pantomima"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 2,
+        "sesion": 2,
+        "actividad": 2,
+        "inicioPagina": 75,
+        "hojaPDF": 39,
+        "tituloSesion": "Malabares con dos y tres pelotas"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 2,
+        "sesion": 3,
+        "actividad": 2,
+        "inicioPagina": 79,
+        "hojaPDF": 41,
+        "tituloSesion": "Malabares con tres pelotas"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 2,
+        "sesion": 4,
+        "actividad": 2,
+        "inicioPagina": 81,
+        "hojaPDF": 42,
+        "tituloSesion": "Malabares con cuatro pelotas"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 2,
+        "sesion": 5,
+        "actividad": 2,
+        "inicioPagina": 83,
+        "hojaPDF": 43,
+        "tituloSesion": "Malabares con aros y mazas"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 4,
+        "sesion": 1,
+        "actividad": 2,
+        "inicioPagina": 135,
+        "hojaPDF": 69,
+        "tituloSesion": "Familiarización con el material"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 4,
+        "sesion": 2,
+        "actividad": 2,
+        "inicioPagina": 137,
+        "hojaPDF": 70,
+        "tituloSesion": "El golpe de fondo de derecha"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 4,
+        "sesion": 2,
+        "actividad": 3,
+        "inicioPagina": 137,
+        "hojaPDF": 70,
+        "tituloSesion": "El golpe de fondo de derecha"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 4,
+        "sesion": 3,
+        "actividad": 2,
+        "inicioPagina": 139,
+        "hojaPDF": 71,
+        "tituloSesion": "El golpe de fondo de revés"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 4,
+        "sesion": 4,
+        "actividad": 2,
+        "inicioPagina": 141,
+        "hojaPDF": 72,
+        "tituloSesion": "El servicio"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 4,
+        "sesion": 6,
+        "actividad": 2,
+        "inicioPagina": 145,
+        "hojaPDF": 74,
+        "tituloSesion": "La volea"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 4,
+        "sesion": 7,
+        "actividad": 2,
+        "inicioPagina": 147,
+        "hojaPDF": 75,
+        "tituloSesion": "El globo"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 4,
+        "sesion": 8,
+        "actividad": 2,
+        "inicioPagina": 149,
+        "hojaPDF": 76,
+        "tituloSesion": "El remate"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 4,
+        "sesion": 9,
+        "actividad": 2,
+        "inicioPagina": 151,
+        "hojaPDF": 77,
+        "tituloSesion": "Juego real"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 5,
+        "sesion": 1,
+        "actividad": 2,
+        "inicioPagina": 167,
+        "hojaPDF": 85,
+        "tituloSesion": "El campo de juego"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 5,
+        "sesion": 2,
+        "actividad": 2,
+        "inicioPagina": 169,
+        "hojaPDF": 86,
+        "tituloSesion": "Agarre de la pelota y lanzamiento"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 5,
+        "sesion": 2,
+        "actividad": 3,
+        "inicioPagina": 169,
+        "hojaPDF": 86,
+        "tituloSesion": "Agarre de la pelota y lanzamiento"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 5,
+        "sesion": 3,
+        "actividad": 2,
+        "inicioPagina": 171,
+        "hojaPDF": 87,
+        "tituloSesion": "Lanzamiento y recepción"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 5,
+        "sesion": 4,
+        "actividad": 2,
+        "inicioPagina": 173,
+        "hojaPDF": 88,
+        "tituloSesion": "Bateo"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 5,
+        "sesion": 5,
+        "actividad": 2,
+        "inicioPagina": 175,
+        "hojaPDF": 89,
+        "tituloSesion": "Bateo y carrera por las bases"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 5,
+        "sesion": 6,
+        "actividad": 2,
+        "inicioPagina": 177,
+        "hojaPDF": 90,
+        "tituloSesion": "Juego real"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 6,
+        "sesion": 1,
+        "actividad": 2,
+        "inicioPagina": 195,
+        "hojaPDF": 99,
+        "tituloSesion": "Break dance"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 6,
+        "sesion": 1,
+        "actividad": 3,
+        "inicioPagina": 195,
+        "hojaPDF": 99,
+        "tituloSesion": "Break dance"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 6,
+        "sesion": 1,
+        "actividad": 5,
+        "inicioPagina": 195,
+        "hojaPDF": 99,
+        "tituloSesion": "Break dance"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 6,
+        "sesion": 1,
+        "actividad": 7,
+        "inicioPagina": 195,
+        "hojaPDF": 99,
+        "tituloSesion": "Break dance"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 6,
+        "sesion": 1,
+        "actividad": 9,
+        "inicioPagina": 195,
+        "hojaPDF": 99,
+        "tituloSesion": "Break dance"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 6,
+        "sesion": 1,
+        "actividad": 11,
+        "inicioPagina": 195,
+        "hojaPDF": 99,
+        "tituloSesion": "Break dance"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 6,
+        "sesion": 1,
+        "actividad": 13,
+        "inicioPagina": 195,
+        "hojaPDF": 99,
+        "tituloSesion": "Break dance"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 6,
+        "sesion": 1,
+        "actividad": 15,
+        "inicioPagina": 195,
+        "hojaPDF": 99,
+        "tituloSesion": "Break dance"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 6,
+        "sesion": 2,
+        "actividad": 2,
+        "inicioPagina": 197,
+        "hojaPDF": 100,
+        "tituloSesion": "Break dance"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 6,
+        "sesion": 2,
+        "actividad": 3,
+        "inicioPagina": 197,
+        "hojaPDF": 100,
+        "tituloSesion": "Break dance"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 6,
+        "sesion": 2,
+        "actividad": 5,
+        "inicioPagina": 197,
+        "hojaPDF": 100,
+        "tituloSesion": "Break dance"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 6,
+        "sesion": 2,
+        "actividad": 7,
+        "inicioPagina": 197,
+        "hojaPDF": 100,
+        "tituloSesion": "Break dance"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 6,
+        "sesion": 2,
+        "actividad": 9,
+        "inicioPagina": 197,
+        "hojaPDF": 100,
+        "tituloSesion": "Break dance"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 6,
+        "sesion": 2,
+        "actividad": 11,
+        "inicioPagina": 197,
+        "hojaPDF": 100,
+        "tituloSesion": "Break dance"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 6,
+        "sesion": 2,
+        "actividad": 13,
+        "inicioPagina": 197,
+        "hojaPDF": 100,
+        "tituloSesion": "Break dance"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 6,
+        "sesion": 3,
+        "actividad": 2,
+        "inicioPagina": 199,
+        "hojaPDF": 101,
+        "tituloSesion": "Funky y hip-hop"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 6,
+        "sesion": 3,
+        "actividad": 3,
+        "inicioPagina": 199,
+        "hojaPDF": 101,
+        "tituloSesion": "Funky y hip-hop"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 6,
+        "sesion": 3,
+        "actividad": 4,
+        "inicioPagina": 199,
+        "hojaPDF": 101,
+        "tituloSesion": "Funky y hip-hop"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 6,
+        "sesion": 3,
+        "actividad": 6,
+        "inicioPagina": 199,
+        "hojaPDF": 101,
+        "tituloSesion": "Funky y hip-hop"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 6,
+        "sesion": 3,
+        "actividad": 8,
+        "inicioPagina": 199,
+        "hojaPDF": 101,
+        "tituloSesion": "Funky y hip-hop"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 6,
+        "sesion": 3,
+        "actividad": 10,
+        "inicioPagina": 199,
+        "hojaPDF": 101,
+        "tituloSesion": "Funky y hip-hop"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 6,
+        "sesion": 3,
+        "actividad": 12,
+        "inicioPagina": 199,
+        "hojaPDF": 101,
+        "tituloSesion": "Funky y hip-hop"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 6,
+        "sesion": 3,
+        "actividad": 14,
+        "inicioPagina": 199,
+        "hojaPDF": 101,
+        "tituloSesion": "Funky y hip-hop"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 6,
+        "sesion": 3,
+        "actividad": 16,
+        "inicioPagina": 199,
+        "hojaPDF": 101,
+        "tituloSesion": "Funky y hip-hop"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 6,
+        "sesion": 3,
+        "actividad": 18,
+        "inicioPagina": 199,
+        "hojaPDF": 101,
+        "tituloSesion": "Funky y hip-hop"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 6,
+        "sesion": 3,
+        "actividad": 20,
+        "inicioPagina": 199,
+        "hojaPDF": 101,
+        "tituloSesion": "Funky y hip-hop"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 6,
+        "sesion": 3,
+        "actividad": 22,
+        "inicioPagina": 199,
+        "hojaPDF": 101,
+        "tituloSesion": "Funky y hip-hop"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 6,
+        "sesion": 4,
+        "actividad": 2,
+        "inicioPagina": 203,
+        "hojaPDF": 103,
+        "tituloSesion": "Funky y hip-hop"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 6,
+        "sesion": 4,
+        "actividad": 4,
+        "inicioPagina": 203,
+        "hojaPDF": 103,
+        "tituloSesion": "Funky y hip-hop"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 6,
+        "sesion": 4,
+        "actividad": 6,
+        "inicioPagina": 203,
+        "hojaPDF": 103,
+        "tituloSesion": "Funky y hip-hop"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 6,
+        "sesion": 4,
+        "actividad": 8,
+        "inicioPagina": 203,
+        "hojaPDF": 103,
+        "tituloSesion": "Funky y hip-hop"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 6,
+        "sesion": 4,
+        "actividad": 10,
+        "inicioPagina": 203,
+        "hojaPDF": 103,
+        "tituloSesion": "Funky y hip-hop"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 6,
+        "sesion": 4,
+        "actividad": 12,
+        "inicioPagina": 203,
+        "hojaPDF": 103,
+        "tituloSesion": "Funky y hip-hop"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 6,
+        "sesion": 4,
+        "actividad": 14,
+        "inicioPagina": 203,
+        "hojaPDF": 103,
+        "tituloSesion": "Funky y hip-hop"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 6,
+        "sesion": 4,
+        "actividad": 16,
+        "inicioPagina": 203,
+        "hojaPDF": 103,
+        "tituloSesion": "Funky y hip-hop"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 6,
+        "sesion": 5,
+        "actividad": 2,
+        "inicioPagina": 205,
+        "hojaPDF": 104,
+        "tituloSesion": "Locking"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 6,
+        "sesion": 5,
+        "actividad": 3,
+        "inicioPagina": 205,
+        "hojaPDF": 104,
+        "tituloSesion": "Locking"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 6,
+        "sesion": 5,
+        "actividad": 5,
+        "inicioPagina": 205,
+        "hojaPDF": 104,
+        "tituloSesion": "Locking"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 6,
+        "sesion": 5,
+        "actividad": 7,
+        "inicioPagina": 205,
+        "hojaPDF": 104,
+        "tituloSesion": "Locking"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 6,
+        "sesion": 5,
+        "actividad": 9,
+        "inicioPagina": 205,
+        "hojaPDF": 104,
+        "tituloSesion": "Locking"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 6,
+        "sesion": 5,
+        "actividad": 11,
+        "inicioPagina": 205,
+        "hojaPDF": 104,
+        "tituloSesion": "Locking"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 6,
+        "sesion": 5,
+        "actividad": 13,
+        "inicioPagina": 205,
+        "hojaPDF": 104,
+        "tituloSesion": "Locking"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 6,
+        "sesion": 5,
+        "actividad": 15,
+        "inicioPagina": 205,
+        "hojaPDF": 104,
+        "tituloSesion": "Locking"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 6,
+        "sesion": 5,
+        "actividad": 17,
+        "inicioPagina": 205,
+        "hojaPDF": 104,
+        "tituloSesion": "Locking"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 6,
+        "sesion": 5,
+        "actividad": 19,
+        "inicioPagina": 205,
+        "hojaPDF": 104,
+        "tituloSesion": "Locking"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 6,
+        "sesion": 5,
+        "actividad": 21,
+        "inicioPagina": 205,
+        "hojaPDF": 104,
+        "tituloSesion": "Locking"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 6,
+        "sesion": 6,
+        "actividad": 2,
+        "inicioPagina": 209,
+        "hojaPDF": 106,
+        "tituloSesion": "Batallas"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 7,
+        "sesion": 1,
+        "actividad": 3,
+        "inicioPagina": 227,
+        "hojaPDF": 115,
+        "tituloSesion": "Partes de la bicicleta, ajustes y reparaciones"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 7,
+        "sesion": 1,
+        "actividad": 4,
+        "inicioPagina": 227,
+        "hojaPDF": 115,
+        "tituloSesion": "Partes de la bicicleta, ajustes y reparaciones"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 7,
+        "sesion": 1,
+        "actividad": 6,
+        "inicioPagina": 227,
+        "hojaPDF": 115,
+        "tituloSesion": "Partes de la bicicleta, ajustes y reparaciones"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 7,
+        "sesion": 1,
+        "actividad": 8,
+        "inicioPagina": 227,
+        "hojaPDF": 115,
+        "tituloSesion": "Partes de la bicicleta, ajustes y reparaciones"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 7,
+        "sesion": 3,
+        "actividad": 4,
+        "inicioPagina": 231,
+        "hojaPDF": 117,
+        "tituloSesion": "Desplazamientos y posiciones sobre la bicicleta"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 7,
+        "sesion": 3,
+        "actividad": 6,
+        "inicioPagina": 231,
+        "hojaPDF": 117,
+        "tituloSesion": "Desplazamientos y posiciones sobre la bicicleta"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 7,
+        "sesion": 4,
+        "actividad": 2,
+        "inicioPagina": 233,
+        "hojaPDF": 118,
+        "tituloSesion": "Frenadas y conducción"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 7,
+        "sesion": 5,
+        "actividad": 2,
+        "inicioPagina": 235,
+        "hojaPDF": 119,
+        "tituloSesion": "Desarrollos, curvas y conducción"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 7,
+        "sesion": 5,
+        "actividad": 4,
+        "inicioPagina": 235,
+        "hojaPDF": 119,
+        "tituloSesion": "Desarrollos, curvas y conducción"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 16,
+        "unidad": 7,
+        "sesion": 6,
+        "actividad": 2,
+        "inicioPagina": 237,
+        "hojaPDF": 120,
+        "tituloSesion": "Paso de obstáculos y gymkhana"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 1,
+        "sesion": 1,
+        "actividad": 3,
+        "inicioPagina": 251,
+        "hojaPDF": 127,
+        "tituloSesion": "Entrenamiento cardiovascular con cuerda"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 1,
+        "sesion": 2,
+        "actividad": 2,
+        "inicioPagina": 253,
+        "hojaPDF": 128,
+        "tituloSesion": "Entrenamiento cardiovascular con soga (rope training)"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 1,
+        "sesion": 2,
+        "actividad": 3,
+        "inicioPagina": 253,
+        "hojaPDF": 128,
+        "tituloSesion": "Entrenamiento cardiovascular con soga (rope training)"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 1,
+        "sesion": 3,
+        "actividad": 2,
+        "inicioPagina": 255,
+        "hojaPDF": 129,
+        "tituloSesion": "Técnicas miofasciales"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 1,
+        "sesion": 4,
+        "actividad": 2,
+        "inicioPagina": 259,
+        "hojaPDF": 131,
+        "tituloSesion": "Entrenamiento del core"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 1,
+        "sesion": 4,
+        "actividad": 3,
+        "inicioPagina": 259,
+        "hojaPDF": 131,
+        "tituloSesion": "Entrenamiento del core"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 1,
+        "sesion": 4,
+        "actividad": 5,
+        "inicioPagina": 259,
+        "hojaPDF": 131,
+        "tituloSesion": "Entrenamiento del core"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 1,
+        "sesion": 5,
+        "actividad": 2,
+        "inicioPagina": 263,
+        "hojaPDF": 133,
+        "tituloSesion": "Espalda sana"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 1,
+        "sesion": 5,
+        "actividad": 3,
+        "inicioPagina": 263,
+        "hojaPDF": 133,
+        "tituloSesion": "Espalda sana"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 1,
+        "sesion": 6,
+        "actividad": 2,
+        "inicioPagina": 267,
+        "hojaPDF": 135,
+        "tituloSesion": "Entrenamiento con kettlebells (pesas rusas)"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 1,
+        "sesion": 6,
+        "actividad": 3,
+        "inicioPagina": 267,
+        "hojaPDF": 135,
+        "tituloSesion": "Entrenamiento con kettlebells (pesas rusas)"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 1,
+        "sesion": 6,
+        "actividad": 4,
+        "inicioPagina": 267,
+        "hojaPDF": 135,
+        "tituloSesion": "Entrenamiento con kettlebells (pesas rusas)"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 1,
+        "sesion": 8,
+        "actividad": 2,
+        "inicioPagina": 273,
+        "hojaPDF": 138,
+        "tituloSesion": "Entrenamiento de crossfit wod"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 1,
+        "sesion": 8,
+        "actividad": 3,
+        "inicioPagina": 273,
+        "hojaPDF": 138,
+        "tituloSesion": "Entrenamiento de crossfit wod"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 1,
+        "sesion": 9,
+        "actividad": 2,
+        "inicioPagina": 274,
+        "hojaPDF": 139,
+        "tituloSesion": "Entrenamiento de crossfit wod por amrap"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 1,
+        "sesion": 9,
+        "actividad": 3,
+        "inicioPagina": 274,
+        "hojaPDF": 139,
+        "tituloSesion": "Entrenamiento de crossfit wod por amrap"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 1,
+        "sesion": 10,
+        "actividad": 2,
+        "inicioPagina": 275,
+        "hojaPDF": 139,
+        "tituloSesion": "Entrenamiento en suspensión TRX"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 1,
+        "sesion": 10,
+        "actividad": 3,
+        "inicioPagina": 275,
+        "hojaPDF": 139,
+        "tituloSesion": "Entrenamiento en suspensión TRX"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 1,
+        "sesion": 11,
+        "actividad": 2,
+        "inicioPagina": 279,
+        "hojaPDF": 141,
+        "tituloSesion": "Entrenamiento en suspensión TRX"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 1,
+        "sesion": 12,
+        "actividad": 2,
+        "inicioPagina": 281,
+        "hojaPDF": 142,
+        "tituloSesion": "Entrenamiento con pelotas de fitball"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 1,
+        "sesion": 13,
+        "actividad": 2,
+        "inicioPagina": 285,
+        "hojaPDF": 144,
+        "tituloSesion": "Entrenamiento con pelotas de fitball"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 1,
+        "sesion": 14,
+        "actividad": 2,
+        "inicioPagina": 289,
+        "hojaPDF": 146,
+        "tituloSesion": "Entrenamiento hiit"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 1,
+        "sesion": 14,
+        "actividad": 3,
+        "inicioPagina": 289,
+        "hojaPDF": 146,
+        "tituloSesion": "Entrenamiento hiit"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 1,
+        "sesion": 15,
+        "actividad": 2,
+        "inicioPagina": 291,
+        "hojaPDF": 147,
+        "tituloSesion": "Entrenamiento tabata"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 1,
+        "sesion": 15,
+        "actividad": 3,
+        "inicioPagina": 291,
+        "hojaPDF": 147,
+        "tituloSesion": "Entrenamiento tabata"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 2,
+        "sesion": 1,
+        "actividad": 2,
+        "inicioPagina": 319,
+        "hojaPDF": 161,
+        "tituloSesion": "Empuñadura continental"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 2,
+        "sesion": 2,
+        "actividad": 2,
+        "inicioPagina": 321,
+        "hojaPDF": 162,
+        "tituloSesion": "Posición de espera y punto de impacto"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 2,
+        "sesion": 2,
+        "actividad": 3,
+        "inicioPagina": 321,
+        "hojaPDF": 162,
+        "tituloSesion": "Posición de espera y punto de impacto"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 2,
+        "sesion": 3,
+        "actividad": 2,
+        "inicioPagina": 323,
+        "hojaPDF": 163,
+        "tituloSesion": "Volea de derecha y de revés"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 2,
+        "sesion": 4,
+        "actividad": 2,
+        "inicioPagina": 325,
+        "hojaPDF": 164,
+        "tituloSesion": "Saque y golpe de derecha desde el fondo de la pista"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 2,
+        "sesion": 5,
+        "actividad": 2,
+        "inicioPagina": 327,
+        "hojaPDF": 165,
+        "tituloSesion": "Golpe de revés"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 2,
+        "sesion": 6,
+        "actividad": 2,
+        "inicioPagina": 329,
+        "hojaPDF": 166,
+        "tituloSesion": "Golpe lateral de pared, de derecha y de revés"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 2,
+        "sesion": 7,
+        "actividad": 2,
+        "inicioPagina": 331,
+        "hojaPDF": 167,
+        "tituloSesion": "Golpe de vuelta de pared, de derecha y de revés"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 2,
+        "sesion": 9,
+        "actividad": 3,
+        "inicioPagina": 334,
+        "hojaPDF": 169,
+        "tituloSesion": "Torneo de juego real"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 3,
+        "sesion": 1,
+        "actividad": 4,
+        "inicioPagina": 347,
+        "hojaPDF": 175,
+        "tituloSesion": "Familiarización con el material"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 3,
+        "sesion": 1,
+        "actividad": 7,
+        "inicioPagina": 347,
+        "hojaPDF": 175,
+        "tituloSesion": "Familiarización con el material"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 3,
+        "sesion": 5,
+        "actividad": 2,
+        "inicioPagina": 355,
+        "hojaPDF": 179,
+        "tituloSesion": "Técnica y táctica ofensiva"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 3,
+        "sesion": 5,
+        "actividad": 3,
+        "inicioPagina": 355,
+        "hojaPDF": 179,
+        "tituloSesion": "Técnica y táctica ofensiva"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 3,
+        "sesion": 7,
+        "actividad": 2,
+        "inicioPagina": 359,
+        "hojaPDF": 181,
+        "tituloSesion": "Técnica y táctica defensiva"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 3,
+        "sesion": 7,
+        "actividad": 3,
+        "inicioPagina": 359,
+        "hojaPDF": 181,
+        "tituloSesion": "Técnica y táctica defensiva"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 3,
+        "sesion": 8,
+        "actividad": 4,
+        "inicioPagina": 361,
+        "hojaPDF": 182,
+        "tituloSesion": "Introducción al juego real"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 3,
+        "sesion": 8,
+        "actividad": 5,
+        "inicioPagina": 361,
+        "hojaPDF": 182,
+        "tituloSesion": "Introducción al juego real"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 3,
+        "sesion": 9,
+        "actividad": 2,
+        "inicioPagina": 362,
+        "hojaPDF": 183,
+        "tituloSesion": "Torneo de juego real"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 4,
+        "sesion": 1,
+        "actividad": 6,
+        "inicioPagina": 375,
+        "hojaPDF": 189,
+        "tituloSesion": "Familiarización con la raqueta y la forma de empuñarla"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 4,
+        "sesion": 2,
+        "actividad": 4,
+        "inicioPagina": 377,
+        "hojaPDF": 190,
+        "tituloSesion": "Golpes básicos, el saque"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 4,
+        "sesion": 2,
+        "actividad": 7,
+        "inicioPagina": 377,
+        "hojaPDF": 190,
+        "tituloSesion": "Golpes básicos, el saque"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 4,
+        "sesion": 3,
+        "actividad": 4,
+        "inicioPagina": 379,
+        "hojaPDF": 191,
+        "tituloSesion": "Golpes básicos, drive y revés"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 4,
+        "sesion": 3,
+        "actividad": 5,
+        "inicioPagina": 379,
+        "hojaPDF": 191,
+        "tituloSesion": "Golpes básicos, drive y revés"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 4,
+        "sesion": 4,
+        "actividad": 4,
+        "inicioPagina": 381,
+        "hojaPDF": 192,
+        "tituloSesion": "Juego defensivo y ofensivo en el tenis de mesa"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 4,
+        "sesion": 4,
+        "actividad": 5,
+        "inicioPagina": 381,
+        "hojaPDF": 192,
+        "tituloSesion": "Juego defensivo y ofensivo en el tenis de mesa"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 4,
+        "sesion": 5,
+        "actividad": 5,
+        "inicioPagina": 383,
+        "hojaPDF": 193,
+        "tituloSesion": "Golpes básicos, top-spin de derecha"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 4,
+        "sesion": 6,
+        "actividad": 5,
+        "inicioPagina": 385,
+        "hojaPDF": 194,
+        "tituloSesion": "Golpes básicos, top-spin de revés"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 4,
+        "sesion": 7,
+        "actividad": 4,
+        "inicioPagina": 387,
+        "hojaPDF": 195,
+        "tituloSesion": "Golpes básicos, el remate"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 4,
+        "sesion": 8,
+        "actividad": 4,
+        "inicioPagina": 389,
+        "hojaPDF": 196,
+        "tituloSesion": "El juego de dobles"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 4,
+        "sesion": 9,
+        "actividad": 3,
+        "inicioPagina": 391,
+        "hojaPDF": 197,
+        "tituloSesion": "Torneo de juego real con tanteo"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 5,
+        "sesion": 1,
+        "actividad": 5,
+        "inicioPagina": 405,
+        "hojaPDF": 204,
+        "tituloSesion": "Iniciación al voleibol sentado, pase de antebrazos"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 5,
+        "sesion": 2,
+        "actividad": 3,
+        "inicioPagina": 407,
+        "hojaPDF": 205,
+        "tituloSesion": "Iniciación al voleibol sentado, pase de dedos"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 5,
+        "sesion": 3,
+        "actividad": 2,
+        "inicioPagina": 409,
+        "hojaPDF": 206,
+        "tituloSesion": "Iniciación al voleibol sentado, el saque y el remate"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 5,
+        "sesion": 3,
+        "actividad": 7,
+        "inicioPagina": 409,
+        "hojaPDF": 206,
+        "tituloSesion": "Iniciación al voleibol sentado, el saque y el remate"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 5,
+        "sesion": 4,
+        "actividad": 2,
+        "inicioPagina": 411,
+        "hojaPDF": 207,
+        "tituloSesion": "Iniciación al voleibol sentado, juego real"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 5,
+        "sesion": 5,
+        "actividad": 2,
+        "inicioPagina": 413,
+        "hojaPDF": 208,
+        "tituloSesion": "Iniciación al goalball"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 5,
+        "sesion": 6,
+        "actividad": 3,
+        "inicioPagina": 415,
+        "hojaPDF": 209,
+        "tituloSesion": "Iniciación al goalball, juego real"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 5,
+        "sesion": 6,
+        "actividad": 5,
+        "inicioPagina": 415,
+        "hojaPDF": 209,
+        "tituloSesion": "Iniciación al goalball, juego real"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 6,
+        "sesion": 1,
+        "actividad": 2,
+        "inicioPagina": 431,
+        "hojaPDF": 217,
+        "tituloSesion": "Iniciación al ritmo"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 6,
+        "sesion": 1,
+        "actividad": 3,
+        "inicioPagina": 431,
+        "hojaPDF": 217,
+        "tituloSesion": "Iniciación al ritmo"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 6,
+        "sesion": 2,
+        "actividad": 2,
+        "inicioPagina": 433,
+        "hojaPDF": 218,
+        "tituloSesion": "Asimilación de los conceptos básicos del ritmo"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 6,
+        "sesion": 3,
+        "actividad": 2,
+        "inicioPagina": 435,
+        "hojaPDF": 219,
+        "tituloSesion": "La frase musical y el bloque musical"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 6,
+        "sesion": 3,
+        "actividad": 3,
+        "inicioPagina": 435,
+        "hojaPDF": 219,
+        "tituloSesion": "La frase musical y el bloque musical"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 6,
+        "sesion": 4,
+        "actividad": 2,
+        "inicioPagina": 437,
+        "hojaPDF": 220,
+        "tituloSesion": "Sonidos básicos de percusión corporal"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 6,
+        "sesion": 5,
+        "actividad": 2,
+        "inicioPagina": 439,
+        "hojaPDF": 221,
+        "tituloSesion": "Coreografías de percusión corporal"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 6,
+        "sesion": 6,
+        "actividad": 2,
+        "inicioPagina": 442,
+        "hojaPDF": 223,
+        "tituloSesion": "Muestra de coreografías de percusión corporal"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 7,
+        "sesion": 1,
+        "actividad": 6,
+        "inicioPagina": 455,
+        "hojaPDF": 229,
+        "tituloSesion": "Familiarización con el material y medidas de seguridad"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 7,
+        "sesion": 2,
+        "actividad": 7,
+        "inicioPagina": 457,
+        "hojaPDF": 230,
+        "tituloSesion": "Técnica de lanzamiento en T"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    },
+    {
+      "referencia": {
+        "edad": 17,
+        "unidad": 7,
+        "sesion": 4,
+        "actividad": 8,
+        "inicioPagina": 461,
+        "hojaPDF": 232,
+        "tituloSesion": "Juegos competitivos y técnicas de respiración"
+      },
+      "motivo": "Explicación, organización o preparación, conservada en la revisión de la sesión."
+    }
+  ]
+}
