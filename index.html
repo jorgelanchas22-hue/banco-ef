@@ -971,7 +971,8 @@ document.getElementById('input-importar-backup').addEventListener('change', e=>{
 function matchesFiltros(ej){
   const unidad=document.getElementById('f-unidad-libro').value;
   if(unidad==='libro' && !ej.unidadLibro) return false;
-  if(unidad && unidad!=='libro' && ej.unidadLibro!==unidad) return false;
+  if(unidad==='dibujos' && !ej.ilustracionEspecifica) return false;
+  if(unidad && !['libro','dibujos'].includes(unidad) && ej.unidadLibro!==unidad) return false;
   if(filtros.curso && !(ej.cursos||[]).includes(filtros.curso)) return false;
   if(filtros.bloque && BLOQUES[ej.bloque] !== filtros.bloque) return false;
   if(filtros.contenido && !(ej.contenidos||[]).includes(filtros.contenido)) return false;
@@ -1094,10 +1095,11 @@ function renderBanco(){
 }
 document.getElementById('select-agrupar').addEventListener('change', renderBanco);
 const selectorUnidad=document.getElementById('f-unidad-libro');
+const opcionDibujos=document.createElement('option');opcionDibujos.value='dibujos';opcionDibujos.textContent='Con dibujo específico ('+Object.keys(window.PILA_ILUSTRACIONES||{}).length+')';selectorUnidad.appendChild(opcionDibujos);
 const pilaRevision=window.PILA_REVISION;
 if(pilaRevision){
  pilaRevision.unidades.forEach(u=>{const op=document.createElement('option');op.value=u.id;op.textContent=u.nombre+' · '+u.edad+' años ('+u.fichas+')';selectorUnidad.appendChild(op);});
- document.getElementById('pila-resumen').textContent=pilaRevision.fichas+' fichas · '+pilaRevision.unidades.length+' unidades · '+pilaRevision.sesionesRevisadas+' sesiones de referencia';
+ document.getElementById('pila-resumen').textContent=pilaRevision.fichas+' fichas · '+pilaRevision.unidades.length+' unidades · '+pilaRevision.sesionesRevisadas+' sesiones de referencia · '+Object.keys(window.PILA_ILUSTRACIONES||{}).length+' dibujos específicos listos';
 }
 selectorUnidad.addEventListener('change',renderBanco);
 document.getElementById('btn-ver-pila').addEventListener('click',()=>{
