@@ -537,6 +537,7 @@
 <!-- PRINT AREA -->
 <div id="printArea"></div>
 <script src="pila-actividades.js?v=20261006-2"></script>
+<script src="pila-ilustraciones.js?v=20261006-1"></script>
 <input type="file" id="quick-img-input" accept="image/*" style="display:none;">
 
 <script>
@@ -733,8 +734,15 @@ BATCHES.bachillerato_docentes_20261006 = [{"nombre": "Carrera continua autorregu
 
 BATCHES.pila_teleña_completo_20261006 = window.PILA_ACTIVIDADES || [];
 
+function aplicarIlustracion(ej){
+ const dibujo=(window.PILA_ILUSTRACIONES||{})[ej.id];
+ if(dibujo && (!ej.imagen || /^assets\/pila\//.test(ej.imagen))) return Object.assign({},ej,dibujo);
+ return ej;
+}
+BATCHES.pila_teleña_completo_20261006=BATCHES.pila_teleña_completo_20261006.map(aplicarIlustracion);
 function normalizarEjercicio(ej){
   if(!ej || typeof ej !== 'object') return null;
+  ej=aplicarIlustracion(ej);
   return Object.assign({}, ej, {
     nombre: ej.nombre || 'Ejercicio sin nombre',
     descripcion: ej.descripcion || '',
@@ -978,17 +986,17 @@ function escapeFicha(value){ return String(value||'').replace(/[&<>"']/g, c=>({'
 function imprimirFicha(id){
  const ej=ejercicios.find(x=>x.id===id); if(!ej) return;
  const area=document.getElementById('printArea');
- area.innerHTML=`<div class="print-header"><h2>${escapeFicha(ej.nombre)}</h2><p>Salesianos San Pedro · Educación Física · ${escapeFicha((ej.cursos||[]).join(', '))}</p></div>${ej.imagen && !ej.unidadLibro ? `<img src="${ej.imagen}" style="display:block;width:420px;max-width:100%;max-height:300px;object-fit:contain;margin:12px auto">` : ''}<p>${escapeFicha(ej.descripcion)}</p><p><strong>Material:</strong> ${escapeFicha(ej.material)} · <strong>Duración orientativa:</strong> ${ej.duracion} min</p>${['pauta','tecnica','variante'].map((k,i)=>ej[k]?`<p><strong>${['Organización','Técnica','Adaptación'][i]}:</strong> ${escapeFicha(ej[k])}</p>`:'').join('')}${ej.unidadLibro ? `<h3>Desarrollo de la actividad</h3><p style="white-space:pre-line">${escapeFicha(ej.desarrolloLibro)}</p>${ej.contextoLibro ? `<p style="white-space:pre-line">${escapeFicha(ej.contextoLibro)}</p>` : ''}${ej.anexoLibro ? `<p style="white-space:pre-line">${escapeFicha(ej.anexoLibro)}</p>` : ''}<p><strong>Adaptación:</strong> ${escapeFicha(ej.adaptacionLibro)}</p><p>${escapeFicha(ej.ilustracionLibro)}</p>` : ''}<p>${escapeFicha(ej.fuente)}</p><p>El profesor ajusta los tiempos y la dificultad al grupo y a las adaptaciones individuales.</p>`;
+ area.innerHTML=`<div class="print-header"><h2>${escapeFicha(ej.nombre)}</h2><p>Salesianos San Pedro · Educación Física · ${escapeFicha((ej.cursos||[]).join(', '))}</p></div>${ej.imagen && (!ej.unidadLibro || ej.ilustracionEspecifica) ? `<img src="${ej.imagen}" style="display:block;width:420px;max-width:100%;max-height:300px;object-fit:contain;margin:12px auto">` : ''}<p>${escapeFicha(ej.descripcion)}</p><p><strong>Material:</strong> ${escapeFicha(ej.material)} · <strong>Duración orientativa:</strong> ${ej.duracion} min</p>${['pauta','tecnica','variante'].map((k,i)=>ej[k]?`<p><strong>${['Organización','Técnica','Adaptación'][i]}:</strong> ${escapeFicha(ej[k])}</p>`:'').join('')}${ej.unidadLibro ? `<h3>Desarrollo de la actividad</h3><p style="white-space:pre-line">${escapeFicha(ej.desarrolloLibro)}</p>${ej.contextoLibro ? `<p style="white-space:pre-line">${escapeFicha(ej.contextoLibro)}</p>` : ''}${ej.anexoLibro ? `<p style="white-space:pre-line">${escapeFicha(ej.anexoLibro)}</p>` : ''}<p><strong>Adaptación:</strong> ${escapeFicha(ej.adaptacionLibro)}</p><p>${escapeFicha(ej.ilustracionLibro)}</p>` : ''}<p>${escapeFicha(ej.fuente)}</p><p>El profesor ajusta los tiempos y la dificultad al grupo y a las adaptaciones individuales.</p>`;
  const images=[...area.querySelectorAll('img')];
  Promise.all(images.map(im=>im.decode().catch(()=>{}))).then(()=>window.print());
 }
 document.addEventListener('click', ev=>{ const btn=ev.target.closest('.btn-print-ficha'); if(btn) imprimirFicha(btn.dataset.id); });
 function detalleLibroHTML(ej){
  if(!ej.unidadLibro) return '';
- return `<details class="exercise-detail book-detail"><summary>Desarrollo, variantes y adaptación</summary><p><strong>${ej.adaptado ? 'Propuesta adaptada de aula' : 'Desarrollo extraído del libro'}:</strong></p><p class="book-text">${escapeFicha(ej.desarrolloLibro)}</p>${ej.contextoLibro ? `<p><strong>Posición o actividad de referencia:</strong></p><p class="book-text">${escapeFicha(ej.contextoLibro)}</p>` : ''}${ej.anexoLibro ? `<p><strong>Explicación del movimiento en el anexo:</strong></p><p class="book-text">${escapeFicha(ej.anexoLibro)}</p>` : ''}<p><strong>Adaptación docente:</strong> ${escapeFicha(ej.adaptacionLibro)}</p><p><strong>Uso:</strong> ${escapeFicha(ej.usoLibro)}</p><p class="source-note">${escapeFicha(ej.fuente)}</p><p class="source-note">Duración propuesta: 5 minutos, editable; no es una duración del libro. ${escapeFicha(ej.ilustracionLibro)}</p>${ej.enlaceActualizacion ? `<p><a href="${ej.enlaceActualizacion}" target="_blank" rel="noopener">Referencia actual para formación en reanimación</a></p>` : ''}</details>`;
+ return `<details class="exercise-detail book-detail"><summary>Desarrollo, variantes y adaptación</summary><p><strong>${ej.adaptado ? 'Propuesta adaptada de aula' : 'Desarrollo extraído del libro'}:</strong></p><p class="book-text">${escapeFicha(ej.desarrolloLibro)}</p>${ej.contextoLibro ? `<p><strong>Posición o actividad de referencia:</strong></p><p class="book-text">${escapeFicha(ej.contextoLibro)}</p>` : ''}${ej.anexoLibro ? `<p><strong>Explicación del movimiento en el anexo:</strong></p><p class="book-text">${escapeFicha(ej.anexoLibro)}</p>` : ''}<p><strong>Adaptación docente:</strong> ${escapeFicha(ej.adaptacionLibro)}</p><p><strong>Uso:</strong> ${escapeFicha(ej.usoLibro)}</p><p class="source-note">${escapeFicha(ej.fuente)}</p><p class="source-note">Duración propuesta: 5 minutos, editable; no es una duración del libro. ${escapeFicha(ej.ilustracionEspecifica ? ej.ilustracionLibro : "Dibujo específico pendiente.")}</p>${ej.enlaceActualizacion ? `<p><a href="${ej.enlaceActualizacion}" target="_blank" rel="noopener">Referencia actual para formación en reanimación</a></p>` : ''}</details>`;
 }
 function cardHTML(ej, opts={}){
-  const imagenValida = !ej.unidadLibro && ej.imagen && typeof ej.imagen === 'string' && (ej.imagen.indexOf('data:image') === 0 || /^assets\/pila\/unidad-\d+\.jpg$/.test(ej.imagen));
+  const imagenValida = (!ej.unidadLibro || ej.ilustracionEspecifica) && ej.imagen && typeof ej.imagen === 'string' && (ej.imagen.indexOf('data:image') === 0 || /^assets\/pila\/(?:unidad-\d+|ejercicio-pila_[\d_]+)\.jpg$/.test(ej.imagen));
   const imgStyle = imagenValida ? `style="background-image:url('${ej.imagen}')"` : "";
   const imgContent = imagenValida ? "" : (ej.unidadLibro ? "Dibujo específico pendiente" : "Sin imagen");
   return `
@@ -1006,6 +1014,7 @@ function cardHTML(ej, opts={}){
       </div>
       <div class="card-meta"><span>${ej.duracion} min</span><span>${ej.material || ""}</span></div>
       ${ej.pauta ? `<details class="exercise-detail"><summary>Cómo llevarlo a clase</summary><p><strong>Organización:</strong> ${escapeFicha(ej.pauta)}</p><p><strong>Técnica:</strong> ${escapeFicha(ej.tecnica)}</p><p><strong>Adaptación:</strong> ${escapeFicha(ej.variante)}</p><p class="source-note">${escapeFicha(ej.fuente)} Tiempos orientativos: el profesor ajusta la propuesta al grupo.</p></details>` : ""}
+      ${ej.ilustracionEspecifica ? `<a class="btn btn-ghost" href="${ej.imagen}" target="_blank" rel="noopener">Ver dibujo ampliado</a>` : ''}
       ${detalleLibroHTML(ej)}
       <div class="card-actions">
         <button class="btn btn-ghost btn-print-ficha" data-id="${ej.id}">Imprimir ficha</button>
