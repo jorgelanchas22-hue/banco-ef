@@ -804,6 +804,8 @@ function aplicarBatchesPendientes(lista){
       huboNuevas = true;
     }
   });
+  const correcciones = ["pila_16_1_5_10"];
+  correcciones.forEach(id=>{ const actual=lista.find(e=>e.id===id), fuente=(window.PILA_ACTIVIDADES||[]).find(e=>e.id===id); if(actual && fuente && /goma.{0,90}cuello/i.test(actual.desarrolloLibro||"")){ Object.assign(actual,fuente); huboNuevas=true; } });
   if(huboNuevas){
     localStorage.setItem(BATCHES_KEY, JSON.stringify(aplicados));
     saveEjercicios(lista);
